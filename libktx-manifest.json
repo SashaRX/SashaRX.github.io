@@ -1,9 +1,9 @@
 {
   "version": "v4.4.2",
-  "buildId": "v4.4.2-c25b2452",
+  "buildId": "v4.4.2-f4e027a0",
   "emsdk": "4.0.10",
-  "wasmSha256": "716a9605b7cac4f03f6041cf3d2da98ba93fa6cf9e9166c71e48b1033d69c07c",
-  "mjsSha256": "d62f9e3c02183f46bac98aa40a13fd97a729131e322b4f7e633073c990f9e4f3",
-  "mjs": "libktx-v4.4.2-c25b2452.mjs",
-  "wasm": "libktx-v4.4.2-c25b2452.wasm"
+  "wasmSha256": "bebdc23b7f41fecd648da37915b11290dbd77ee2b2174f4893432e97bd8acce0",
+  "mjsSha256": "590e6c1cd9e53aeb216fc194aad6fe740c980603057ea0ab1434322eb9bddd20",
+  "mjs": "libktx-v4.4.2-f4e027a0.mjs",
+  "wasm": "libktx-v4.4.2-f4e027a0.wasm"
 }

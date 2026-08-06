@@ -1,0 +1,11 @@
+{
+  "channel": "trial",
+  "version": "v5.0.0-rc1",
+  "buildId": "v5.0.0-rc1-97ff981a",
+  "buildRunId": 31061125473,
+  "emsdk": "4.0.10",
+  "wasmSha256": "3a6ea15aace7d924a22b4232ba0e1f057ac65d9db12d5b1b1af35fdc76a35b1b",
+  "mjsSha256": "40d688cc32237c7b1dcfdacc61023ae5b866e25848a9cf309cf2bd7ff7bae2cf",
+  "mjs": "libktx-v5.0.0-rc1-97ff981a.mjs",
+  "wasm": "libktx-v5.0.0-rc1-97ff981a.wasm"
+}

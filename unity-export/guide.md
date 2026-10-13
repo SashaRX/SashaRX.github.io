@@ -1,10 +1,10 @@
-# TS_UnityExport: illustrated user guide
+# MAX ModelBatch: illustrated user guide
 
-**Version 1.2.0 · 3ds Max 2022-2027 · examples from Max 2024**
+**Version 1.2.1 · 3ds Max 2022-2027 · FBX workflows · examples from Max 2024**
 
-Prepare models for Unity with a dockable Max panel: create export Dummies, write one FBX per asset, import files in batches, compare UV seams, preview LODs and route models into project folders using export tags.
+Batch-import, prepare and export models with a dockable Max panel: create export Dummies, write one FBX per asset, import files in batches, compare UV seams, preview LODs and route models into project folders using export tags.
 
-The illustrations are actual Max 2024 captures from development test scenes. Controls and instructions have been checked against version 1.2.0. Object names, paths, checkbox states and version labels in the captures are examples rather than recommended defaults. These earlier captures do not establish runtime compatibility of the new release in every supported Max host.
+MAX ModelBatch is the new name of TS_UnityExport. Version 1.2.1 uses the new name, repository and plugin filename, while retaining saved settings and scene metadata. The illustrations are actual Max 2024 captures from development test scenes and retain those earlier UI labels. The workflow captures come from version 1.2.0; the rename, old scene tags/routes and real FBX export were verified in a separate Max 2024 run. All twelve SDK build variants pass their regression suites. Object names, paths, checkbox states and version labels in the captures are examples rather than recommended defaults. These earlier captures do not establish runtime compatibility of the new release in every supported Max host.
 
 ## Contents
 
@@ -26,10 +26,12 @@ The illustrations are actual Max 2024 captures from development test scenes. Con
 <a id="install"></a>
 ## 1. Install and open
 
-1. Open the [1.2.0 release](https://github.com/SashaRX/TS_UnityExport_SDK/releases/tag/v1.2.0). Download the archive **for your exact Max year**. For Max 2024, [download the standard build](https://github.com/SashaRX/TS_UnityExport_SDK/releases/download/v1.2.0/TS_UnityExport_v1.2.0_3dsMax2024.zip).
-2. Close Max. Extract the archive into a permanent folder such as `C:\Tools\TS_UnityExport\2024`. The plugin file is `TS_UnityExport.dlu`.
+1. Open the [1.2.1 release](https://github.com/SashaRX/MaxModelBatch/releases/tag/v1.2.1). Download the archive **for your exact Max year**. For Max 2024, [download the standard build](https://github.com/SashaRX/MaxModelBatch/releases/download/v1.2.1/MaxModelBatch_v1.2.1_3dsMax2024.zip).
+2. Close Max. Extract the archive into a permanent folder such as `C:\Tools\MaxModelBatch\2024`. The plugin file is `MaxModelBatch.dlu`. Historical releases through 1.2.0 use `TS_UnityExport.dlu`.
 3. In Max, open **Customize → Configure System Paths → 3rd-Party Plug-Ins → Add**. Add the folder containing the `.dlu`, then restart Max.
-4. In **Max 2022-2024**, choose **Scripting → Unity FBX Exporter**. If the command is absent from Scripting, look under **Unity Tools → Unity FBX Exporter**. In **Max 2025-2027**, use **Unity Tools**.
+4. In a renamed build, open **Scripting → MAX ModelBatch** on **Max 2022-2024**, or **MAX ModelBatch → MAX ModelBatch** on **Max 2025-2027**. The legacy menu fallback on older hosts is also **MAX ModelBatch**. In the published **1.2.0** build, the command is still **Unity FBX Exporter**, under **Scripting** or **Unity Tools**.
+
+For the first upgrade after the repository rename, close Max and manually replace the installation. Remove `TS_UnityExport.dlu` from all scanned plugin folders before installing `MaxModelBatch.dlu`, and keep one copy for each host. Existing scene tags and settings are retained.
 
 The standard archive includes every core feature in this guide. Experimental Mesh Align requires the separate `_MeshAlign.zip` variant. Max supplies the Qt runtime; do not copy additional Qt DLLs into the plugin folder. Plugin downloads require GitHub access while the plugin repository remains private, even though this guide is public.
 
@@ -301,6 +303,8 @@ LOD preview temporarily filters the viewport. Layer organization changes scene-l
 <a id="updates"></a>
 ## 12. Update and roll back
 
+**First upgrade after the rename:** pre-rename updaters check the old repository asset address strictly, so they need one manual installation of a renamed build. The steps below apply after that migration. New builds can read historical packages and replace the loaded filename in place, avoiding a second plugin copy.
+
 ![GitHub update controls](guide/images/updates.png)
 
 *Updates capture from an earlier test build. Installed/Latest are historical labels; your check displays the actual versions.*
@@ -359,4 +363,4 @@ Analyze and highlighting are read-only. Project/Weld move existing vertices with
 
 For a new Max 2024 build, try: create a Dummy → Analyze → assign a tag → export one FBX → import it → inspect UV Seams → preview LODs. Save and reopen the `.max` scene to verify filter, checkbox and tag persistence.
 
-Technical references in the plugin repository, subject to repository access: [UV seams](https://github.com/SashaRX/TS_UnityExport_SDK/blob/main/docs/UV_SEAMS.md), [export tags](https://github.com/SashaRX/TS_UnityExport_SDK/blob/main/docs/EXPORT_TAGS.md), [Dummy creation](https://github.com/SashaRX/TS_UnityExport_SDK/blob/main/docs/DUMMY_CREATION.md), [Unity axes](https://github.com/SashaRX/TS_UnityExport_SDK/blob/main/docs/UNITY_AXES.md), [units](https://github.com/SashaRX/TS_UnityExport_SDK/blob/main/docs/EXPORT_UNITS.md), [updates](https://github.com/SashaRX/TS_UnityExport_SDK/blob/main/docs/UPDATES.md), [Mesh Align](https://github.com/SashaRX/TS_UnityExport_SDK/blob/main/docs/MESHALIGN.md).
+Technical references in the plugin repository, subject to repository access: [UV seams](https://github.com/SashaRX/MaxModelBatch/blob/main/docs/UV_SEAMS.md), [export tags](https://github.com/SashaRX/MaxModelBatch/blob/main/docs/EXPORT_TAGS.md), [Dummy creation](https://github.com/SashaRX/MaxModelBatch/blob/main/docs/DUMMY_CREATION.md), [Unity axes](https://github.com/SashaRX/MaxModelBatch/blob/main/docs/UNITY_AXES.md), [units](https://github.com/SashaRX/MaxModelBatch/blob/main/docs/EXPORT_UNITS.md), [updates](https://github.com/SashaRX/MaxModelBatch/blob/main/docs/UPDATES.md), [Mesh Align](https://github.com/SashaRX/MaxModelBatch/blob/main/docs/MESHALIGN.md).

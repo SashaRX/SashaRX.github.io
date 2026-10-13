@@ -11,6 +11,7 @@
 .section-title { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 16px; }
 .section-title h2 { margin: 0; font-size: 22px; }
 .section-title span { color: var(--muted); font-size: 12px; }
+.section-title span a { display: inline-flex; align-items: center; min-height: 44px; }
 .project-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 .project { min-width: 0; display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: 14px; background: var(--panel); }
 .project-copy { padding: 24px; }

@@ -18,6 +18,23 @@ pre code { font-size: 13px; }
 .notice { margin: 18px 0; }
 .hero .notice { margin-bottom: 0; }
 .fbx-page .site-footer { margin-top: 40px; }
+.manual-downloads { display: flex; flex-wrap: wrap; gap: 10px 20px; font-size: 14px; }
+.reference-search { max-width: 680px; margin: 18px 0; }
+.reference-search[hidden], .option-reference [hidden] { display: none; }
+.reference-search label { display: block; font-size: 14px; margin-bottom: 6px; }
+.reference-search input { width: 100%; min-height: 44px; padding: 9px 12px; border: 1px solid var(--line); border-radius: 7px; background: var(--panel); color: var(--text); font: inherit; }
+.reference-search p { font-size: 12px; margin: 8px 0 0; }
+.option-group { margin-bottom: 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); }
+.option-group > summary, .internal-options > summary { padding: 12px 14px; min-height: 44px; cursor: pointer; font-size: 14px; }
+.group-total { color: var(--muted); font-size: 12px; margin-left: 6px; font-weight: 400; }
+.option-group .table-wrap { margin: 0 12px 12px; }
+.option-reference table { min-width: 0; table-layout: fixed; }
+.option-reference th:first-child { width: 34%; }
+.option-reference tbody th { text-align: left; vertical-align: top; }
+.option-reference code { overflow-wrap: anywhere; font-size: 12px; font-weight: 400; }
+.option-kind { display: block; color: var(--accent); font-size: 11px; margin-bottom: 4px; font-weight: 500; }
+.internal-options { margin-top: 16px; font-size: 13px; }
+.internal-options p { padding: 0 14px; overflow-wrap: anywhere; }
 @media (max-width: 700px) {
   .hero { padding: 24px 0 18px; }
   .hero .lead { font-size: 16px; }
@@ -26,6 +43,12 @@ pre code { font-size: 13px; }
   .table-wrap table { min-width: 460px; }
   #exit-codes table { min-width: 0; }
   .command-examples > .command { margin: 10px; padding: 12px; }
+  .option-reference table { min-width: 0; }
+  .option-reference thead { display: none; }
+  .option-reference tr:not([hidden]), .option-reference tbody th, .option-reference td { display: block; width: auto; }
+  .option-reference tbody th:first-child { width: auto; border-bottom: 0; padding-bottom: 6px; }
+  .option-reference td { padding-top: 0; font-size: 13px; }
+  .reference-search input { font-size: 16px; }
 }
 @media print {
   .hero { padding: 20px 0; }

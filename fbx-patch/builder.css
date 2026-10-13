@@ -23,11 +23,17 @@
 .builder-presets button:hover { border-color: var(--accent); }
 .repair-options { margin: 0; padding: 0; border: 0; }
 .repair-options legend { padding: 0; margin-bottom: 10px; font-weight: 600; font-size: 14px; }
-.repair-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
-.repair-grid .builder-check { padding: 8px; border: 1px solid var(--line); border-radius: 7px; }
-.repair-grid strong { display: block; font-size: 13px; }
-.repair-grid small { display: block; margin-top: 3px; font-size: 12px; line-height: 1.45; }
-.repair-options:disabled .builder-check { opacity: .7; cursor: default; }
+.flag-hint { font-size: 12px; margin: 0 0 12px; }
+.builder-option-group { border-top: 1px solid var(--line); }
+.builder-option-group > summary { min-height: 40px; padding: 9px 0; cursor: pointer; font-size: 13px; }
+.selected-count { margin-left: 8px; font-size: 11px; color: var(--accent); }
+.flag-choices { display: grid; gap: 8px; margin: 4px 0 12px; }
+.flag-choices .builder-check { padding: 8px; border: 1px solid var(--line); border-radius: 7px; }
+.flag-choices .builder-check > span { min-width: 0; }
+.flag-choices strong { display: block; font-size: 12px; }
+.flag-choices code { overflow-wrap: anywhere; }
+.flag-choices small { display: block; margin-top: 4px; font-size: 12px; line-height: 1.45; }
+.flag-choices .builder-check:has(input:disabled) { opacity: .65; cursor: default; }
 .command-builder :disabled { cursor: default; }
 .command-builder input:disabled, .command-builder select:disabled { opacity: .55; }
 .builder-advanced { padding-top: 12px; border-top: 1px solid var(--line); }
@@ -54,9 +60,9 @@
   .builder-inline .builder-check { min-height: 44px; align-items: center; }
   .builder-inline .builder-check input { margin-top: 0; }
   .builder-advanced summary { min-height: 44px; padding-block: 10px; }
+  .builder-option-group > summary { min-height: 44px; }
   #generated-command { min-height: 160px; font-size: 16px; }
   .copy-row { flex-direction: column; align-items: flex-start; gap: 10px; }
   .copy-row .button { width: 100%; }
 }
-@media (max-width: 480px) { .repair-grid { grid-template-columns: 1fr; } }
 @media print { .command-builder { display: none; } .batch-benefits { grid-template-columns: 1fr; } }

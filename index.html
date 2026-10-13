@@ -24,8 +24,8 @@ document.addEventListener('DOMContentLoaded',()=>{const links=[...document.query
 const update=()=>links.forEach(link=>link.href=routes[link.dataset.language]+location.search+location.hash);update();addEventListener('hashchange',update);
 links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(key,link.dataset.language)}catch{}}));});})();
 </script>
-<link rel="stylesheet" href="/assets/site.css">
-<link rel="stylesheet" href="/assets/home.css">
+<link rel="stylesheet" href="/assets/site.css?v=20261013">
+<link rel="stylesheet" href="/assets/home.css?v=20261013">
 </head>
 <body class="home-page">
 <a class="skip-link" href="#main">Skip to content</a>

@@ -12,8 +12,8 @@ document.addEventListener('DOMContentLoaded',()=>{const links=[...document.query
 const update=()=>links.forEach(link=>link.href=routes[link.dataset.language]+location.search+location.hash);update();addEventListener('hashchange',update);
 links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(key,link.dataset.language)}catch{}}));});})();
 </script>
-<link rel="stylesheet" href="/assets/site.css">
-<link rel="stylesheet" href="/modelbatch/guide.css"></head><body class="modelbatch-page">
+<link rel="stylesheet" href="/assets/site.css?v=20261013">
+<link rel="stylesheet" href="/modelbatch/guide.css?v=20261013"></head><body class="modelbatch-page">
 <a class="skip-link" href="#main">К содержимому</a>
 <aside class="sidebar"><div class="sidebar-top"><a class="home-link" href="/ru/">← SashaRX / Проекты</a><nav class="language-switch" aria-label="Язык сайта"><a href="/modelbatch/" hreflang="en" lang="en" data-language="en">EN</a><a href="/ru/modelbatch/" hreflang="ru" lang="ru" data-language="ru" aria-current="true">RU</a></nav></div><div class="sidebar-title"><div><div class="brand">MAX ModelBatch</div><div class="version">РУКОВОДСТВО · 1.2.1</div></div><button class="mobile-top" id="menu-toggle" aria-expanded="false" aria-controls="guide-contents">Содержание</button></div>
 <nav id="guide-contents" class="contents-nav" aria-label="Содержание"><a href="#install">1. Установка и открытие</a><a href="#quickstart">2. Первый экспорт</a><a href="#preparation">3. Dummy, имена и подготовка</a><a href="#models">4. Таблица экспортируемых моделей</a><a href="#tags">5. Теги, цвета и папки проекта</a><a href="#settings">6. Настройки экспорта</a><a href="#unity">7. Масштаб и направления Unity</a><a href="#channels">8. UV-каналы и цвета вершин</a><a href="#seams">9. Отображение UV-швов</a><a href="#lod">10. Просмотр LOD и общие слои</a><a href="#import">11. Пакетный импорт FBX</a><a href="#updates">12. Обновление и откат</a><a href="#meshalign">13. Mesh Align: дополнительная сборка</a><a href="#help">14. Сохранение настроек и частые вопросы</a></nav>
@@ -449,4 +449,4 @@ Result             D:\Game\Assets\Models\Props\SM_TrashCan.fbx
 
 <p class="print-note">Интерактивное переключение примеров доступно в HTML-версии руководства. В PDF показаны оба состояния Depth test и два состояния LOD.</p><footer>MAX ModelBatch · Инструкция на русском · Скриншоты тестовых сцен Max 2024 · 13 октября 2026</footer></main>
 <dialog id="zoom" aria-label="Увеличенная иллюстрация"><button id="close-zoom" autofocus>Закрыть</button><img alt="Увеличенная иллюстрация"></dialog>
-<script src="/modelbatch/guide.js" defer></script></body></html>
+<script src="/modelbatch/guide.js?v=20261013" defer></script></body></html>

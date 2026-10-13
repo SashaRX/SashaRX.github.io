@@ -4,13 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>SashaRX - tools &amp; projects</title>
-  <meta name="description" content="SashaRX's tools and projects: MAX ModelBatch for 3ds Max and an interactive planetary atmosphere demo for WebGPU and WebGL2.">
+  <meta name="description" content="SashaRX's tools and projects: MAX ModelBatch for 3ds Max, FBX Patch Tool with command examples, and a planetary atmosphere demo for WebGPU and WebGL2.">
   <link rel="canonical" href="https://sasharx.github.io/">
 <link rel="alternate" hreflang="en" href="https://sasharx.github.io/">
 <link rel="alternate" hreflang="ru" href="https://sasharx.github.io/ru/">
 <link rel="alternate" hreflang="x-default" href="https://sasharx.github.io/">
   <meta property="og:title" content="SashaRX - tools &amp; projects">
-  <meta property="og:description" content="SashaRX's tools and projects: MAX ModelBatch for 3ds Max and an interactive planetary atmosphere demo for WebGPU and WebGL2.">
+  <meta property="og:description" content="SashaRX's tools and projects: MAX ModelBatch for 3ds Max, FBX Patch Tool with command examples, and a planetary atmosphere demo for WebGPU and WebGL2.">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="en_US">
   <meta property="og:url" content="https://sasharx.github.io/">
@@ -102,6 +102,24 @@ links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(
           <a class="project-image" href="/modelbatch/" aria-label="Open the MAX ModelBatch illustrated guide">
             <img src="/modelbatch/preview.png" alt="MAX ModelBatch's Models page in 3ds Max, with Dummy roots, destination paths and tag controls" width="802" height="522">
           </a>
+        </article>
+        <article class="project" id="fbx-patch" aria-labelledby="fbx-patch-title">
+          <div class="project-copy">
+            <span class="badge">WINDOWS X64 · VERSION 1.0.0 · COMMAND LINE</span>
+            <h3 id="fbx-patch-title">FBX Patch Tool</h3>
+            <p>Audit and repair existing FBX libraries: materials, textures, UV channels, collision data, normals and units. Runs independently of 3ds Max and Unity.</p>
+            <div class="features" aria-label="FBX Patch Tool features">
+              <span>Batch audit</span><span>Markdown reports</span><span>Repair preview</span><span>Backups</span>
+            </div>
+          </div>
+          <div class="demo-launch">
+            <div class="demo-actions">
+              <a class="button" href="/fbx-patch/">Description &amp; commands →</a>
+              <a class="button button-secondary" href="https://github.com/SashaRX/MaxModelBatch/releases/download/patch-fbx-v1.0.0/patch_fbx_v1.0.0_Windows_x64.zip">Download ZIP ↓</a>
+            </div>
+            <p>Extract the archive and run <code>patch_fbx.exe</code> from PowerShell. Start with an audit or preview repairs with <code>--dry-run</code>.</p>
+            <p>GitHub downloads currently require access to the private MaxModelBatch repository.</p>
+          </div>
         </article>
         <article class="project" id="atmosphere" aria-labelledby="atmosphere-title">
           <div class="project-copy">

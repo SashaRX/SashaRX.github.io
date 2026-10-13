@@ -4,13 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>SashaRX - инструменты и проекты</title>
-  <meta name="description" content="Инструменты и проекты SashaRX: MAX ModelBatch для 3ds Max и интерактивное демо планетной атмосферы на WebGPU и WebGL2.">
+  <meta name="description" content="Проекты SashaRX: MAX ModelBatch для 3ds Max, FBX Patch Tool с примерами команд и демо планетной атмосферы на WebGPU и WebGL2.">
   <link rel="canonical" href="https://sasharx.github.io/ru/">
 <link rel="alternate" hreflang="en" href="https://sasharx.github.io/">
 <link rel="alternate" hreflang="ru" href="https://sasharx.github.io/ru/">
 <link rel="alternate" hreflang="x-default" href="https://sasharx.github.io/">
   <meta property="og:title" content="SashaRX - инструменты и проекты">
-  <meta property="og:description" content="Инструменты и проекты SashaRX: MAX ModelBatch для 3ds Max и интерактивное демо планетной атмосферы на WebGPU и WebGL2.">
+  <meta property="og:description" content="Проекты SashaRX: MAX ModelBatch для 3ds Max, FBX Patch Tool с примерами команд и демо планетной атмосферы на WebGPU и WebGL2.">
   <meta property="og:type" content="website">
   <meta property="og:locale" content="ru_RU">
   <meta property="og:url" content="https://sasharx.github.io/ru/">
@@ -102,6 +102,24 @@ links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(
           <a class="project-image" href="/ru/modelbatch/" aria-label="Открыть руководство MAX ModelBatch с иллюстрациями">
             <img src="/modelbatch/preview.png" alt="Страница Models плагина MAX ModelBatch в 3ds Max: корни Dummy, пути экспорта и выбор тегов" width="802" height="522">
           </a>
+        </article>
+        <article class="project" id="fbx-patch" aria-labelledby="fbx-patch-title">
+          <div class="project-copy">
+            <span class="badge">WINDOWS X64 · ВЕРСИЯ 1.0.0 · КОМАНДНАЯ СТРОКА</span>
+            <h3 id="fbx-patch-title">FBX Patch Tool</h3>
+            <p>Проверка и исправление библиотек FBX: материалы, текстуры, UV-каналы, данные коллизий, нормали и единицы измерения. Работает отдельно от 3ds Max и Unity.</p>
+            <div class="features" aria-label="Возможности FBX Patch Tool">
+              <span>Пакетная проверка</span><span>Отчёты Markdown</span><span>Предпросмотр исправлений</span><span>Резервные копии</span>
+            </div>
+          </div>
+          <div class="demo-launch">
+            <div class="demo-actions">
+              <a class="button" href="/ru/fbx-patch/">Описание и команды →</a>
+              <a class="button button-secondary" href="https://github.com/SashaRX/MaxModelBatch/releases/download/patch-fbx-v1.0.0/patch_fbx_v1.0.0_Windows_x64.zip">Скачать ZIP ↓</a>
+            </div>
+            <p>Распакуй архив и запусти <code>patch_fbx.exe</code> из PowerShell. Начни с аудита или предпросмотра исправлений через <code>--dry-run</code>.</p>
+            <p>Скачивание с GitHub сейчас требует доступа к приватному репозиторию MaxModelBatch.</p>
+          </div>
         </article>
         <article class="project" id="atmosphere" aria-labelledby="atmosphere-title">
           <div class="project-copy">

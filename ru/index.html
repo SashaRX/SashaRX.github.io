@@ -25,8 +25,8 @@ const update=()=>links.forEach(link=>link.href=routes[link.dataset.language]+loc
 links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(key,link.dataset.language)}catch{}}));});})();
 </script>
 <link rel="stylesheet" href="/assets/site.css?v=20261013">
-<link rel="stylesheet" href="/assets/home.css?v=20261013-about">
-<script src="/assets/about.js?v=20261013" defer></script>
+<link rel="stylesheet" href="/assets/home.css?v=20261013-projects">
+<script src="/assets/about.js?v=20261013-projects" defer></script>
 </head>
 <body class="home-page">
 <a class="skip-link" href="#main">К содержимому</a>
@@ -64,72 +64,103 @@ links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(
           <span>Инструменты, демо и документация</span>
         </div>
         <div class="project-grid">
-        <article class="project">
+        <article class="project" id="modelbatch" aria-labelledby="modelbatch-title">
           <div class="project-copy">
             <span class="badge">3DS MAX 2022-2027 · ВЕРСИЯ 1.2.1</span>
-            <h3>MAX ModelBatch</h3>
-            <p>Пакетный импорт, подготовка и экспорт моделей в 3ds Max. Экспортируйте иерархии Dummy в FBX, проверяйте UV-швы, просматривайте LOD и распределяйте модели по папкам проекта.</p>
-            <div class="features" aria-label="Возможности плагина">
-              <span>Экспорт и импорт FBX</span><span>UV-швы</span><span>Просмотр LOD</span><span>Теги экспорта</span><span>Автообновление</span>
-            </div>
+            <h3 id="modelbatch-title">MAX ModelBatch</h3>
+            <p>Пакетный импорт, подготовка и экспорт моделей в 3ds Max. Иерархии Dummy, UV-швы, LOD и папки проекта в одном инструменте.</p>
             <a class="button" href="/ru/modelbatch/">Инструкция к плагину →</a>
           </div>
-          <a class="project-image" href="/ru/modelbatch/" aria-label="Открыть руководство MAX ModelBatch с иллюстрациями">
-            <img src="/modelbatch/preview.png" alt="Страница Models плагина MAX ModelBatch в 3ds Max: корни Dummy, пути экспорта и выбор тегов" width="802" height="522" decoding="async">
-          </a>
+          <details class="project-details">
+            <summary aria-label="Подробнее: MAX ModelBatch">Подробнее</summary>
+            <div class="project-details-content">
+              <div class="features" aria-label="Возможности плагина"><span>Экспорт и импорт FBX</span><span>UV-швы</span><span>Просмотр LOD</span><span>Теги экспорта</span><span>Автообновление</span></div>
+              <a class="project-image" href="/ru/modelbatch/" aria-label="Открыть руководство MAX ModelBatch с иллюстрациями">
+                <img src="/modelbatch/preview.png" alt="Страница Models плагина MAX ModelBatch в 3ds Max: корни Dummy, пути экспорта и выбор тегов" width="802" height="522" loading="lazy" decoding="async">
+              </a>
+            </div>
+          </details>
         </article>
         <article class="project" id="fbx-patch" aria-labelledby="fbx-patch-title">
           <div class="project-copy">
             <span class="badge">WINDOWS X64 · ВЕРСИЯ 1.0.0 · КОМАНДНАЯ СТРОКА</span>
             <h3 id="fbx-patch-title">FBX Patch Tool</h3>
-            <p>Проверка и исправление библиотек FBX: материалы, текстуры, UV-каналы, данные коллизий, нормали и единицы измерения. Работает отдельно от 3ds Max и Unity.</p>
-            <div class="features" aria-label="Возможности FBX Patch Tool">
-              <span>Пакетная проверка</span><span>Отчёты Markdown</span><span>Предпросмотр исправлений</span><span>Резервные копии</span>
-            </div>
+            <p>Пакетная проверка и исправление библиотек FBX: материалы, текстуры, UV, коллизии и нормали. Работает отдельно от 3ds Max.</p>
           </div>
           <div class="demo-launch">
             <div class="demo-actions">
               <a class="button" href="/ru/fbx-patch/">Собрать команду →</a>
               <a class="button button-secondary" href="https://github.com/SashaRX/MaxModelBatch/releases/download/patch-fbx-v1.0.0/patch_fbx_v1.0.0_Windows_x64.zip">Скачать ZIP ↓</a>
             </div>
-            <p>Распакуй архив и запусти <code>patch_fbx.exe</code> из PowerShell. Начни с аудита или предпросмотра исправлений через <code>--dry-run</code>.</p>
-            <p>Скачивание с GitHub сейчас требует доступа к приватному репозиторию MaxModelBatch.</p>
+            <p>Скачивание требует доступа к приватному репозиторию MaxModelBatch.</p>
           </div>
-        <div class="command-preview"><span>POWERSHELL · BATCH AUDIT</span><pre><code>.\patch_fbx.exe -r -v --report-file audit.md "D:\Models"</code></pre><p>Проверка всей библиотеки без изменения FBX.</p></div>
+          <details class="project-details">
+            <summary aria-label="Подробнее: FBX Patch Tool">Подробнее</summary>
+            <div class="project-details-content">
+              <div class="features" aria-label="Возможности FBX Patch Tool"><span>Пакетная проверка</span><span>Отчёты Markdown</span><span>Предпросмотр исправлений</span><span>Резервные копии</span></div>
+              <p>Распакуй архив и запусти <code>patch_fbx.exe</code> из PowerShell. Начни с аудита или предпросмотра исправлений через <code>--dry-run</code>.</p>
+              <div class="command-preview"><span>POWERSHELL · BATCH AUDIT</span><pre><code>.\patch_fbx.exe -r -v --report-file audit.md "D:\Models"</code></pre><p>Проверка всей библиотеки без изменения FBX.</p></div>
+            </div>
+          </details>
         </article>
         <article class="project project-atmosphere" id="atmosphere" aria-labelledby="atmosphere-title">
           <div class="atmosphere-info">
-          <div class="project-copy">
-            <span class="badge">ДЕМО В БРАУЗЕРЕ · WEBGPU / WEBGL2</span>
-            <h3 id="atmosphere-title">Atmosphere</h3>
-            <p>Интерактивное демо планетной атмосферы. Рассеяние света, свечение у края планеты и туман с настройками, которые можно менять в реальном времени.</p>
-            <div class="features" aria-label="Возможности Atmosphere">
-              <span>Рассеяние света</span><span>Планетная атмосфера</span><span>Туман</span><span>Живые настройки</span>
+            <div class="project-copy">
+              <span class="badge">ДЕМО В БРАУЗЕРЕ · WEBGPU / WEBGL2</span>
+              <h3 id="atmosphere-title">Atmosphere</h3>
+              <p>Планетная атмосфера в реальном времени: рассеяние света, объёмный туман, тени и HDR-свечение. Запускается прямо в браузере.</p>
+            </div>
+            <div class="demo-launch">
+              <div class="demo-actions">
+                <a class="button" href="https://sasharx.github.io/Atmosphere/" target="_blank" rel="noopener">Демо WebGPU ↗</a>
+                <a class="button button-secondary" href="https://sasharx.github.io/Atmosphere/?webgl2" target="_blank" rel="noopener">WebGL2 ↗</a>
+              </div>
+              <p>WebGPU с резервным WebGL2. Вторая ссылка принудительно включает WebGL2.</p>
+              <p class="shader-note"><strong>Дождитесь компиляции шейдеров</strong>Первый запуск может сопровождаться паузами. Дайте сцене загрузиться.</p>
             </div>
           </div>
-          <div class="demo-launch">
-            <div class="demo-actions">
-              <a class="button" href="https://sasharx.github.io/Atmosphere/" target="_blank" rel="noopener">Демо WebGPU ↗</a>
-              <a class="button button-secondary" href="https://sasharx.github.io/Atmosphere/?webgl2" target="_blank" rel="noopener">WebGL2 ↗</a>
+          <details class="project-details">
+            <summary aria-label="Подробнее: Atmosphere">Подробнее</summary>
+            <div class="project-details-content">
+              <div class="features" aria-label="Возможности Atmosphere"><span>Рассеяние Рэлея и Ми</span><span>Тени и затмения</span><span>Froxel</span><span>AA</span><span>MipMap bloom</span><span>HDR</span></div>
+              <div class="atmosphere-gallery" aria-label="Скриншоты Atmosphere, снятые в WebGPU">
+                <figure>
+                  <a href="/assets/atmosphere/orbit.jpg" aria-label="Посмотреть общий вид планеты в галерее">
+                    <img src="/assets/atmosphere/orbit.jpg" alt="Голубой атмосферный край вокруг освещённой стороны планеты на фоне космоса" width="1280" height="660" loading="lazy" decoding="async">
+                  </a>
+                  <figcaption>Планетная атмосфера: общий вид · WebGPU</figcaption>
+                </figure>
+                <figure>
+                  <a href="/assets/atmosphere/limb.jpg" aria-label="Посмотреть атмосферное свечение в галерее">
+                    <img src="/assets/atmosphere/limb.jpg" alt="Близкий вид голубого атмосферного свечения у края планеты и перехода в тень" width="1280" height="660" loading="lazy" decoding="async">
+                  </a>
+                  <figcaption>Атмосферное свечение: близкий вид · WebGPU</figcaption>
+                </figure>
+              </div>
+              <dl class="effect-list">
+              <div>
+                <dt>Атмосфера, свет и тени</dt>
+                <dd><p><strong>Рассеяние Рэлея</strong> создаёт голубое небо и атмосферный ободок; <strong>рассеяние Ми</strong> добавляет направленное свечение вокруг солнца. Поглощение озоном и многократное рассеяние влияют на цвет и освещённость атмосферы.</p><p>Направление солнца, цветовую температуру и плотность атмосферы можно менять в реальном времени. Затмения, тени объектов и солнечные лучи показывают, как свет проходит через воздух и туман.</p></dd>
+              </div>
+              <div>
+                <dt>Объёмный туман Froxel</dt>
+                <dd><p>Froxel — ячейка трёхмерной сетки, построенной в области обзора камеры. В этом объёме вычисляются рассеяние и пропускание света, затем слои интегрируются вдоль взгляда и туман восстанавливается для итогового изображения. Это заменяет полный проход по туману для каждого пикселя экрана.</p><p>Профили плотности по высоте, движущиеся скопления тумана и тени объектов добавляют глубину и движение. Разрешение сетки определяет баланс детализации и скорости. <strong>Planets → Fog</strong> управляет плотностью, ветром и цветом; пространственное шумоподавление в <strong>Camera → Fog quality</strong> относится к альтернативному march-режиму, а не к стандартному Froxel.</p></dd>
+              </div>
+              <div>
+                <dt>AA: MSAA, SMAA, CMAA2 и TAA</dt>
+                <dd><p><strong>MSAA</strong> сглаживает края геометрии при отрисовке сцены. <strong>SMAA</strong> находит и сглаживает границы в готовом изображении. <strong>CMAA2</strong> предлагает другой фильтр границ с настройками силы и резкости; в WebGL2 вместо него используется SMAA.</p><p><strong>TAA</strong> в этом демо сочетает SMAA с ограниченным временным фильтром двух кадров, проверкой глубины и ограничением истории по соседним пикселям. Это уменьшает мерцание, но при движении может добавлять мягкость или шлейф. Сравни режимы в <strong>Camera → AA mode</strong>; MSAA сцены можно использовать вместе с постобработкой AA.</p></dd>
+              </div>
+              <div>
+                <dt>MipMap bloom</dt>
+                <dd><p>HDR-изображение уменьшается в пирамиду уровней, затем уровни увеличиваются и смешиваются. Детальные уровни сохраняют локальные блики, а грубые создают широкие ореолы — мягкое свечение солнца и ярких краёв атмосферы.</p><p>В <strong>Look → Bloom</strong> настраиваются интенсивность, кривая и спад свечения. <strong>Blur mix</strong> меняет MIP-пирамиду для просмотра bloom и подсветки тумана, а не свечение в tonemap. Подсветка тумана берётся из пирамиды предыдущего кадра и действует на свет неба, сохраняя чёткие силуэты непрозрачных объектов.</p></dd>
+              </div>
+              <div>
+                <dt>HDR, tonemapping и качество картинки</dt>
+                <dd><p>Экспозиция и Reinhard, ACES, Neutral или AgX переводят HDR-свет в диапазон экрана. Дизеринг скрывает полосы на плавных градиентах, а CAS/RCAS позволяет настроить резкость итоговой картинки.</p><p>Отрисовка атмосферы в уменьшенном разрешении даёт ещё один способ обменять детализацию на скорость. Эти настройки находятся в <strong>Camera</strong>, солнце и bloom — в <strong>Look</strong>, атмосфера и туман — в <strong>Planets</strong>.</p></dd>
+              </div>
+              </dl>
             </div>
-            <p>WebGPU с резервным WebGL2. Вторая ссылка принудительно включает WebGL2.</p>
-            <p class="shader-note"><strong>Дождитесь компиляции шейдеров</strong>Первый запуск может сопровождаться паузами. Дайте сцене загрузиться.</p>
-          </div>
-          </div>
-          <div class="atmosphere-gallery" aria-label="Скриншоты Atmosphere, снятые в WebGPU">
-            <figure>
-              <a href="/assets/atmosphere/orbit.jpg" aria-label="Посмотреть общий вид планеты в галерее">
-                <img src="/assets/atmosphere/orbit.jpg" alt="Голубой атмосферный край вокруг освещённой стороны планеты на фоне космоса" width="1280" height="660" loading="lazy" decoding="async">
-              </a>
-              <figcaption>Планетная атмосфера: общий вид · WebGPU</figcaption>
-            </figure>
-            <figure>
-              <a href="/assets/atmosphere/limb.jpg" aria-label="Посмотреть атмосферное свечение в галерее">
-                <img src="/assets/atmosphere/limb.jpg" alt="Близкий вид голубого атмосферного свечения у края планеты и перехода в тень" width="1280" height="660" loading="lazy" decoding="async">
-              </a>
-              <figcaption>Атмосферное свечение: близкий вид · WebGPU</figcaption>
-            </figure>
-          </div>
+          </details>
         </article>
         </div>
       </section>

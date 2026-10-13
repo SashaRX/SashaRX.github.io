@@ -1,8 +1,12 @@
 const about = document.getElementById('about');
+const projects = document.querySelectorAll('.project-details');
 const mobile = window.matchMedia('(max-width: 700px)');
 
 // Each layout starts with the appropriate default; native details handles toggling.
-const syncLayout = () => { about.open = !mobile.matches; };
+const syncLayout = () => {
+  about.open = !mobile.matches;
+  projects.forEach(project => { project.open = !mobile.matches; });
+};
 syncLayout();
 mobile.addEventListener('change', syncLayout);
 

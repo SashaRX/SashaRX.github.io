@@ -37,7 +37,7 @@ links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(
         <nav class="site-nav" aria-label="Основная навигация">
           <a href="#about">Обо мне</a>
           <a href="#projects">Проекты</a>
-          <a href="https://github.com/SashaRX">GitHub ↗</a>
+          <a href="/ru/downloads/">Скачать</a>
         </nav>
         <nav class="language-switch" aria-label="Язык сайта"><a href="/" hreflang="en" lang="en" data-language="en">EN</a><a href="/ru/" hreflang="ru" lang="ru" data-language="ru" aria-current="true">RU</a></nav>
       </div>
@@ -69,7 +69,7 @@ links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(
             <span class="badge">3DS MAX 2022-2027 · ВЕРСИЯ 1.2.1</span>
             <h3 id="modelbatch-title">MAX ModelBatch</h3>
             <p>Пакетный импорт, подготовка и экспорт моделей в 3ds Max. Иерархии Dummy, UV-швы, LOD и папки проекта в одном инструменте.</p>
-            <a class="button" href="/ru/modelbatch/">Инструкция к плагину →</a>
+            <div class="demo-actions"><a class="button" href="/ru/modelbatch/">Инструкция к плагину →</a><a class="button button-secondary" href="/ru/downloads/#modelbatch">Скачать ↓</a></div>
           </div>
           <details class="project-details">
             <summary aria-label="Подробнее: MAX ModelBatch">Подробнее</summary>
@@ -90,7 +90,7 @@ links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(
           <div class="demo-launch">
             <div class="demo-actions">
               <a class="button" href="/ru/fbx-patch/">Собрать команду →</a>
-              <a class="button button-secondary" href="https://github.com/SashaRX/MaxModelBatch/releases/download/patch-fbx-v1.0.0/patch_fbx_v1.0.0_Windows_x64.zip">Скачать ZIP ↓</a>
+              <a class="button button-secondary" href="/ru/downloads/#fbx">Скачать ↓</a>
             </div>
             <p>Скачивание требует доступа к приватному репозиторию MaxModelBatch.</p>
           </div>
@@ -112,6 +112,7 @@ links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(
             </div>
             <div class="demo-launch">
               <div class="demo-actions">
+                <a class="button button-secondary" href="/ru/atmosphere-guide/">Обзор эффектов →</a>
                 <a class="button" href="https://sasharx.github.io/Atmosphere/" target="_blank" rel="noopener">Демо WebGPU ↗</a>
                 <a class="button button-secondary" href="https://sasharx.github.io/Atmosphere/?webgl2" target="_blank" rel="noopener">WebGL2 ↗</a>
               </div>
@@ -137,28 +138,7 @@ links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(
                   <figcaption>Атмосферное свечение: близкий вид · WebGPU</figcaption>
                 </figure>
               </div>
-              <dl class="effect-list">
-              <div>
-                <dt>Атмосфера, свет и тени</dt>
-                <dd><p><strong>Рассеяние Рэлея</strong> создаёт голубое небо и атмосферный ободок; <strong>рассеяние Ми</strong> добавляет направленное свечение вокруг солнца. Поглощение озоном и многократное рассеяние влияют на цвет и освещённость атмосферы.</p><p>Направление солнца, цветовую температуру и плотность атмосферы можно менять в реальном времени. Затмения, тени объектов и солнечные лучи показывают, как свет проходит через воздух и туман.</p></dd>
-              </div>
-              <div>
-                <dt>Объёмный туман Froxel</dt>
-                <dd><p>Froxel — ячейка трёхмерной сетки, построенной в области обзора камеры. В этом объёме вычисляются рассеяние и пропускание света, затем слои интегрируются вдоль взгляда и туман восстанавливается для итогового изображения. Это заменяет полный проход по туману для каждого пикселя экрана.</p><p>Профили плотности по высоте, движущиеся скопления тумана и тени объектов добавляют глубину и движение. Разрешение сетки определяет баланс детализации и скорости. <strong>Planets → Fog</strong> управляет плотностью, ветром и цветом; пространственное шумоподавление в <strong>Camera → Fog quality</strong> относится к альтернативному march-режиму, а не к стандартному Froxel.</p></dd>
-              </div>
-              <div>
-                <dt>AA: MSAA, SMAA, CMAA2 и TAA</dt>
-                <dd><p><strong>MSAA</strong> сглаживает края геометрии при отрисовке сцены. <strong>SMAA</strong> находит и сглаживает границы в готовом изображении. <strong>CMAA2</strong> предлагает другой фильтр границ с настройками силы и резкости; в WebGL2 вместо него используется SMAA.</p><p><strong>TAA</strong> в этом демо сочетает SMAA с ограниченным временным фильтром двух кадров, проверкой глубины и ограничением истории по соседним пикселям. Это уменьшает мерцание, но при движении может добавлять мягкость или шлейф. Сравни режимы в <strong>Camera → AA mode</strong>; MSAA сцены можно использовать вместе с постобработкой AA.</p></dd>
-              </div>
-              <div>
-                <dt>MipMap bloom</dt>
-                <dd><p>HDR-изображение уменьшается в пирамиду уровней, затем уровни увеличиваются и смешиваются. Детальные уровни сохраняют локальные блики, а грубые создают широкие ореолы — мягкое свечение солнца и ярких краёв атмосферы.</p><p>В <strong>Look → Bloom</strong> настраиваются интенсивность, кривая и спад свечения. <strong>Blur mix</strong> меняет MIP-пирамиду для просмотра bloom и подсветки тумана, а не свечение в tonemap. Подсветка тумана берётся из пирамиды предыдущего кадра и действует на свет неба, сохраняя чёткие силуэты непрозрачных объектов.</p></dd>
-              </div>
-              <div>
-                <dt>HDR, tonemapping и качество картинки</dt>
-                <dd><p>Экспозиция и Reinhard, ACES, Neutral или AgX переводят HDR-свет в диапазон экрана. Дизеринг скрывает полосы на плавных градиентах, а CAS/RCAS позволяет настроить резкость итоговой картинки.</p><p>Отрисовка атмосферы в уменьшенном разрешении даёт ещё один способ обменять детализацию на скорость. Эти настройки находятся в <strong>Camera</strong>, солнце и bloom — в <strong>Look</strong>, атмосфера и туман — в <strong>Planets</strong>.</p></dd>
-              </div>
-              </dl>
+              <p><a href="/ru/atmosphere-guide/#effects">Эффекты, управление и сравнения →</a></p>
             </div>
           </details>
         </article>

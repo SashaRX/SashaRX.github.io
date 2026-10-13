@@ -37,7 +37,7 @@ links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(
         <nav class="site-nav" aria-label="Main navigation">
           <a href="#about">About me</a>
           <a href="#projects">Projects</a>
-          <a href="https://github.com/SashaRX">GitHub ↗</a>
+          <a href="/downloads/">Downloads</a>
         </nav>
         <nav class="language-switch" aria-label="Site language"><a href="/" hreflang="en" lang="en" data-language="en" aria-current="true">EN</a><a href="/ru/" hreflang="ru" lang="ru" data-language="ru">RU</a></nav>
       </div>
@@ -69,7 +69,7 @@ links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(
             <span class="badge">3DS MAX 2022-2027 · VERSION 1.2.1</span>
             <h3 id="modelbatch-title">MAX ModelBatch</h3>
             <p>Batch-import, prepare and export models in 3ds Max. Dummy hierarchies, UV seams, LODs and project folders in one tool.</p>
-            <a class="button" href="/modelbatch/">Plugin guide →</a>
+            <div class="demo-actions"><a class="button" href="/modelbatch/">Plugin guide →</a><a class="button button-secondary" href="/downloads/#modelbatch">Download ↓</a></div>
           </div>
           <details class="project-details">
             <summary aria-label="More details: MAX ModelBatch">More details</summary>
@@ -90,7 +90,7 @@ links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(
           <div class="demo-launch">
             <div class="demo-actions">
               <a class="button" href="/fbx-patch/">Build a command →</a>
-              <a class="button button-secondary" href="https://github.com/SashaRX/MaxModelBatch/releases/download/patch-fbx-v1.0.0/patch_fbx_v1.0.0_Windows_x64.zip">Download ZIP ↓</a>
+              <a class="button button-secondary" href="/downloads/#fbx">Download ↓</a>
             </div>
             <p>Downloads require access to the private MaxModelBatch repository.</p>
           </div>
@@ -112,6 +112,7 @@ links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(
             </div>
             <div class="demo-launch">
               <div class="demo-actions">
+                <a class="button button-secondary" href="/atmosphere-guide/">Effects guide →</a>
                 <a class="button" href="https://sasharx.github.io/Atmosphere/" target="_blank" rel="noopener">WebGPU demo ↗</a>
                 <a class="button button-secondary" href="https://sasharx.github.io/Atmosphere/?webgl2" target="_blank" rel="noopener">WebGL2 ↗</a>
               </div>
@@ -137,28 +138,7 @@ links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(
                   <figcaption>Closer view of the atmospheric limb · WebGPU</figcaption>
                 </figure>
               </div>
-              <dl class="effect-list">
-              <div>
-                <dt>Atmosphere, light &amp; shadows</dt>
-                <dd><p><strong>Rayleigh scattering</strong> creates the blue sky and atmospheric rim; <strong>Mie scattering</strong> adds the forward glow around the sun. Ozone absorption and multiple scattering shape the colour and light in the atmosphere.</p><p>Change the sun direction, colour temperature and atmospheric density live. Planetary eclipses, object shadows and sun shafts reveal how light travels through air and fog.</p></dd>
-              </div>
-              <div>
-                <dt>Froxel volumetric fog</dt>
-                <dd><p>A froxel is a cell in a 3D grid fitted to the camera's view. The renderer evaluates scattering and light transmission in this volume, integrates slices along the view and reconstructs fog for the final image, rather than repeating a full fog march for every screen pixel.</p><p>Height profiles, drifting density banks and object shadows give the fog depth and movement. Grid resolution trades fine detail for speed. <strong>Planets → Fog</strong> controls density, wind and colour; the spatial denoise options in <strong>Camera → Fog quality</strong> apply to the alternative march path, not the default froxel volume.</p></dd>
-              </div>
-              <div>
-                <dt>AA: MSAA, SMAA, CMAA2 &amp; TAA</dt>
-                <dd><p><strong>MSAA</strong> smooths geometry edges during scene rendering. <strong>SMAA</strong> detects and blends edges in the rendered image. <strong>CMAA2</strong> offers another edge-aware filter, with strength and sharpness controls; on WebGL2 it falls back to SMAA.</p><p>This demo's <strong>TAA</strong> combines SMAA with a bounded two-frame temporal filter, using depth and neighbourhood clamping to limit history. It can calm shimmer, with a softness or trailing trade-off during motion. Compare modes in <strong>Camera → AA mode</strong>; scene MSAA can also run under post-AA.</p></dd>
-              </div>
-              <div>
-                <dt>MipMap bloom</dt>
-                <dd><p>The HDR image is downsampled into a pyramid of smaller images, then upsampled and blended. Fine levels keep local highlights; coarse levels spread wider halos, giving the sun and bright atmospheric edges a soft glow.</p><p><strong>Look → Bloom</strong> exposes intensity, curve and falloff. <strong>Blur mix</strong> shapes the MIP pyramid used by the bloom viewer and fog light bleed, rather than the tonemap glow. Fog bleed samples the previous frame's pyramid and affects sky light, keeping opaque silhouettes crisp.</p></dd>
-              </div>
-              <div>
-                <dt>HDR, tonemapping &amp; image quality</dt>
-                <dd><p>Exposure and Reinhard, ACES, Neutral or AgX tonemapping bring HDR lighting into the displayed range. Output dithering reduces visible bands in smooth gradients; CAS/RCAS sharpening adjusts the final image's crispness.</p><p>Reduced-resolution atmosphere rendering offers another quality/speed trade-off. Use <strong>Camera</strong> for these controls, <strong>Look</strong> for sun and bloom, and <strong>Planets</strong> for atmosphere and fog.</p></dd>
-              </div>
-              </dl>
+              <p><a href="/atmosphere-guide/#effects">Effects, controls &amp; comparisons →</a></p>
             </div>
           </details>
         </article>

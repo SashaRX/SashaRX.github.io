@@ -1,0 +1,82 @@
+{
+  "demo": "https://sasharx.github.io/Atmosphere/",
+  "version": "0.00.386",
+  "commit": "344e95b",
+  "backend": "WebGPU",
+  "viewport": [
+    1280,
+    720
+  ],
+  "capture": [
+    1280,
+    660
+  ],
+  "date": "2026-10-13",
+  "objectAnimationSpeed": 0,
+  "pairs": {
+    "bloom": {
+      "changed": "bloom intensity",
+      "values": [
+        0,
+        1
+      ]
+    },
+    "fog": {
+      "changed": "ground fog density",
+      "values": [
+        0,
+        0.38
+      ],
+      "path": "froxel",
+      "note": "atmospheric haze remains"
+    },
+    "aa": {
+      "changed": "post-AA",
+      "values": [
+        "none",
+        "smaa"
+      ],
+      "msaa": "off",
+      "detailCrop": [
+        580,
+        100,
+        110,
+        240
+      ]
+    }
+  },
+  "files": {
+    "aa-off-detail.jpg": {
+      "sha256": "6d262e0a93506457ffbc5404d4b3dd57cf3a3c39b5f373e1e3332f2e9e5aa5c6",
+      "bytes": 1620
+    },
+    "aa-off.jpg": {
+      "sha256": "37f39b692537aab75cc2f7775acb1289a0d075b74cfdc1157cc384cfc7e957d3",
+      "bytes": 20713
+    },
+    "aa-smaa-detail.jpg": {
+      "sha256": "77aeb53cc4ca4ae2918f9ddb088c7b3cd2de642d3861115f8d52a52a50dd27f2",
+      "bytes": 2032
+    },
+    "aa-smaa.jpg": {
+      "sha256": "a8e7eec8616e773aefede602ae5ea4149450cf897bbeb276205bac73fbcde399",
+      "bytes": 30701
+    },
+    "bloom-off.jpg": {
+      "sha256": "96bda23925674a3ab0b3746256041bebf34d8e26ce0820770268950400f0351c",
+      "bytes": 17218
+    },
+    "bloom-on.jpg": {
+      "sha256": "75b27cb2aa73c308de5b38f131dbcce18e06bedc48d6d092773708ba23af1e5e",
+      "bytes": 23191
+    },
+    "fog-off.jpg": {
+      "sha256": "b29849c7569f7a5e47f66d0d50fd872476fb8f99c1d9a0e3771a375eceb97e79",
+      "bytes": 30593
+    },
+    "fog-on.jpg": {
+      "sha256": "550521cbbd5dbf0317bea3014c69de9015016c18e8dd00a71fe6e8d6f929050a",
+      "bytes": 30467
+    }
+  }
+}

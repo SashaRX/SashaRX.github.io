@@ -1,1 +1,93 @@
-ok
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>SashaRX — tools &amp; projects</title>
+  <meta name="description" content="SashaRX's tools and projects. Explore TS_UnityExport for 3ds Max and its illustrated guide for Unity asset workflows.">
+  <link rel="canonical" href="https://sasharx.github.io/">
+  <meta property="og:title" content="SashaRX — tools &amp; projects">
+  <meta property="og:description" content="TS_UnityExport for 3ds Max, with an illustrated guide to FBX export, UV seams, LODs and project routing.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://sasharx.github.io/">
+  <meta property="og:image" content="https://sasharx.github.io/unity-export/preview.png">
+  <style>
+    :root{color-scheme:dark;--bg:#10151b;--panel:#182029;--line:#2e3c48;--text:#eef4f9;--muted:#b3c1ce;--accent:#74d9cc}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:28px}
+    body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 "Segoe UI",Arial,sans-serif}
+    a{color:var(--accent);text-underline-offset:4px}a:focus-visible{outline:3px solid var(--accent);outline-offset:5px}
+    .wrap{width:min(1120px,calc(100% - 64px));margin:auto}
+    header{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:28px 0;border-bottom:1px solid var(--line)}
+    .brand{color:var(--text);font-size:21px;font-weight:700;letter-spacing:.2px;text-decoration:none}
+    nav{display:flex;flex-wrap:wrap;gap:24px}nav a{color:var(--muted);text-decoration:none;font-size:14px}nav a:hover{color:var(--text)}
+    .about{display:grid;grid-template-columns:1.4fr 1fr;align-items:center;gap:64px;padding:88px 0 70px}
+    .eyebrow{color:var(--accent);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:2px;margin:0 0 12px}
+    h1{font-size:clamp(42px,6vw,64px);line-height:1.06;letter-spacing:-2px;margin:0 0 22px}
+    .lead{font-size:22px;color:var(--muted);margin:0;max-width:590px}
+    .note{border-left:2px solid var(--accent);padding-left:24px;color:var(--muted)}.note h2{color:var(--text);font-size:18px;margin:0 0 8px}.note p{margin:0 0 12px}.note a{font-size:14px}
+    .section-title{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:22px}.section-title h2{margin:0;font-size:26px}.section-title span{font-size:13px;color:var(--muted)}
+    .project{display:grid;grid-template-columns:1fr 1.1fr;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--panel)}
+    .project-copy{padding:36px}.badge{display:inline-block;color:var(--accent);font-size:12px;font-weight:600;letter-spacing:.6px;margin-bottom:14px}
+    h3{font-size:30px;line-height:1.2;margin:0 0 16px;letter-spacing:-.6px}.project-copy p{color:var(--muted);margin:0 0 20px}
+    .features{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 28px}.features span{border:1px solid var(--line);border-radius:6px;padding:4px 9px;font-size:12px;color:var(--muted)}
+    .button{display:inline-block;padding:12px 18px;border-radius:8px;background:var(--accent);color:#0e2423;font-size:14px;font-weight:600;text-decoration:none}.button:hover{background:#a3e9df}
+    .project-image{display:flex;align-items:center;padding:28px;background:#121a22;border-left:1px solid var(--line)}.project-image img{display:block;width:100%;height:auto;border:1px solid #4b5761;border-radius:8px}
+    .upcoming{margin:44px 0 64px;padding:24px 0;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:24px}.upcoming h2{font-size:17px;margin:0}.upcoming p{margin:4px 0 0;color:var(--muted);font-size:14px}.future-projects{display:flex;flex-wrap:wrap;gap:10px}.future-projects span{border:1px dashed var(--line);padding:8px 16px;border-radius:8px;color:var(--muted);font-size:14px}
+    footer{border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:20px;padding:24px 0 36px;color:var(--muted);font-size:13px}footer a{text-decoration:none}
+    @media(max-width:820px){.about{grid-template-columns:1fr;gap:32px;padding:56px 0}.project{grid-template-columns:1fr}.project-image{border-left:0;border-top:1px solid var(--line)}.project-copy{padding:28px}.upcoming{align-items:flex-start;flex-direction:column}}
+    @media(max-width:480px){.wrap{width:calc(100% - 32px)}header{gap:16px;align-items:flex-start;flex-direction:column}nav{gap:20px}h1{font-size:44px}.lead{font-size:20px}.project-copy,.project-image{padding:22px}.section-title{align-items:flex-start;flex-direction:column;gap:2px}h3{font-size:27px}footer{flex-wrap:wrap}}
+    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <a class="brand" href="/">SashaRX</a>
+      <nav aria-label="Main navigation">
+        <a href="#about">About me</a>
+        <a href="#projects">Projects</a>
+        <a href="https://github.com/SashaRX">GitHub ↗</a>
+      </nav>
+    </header>
+    <main>
+      <section id="about" class="about" aria-labelledby="name">
+        <div>
+          <p class="eyebrow">About me</p>
+          <h1 id="name">SashaRX</h1>
+          <p class="lead">Tools, experiments and projects.</p>
+        </div>
+        <div class="note">
+          <h2>Hello, and welcome.</h2>
+          <p>This is where I share my projects and their guides. More about me will be added here soon.</p>
+          <a href="https://github.com/SashaRX">Find me on GitHub ↗</a>
+        </div>
+      </section>
+      <section id="projects" aria-labelledby="projects-title">
+        <div class="section-title">
+          <h2 id="projects-title">Projects</h2>
+          <span>Tools &amp; documentation</span>
+        </div>
+        <article class="project">
+          <div class="project-copy">
+            <span class="badge">3DS MAX 2022–2027 · VERSION 1.2.0</span>
+            <h3>TS_UnityExport</h3>
+            <p>A toolkit for preparing 3ds Max assets for Unity. Export Dummy hierarchies to FBX, inspect UV seams, preview LODs and route assets into project folders.</p>
+            <div class="features" aria-label="Plugin features">
+              <span>FBX export &amp; import</span><span>UV seams</span><span>LOD preview</span><span>Export tags</span><span>Auto updates</span>
+            </div>
+            <a class="button" href="unity-export/">Explore the plugin &amp; guide →</a>
+          </div>
+          <a class="project-image" href="unity-export/" aria-label="Open the TS_UnityExport illustrated guide">
+            <img src="unity-export/preview.png" alt="TS_UnityExport's Models page in 3ds Max, with Dummy roots, destination paths and tag controls" width="802" height="522">
+          </a>
+        </article>
+      </section>
+      <section class="upcoming" aria-labelledby="more-title">
+        <div><h2 id="more-title">More projects</h2><p>Project links will be added here later.</p></div>
+        <div class="future-projects"><span>Mesh Lab</span><span>Nohero</span></div>
+      </section>
+    </main>
+    <footer><span>SashaRX · Tools &amp; projects</span><a href="https://github.com/SashaRX">GitHub ↗</a></footer>
+  </div>
+</body>
+</html>

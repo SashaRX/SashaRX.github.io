@@ -25,7 +25,8 @@ const update=()=>links.forEach(link=>link.href=routes[link.dataset.language]+loc
 links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(key,link.dataset.language)}catch{}}));});})();
 </script>
 <link rel="stylesheet" href="/assets/site.css?v=20261013">
-<link rel="stylesheet" href="/assets/home.css?v=20261013">
+<link rel="stylesheet" href="/assets/home.css?v=20261013-about">
+<script src="/assets/about.js?v=20261013" defer></script>
 </head>
 <body class="home-page">
 <a class="skip-link" href="#main">К содержимому</a>
@@ -42,7 +43,9 @@ links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(
       </div>
     </header>
     <main id="main">
-      <section id="about" class="about" aria-labelledby="name">
+      <details id="about" class="about-disclosure">
+        <summary>Обо мне</summary>
+      <section class="about" aria-labelledby="name">
         <div>
           <p class="eyebrow">SashaRX · инструменты и эксперименты</p>
           <h1 id="name">3D-инструменты и графика.</h1>
@@ -54,6 +57,7 @@ links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(
           <a href="https://github.com/SashaRX">Мой профиль на GitHub ↗</a>
         </div>
       </section>
+      </details>
       <section id="projects" aria-labelledby="projects-title">
         <div class="section-title">
           <h2 id="projects-title">Проекты</h2>

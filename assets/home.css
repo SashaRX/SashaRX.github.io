@@ -6,6 +6,8 @@
 .note h2 { font-size: 16px; letter-spacing: -.01em; margin-bottom: 8px; }
 .note p { margin-bottom: 8px; }
 .note a { font-size: 13px; }
+.about-disclosure > summary { min-height: 44px; padding: 10px 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--panel); color: var(--text); font-size: 14px; font-weight: 600; }
+@media (min-width: 701px) { .about-disclosure[open] > summary { display: none; } }
 .section-title { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 16px; }
 .section-title h2 { margin: 0; font-size: 22px; }
 .section-title span { color: var(--muted); font-size: 12px; }
@@ -51,10 +53,12 @@
   .project-image, .command-preview { margin-left: 20px; margin-right: 20px; }
 }
 @media (max-width: 700px) {
-  .about { grid-template-columns: 1fr; gap: 16px; padding: 24px 0; }
+  .about-disclosure { margin: 16px 0 20px; }
+  .about { grid-template-columns: 1fr; gap: 16px; padding: 16px 0 0; }
   .about h1 { font-size: 30px; margin-bottom: 10px; }
   .about .lead { font-size: 16px; }
   .note { border: 0; padding: 0; }
+  .note h2 { display: none; }
   .note p { margin-bottom: 6px; }
   .project-grid, .project-atmosphere { grid-template-columns: 1fr; }
   .section-title { align-items: flex-start; gap: 6px; flex-direction: column; }

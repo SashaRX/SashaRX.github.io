@@ -26,14 +26,14 @@ MAX ModelBatch is the new name of TS_UnityExport. Version 1.2.1 uses the new nam
 <a id="install"></a>
 ## 1. Install and open
 
-1. Open the [1.2.1 release](https://github.com/SashaRX/MaxModelBatch/releases/tag/v1.2.1). Download the archive **for your exact Max year**. For Max 2024, [download the standard build](https://github.com/SashaRX/MaxModelBatch/releases/download/v1.2.1/MaxModelBatch_v1.2.1_3dsMax2024.zip).
+1. Open the [1.2.1 release](https://github.com/SashaRX/MaxModelBatch-Releases/releases/tag/v1.2.1). Download the archive **for your exact Max year**. For Max 2024, [download the standard build](https://github.com/SashaRX/MaxModelBatch-Releases/releases/download/v1.2.1/MaxModelBatch_v1.2.1_3dsMax2024.zip).
 2. Close Max. Extract the archive into a permanent folder such as `C:\Tools\MaxModelBatch\2024`. The plugin file is `MaxModelBatch.dlu`. Historical releases through 1.2.0 use `TS_UnityExport.dlu`.
 3. In Max, open **Customize → Configure System Paths → 3rd-Party Plug-Ins → Add**. Add the folder containing the `.dlu`, then restart Max.
 4. In a renamed build, open **Scripting → MAX ModelBatch** on **Max 2022-2024**, or **MAX ModelBatch → MAX ModelBatch** on **Max 2025-2027**. The legacy menu fallback on older hosts is also **MAX ModelBatch**. In the published **1.2.0** build, the command is still **Unity FBX Exporter**, under **Scripting** or **Unity Tools**.
 
 For the first upgrade after the repository rename, close Max and manually replace the installation. Remove `TS_UnityExport.dlu` from all scanned plugin folders before installing `MaxModelBatch.dlu`, and keep one copy for each host. Existing scene tags and settings are retained.
 
-The standard archive includes every core feature in this guide. Experimental Mesh Align requires the separate `_MeshAlign.zip` variant. Max supplies the Qt runtime; do not copy additional Qt DLLs into the plugin folder. Plugin downloads require GitHub access while the plugin repository remains private, even though this guide is public.
+The standard archive includes every core feature in this guide. Experimental Mesh Align requires the separate `_MeshAlign.zip` variant. Max supplies the Qt runtime; do not copy additional Qt DLLs into the plugin folder. Manual ZIP downloads are public at MaxModelBatch-Releases. No GitHub sign-in is required.
 
 Dock the panel wherever it suits your workspace. The **Export** tab keeps **Project folder** and **Analyze** at the top and **Export FBX** at the bottom. Four workflow pages fill the middle: **Models**, **Preparation**, **Export settings** and **Mesh channels**.
 
@@ -318,7 +318,7 @@ LOD preview temporarily filters the viewport. Layer organization changes scene-l
 
 **Roll back** prepares restoration of the previous binary after Max closes. **Open GitHub releases** opens the release page. If another process locks the binary, the installer keeps the staged package; **Retry after Max closes** retries installation.
 
-Private releases require GitHub CLI and `gh auth login` with repository access. The plugin directory must be writable. The updater does not close or restart Max for you, and there is no hot reload. Versions without the Updates tab need one manual update first.
+Version 1.2.1’s updater still uses private MaxModelBatch and requires `gh auth login` with repository access. Public ZIPs support manual updates. The plugin folder must be writable. Save your scene and close Max before replacing the `.dlu`; no hot reload.
 
 <a id="meshalign"></a>
 ## 13. Optional Mesh Align

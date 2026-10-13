@@ -24,50 +24,16 @@ document.addEventListener('DOMContentLoaded',()=>{const links=[...document.query
 const update=()=>links.forEach(link=>link.href=routes[link.dataset.language]+location.search+location.hash);update();addEventListener('hashchange',update);
 links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(key,link.dataset.language)}catch{}}));});})();
 </script>
-  <style>:root{color-scheme:dark;--bg:#10151b;--panel:#182029;--line:#2e3c48;--text:#eef4f9;--muted:#b3c1ce;--accent:#74d9cc}
-    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:28px}
-    body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 "Segoe UI",Arial,sans-serif}
-    a{color:var(--accent);text-underline-offset:4px}a:focus-visible{outline:3px solid var(--accent);outline-offset:5px}
-    .wrap{width:min(1120px,calc(100% - 64px));margin:auto}
-    header{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:28px 0;border-bottom:1px solid var(--line)}
-    .brand{color:var(--text);font-size:21px;font-weight:700;letter-spacing:.2px;text-decoration:none}
-    nav{display:flex;flex-wrap:wrap;gap:24px}nav a{color:var(--muted);text-decoration:none;font-size:14px}nav a:hover{color:var(--text)}
-    .about{display:grid;grid-template-columns:1.4fr 1fr;align-items:center;gap:64px;padding:88px 0 70px}
-    .eyebrow{color:var(--accent);font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:2px;margin:0 0 12px}
-    h1{font-size:clamp(42px,6vw,64px);line-height:1.06;letter-spacing:-2px;margin:0 0 22px}
-    .lead{font-size:22px;color:var(--muted);margin:0;max-width:590px}
-    .note{border-left:2px solid var(--accent);padding-left:24px;color:var(--muted)}.note h2{color:var(--text);font-size:18px;margin:0 0 8px}.note p{margin:0 0 12px}.note a{font-size:14px}
-    .section-title{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:22px}.section-title h2{margin:0;font-size:26px}.section-title span{font-size:13px;color:var(--muted)}
-    .project{display:grid;grid-template-columns:1fr 1.1fr;border:1px solid var(--line);border-radius:16px;overflow:hidden;background:var(--panel)}
-    .project+.project{margin-top:24px}
-    .project-copy{padding:36px}.badge{display:inline-block;color:var(--accent);font-size:12px;font-weight:600;letter-spacing:.6px;margin-bottom:14px}
-    h3{font-size:30px;line-height:1.2;margin:0 0 16px;letter-spacing:-.6px}.project-copy p{color:var(--muted);margin:0 0 20px}
-    .features{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 28px}.features span{border:1px solid var(--line);border-radius:6px;padding:4px 9px;font-size:12px;color:var(--muted)}
-    .button{display:inline-block;padding:12px 18px;border-radius:8px;background:var(--accent);color:#0e2423;font-size:14px;font-weight:600;text-decoration:none}.button:hover{background:#a3e9df}
-    .project-image{display:flex;align-items:center;padding:28px;background:#121a22;border-left:1px solid var(--line)}.project-image img{display:block;width:100%;height:auto;border:1px solid #4b5761;border-radius:8px}
-    .demo-launch{display:flex;flex-direction:column;justify-content:center;gap:20px;padding:36px;background:#121a22;border-left:1px solid var(--line)}.demo-actions{display:flex;flex-wrap:wrap;gap:12px}.button-secondary{background:transparent;color:var(--accent);box-shadow:inset 0 0 0 1px var(--line)}.button-secondary:hover{background:#24333d}
-    .demo-launch p{margin:0;color:var(--muted);font-size:14px}.demo-launch .shader-note{border-left:2px solid #e7be75;padding-left:16px;color:#e7d7ba}.shader-note strong{display:block;color:#f1dfbf;margin-bottom:4px}
-    .atmosphere-gallery{grid-column:1/-1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;padding:24px;border-top:1px solid var(--line);background:#121a22}.atmosphere-gallery figure{margin:0;min-width:0}.atmosphere-gallery a{display:block}.atmosphere-gallery img{display:block;width:100%;height:auto;border:1px solid var(--line);border-radius:8px}.atmosphere-gallery figcaption{margin-top:10px;color:var(--muted);font-size:13px}
-    .upcoming{margin:44px 0 64px;padding:24px 0;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:24px}.upcoming h2{font-size:17px;margin:0}.upcoming p{margin:4px 0 0;color:var(--muted);font-size:14px}.future-projects{display:flex;flex-wrap:wrap;gap:10px}.future-projects span{border:1px dashed var(--line);padding:8px 16px;border-radius:8px;color:var(--muted);font-size:14px}
-    footer{border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:20px;padding:24px 0 36px;color:var(--muted);font-size:13px}footer a{text-decoration:none}
-    @media(max-width:820px){.about{grid-template-columns:1fr;gap:32px;padding:56px 0}.project{grid-template-columns:1fr}.project-image,.demo-launch{border-left:0;border-top:1px solid var(--line)}.project-copy,.demo-launch{padding:28px}.upcoming{align-items:flex-start;flex-direction:column}}
-    @media(max-width:480px){.wrap{width:calc(100% - 32px)}header{gap:16px;align-items:flex-start;flex-direction:column}nav{gap:20px}h1{font-size:44px}.lead{font-size:20px}.project-copy,.project-image,.demo-launch{padding:22px}.section-title{align-items:flex-start;flex-direction:column;gap:2px}h3{font-size:27px}footer{flex-wrap:wrap}}
-    @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-    @media(max-width:600px){.atmosphere-gallery{grid-template-columns:1fr;padding:22px}}
-
-  .header-actions{display:flex;flex-wrap:wrap;align-items:center;gap:24px}
-  @media(max-width:480px){.header-actions{gap:16px}}
-  .language-switch{display:flex;gap:4px;align-items:center;width:max-content;padding:3px;border:1px solid var(--line);border-radius:8px}
-.language-switch a{display:inline-block;margin:0;padding:5px 10px;border-radius:5px;font-size:12px;font-weight:600;line-height:1.4;text-decoration:none;color:var(--muted)}
-.language-switch a:hover{color:#eef4f9;background:#24333d}.language-switch a[aria-current=true]{background:#74d9cc;color:#0e2423}
-@media print{.language-switch{display:none!important}}</style>
+<link rel="stylesheet" href="/assets/site.css">
+<link rel="stylesheet" href="/assets/home.css">
 </head>
-<body>
+<body class="home-page">
+<a class="skip-link" href="#main">Skip to content</a>
   <div class="wrap">
-    <header>
+    <header class="site-header">
       <a class="brand" href="/">SashaRX</a>
       <div class="header-actions">
-        <nav aria-label="Main navigation">
+        <nav class="site-nav" aria-label="Main navigation">
           <a href="#about">About me</a>
           <a href="#projects">Projects</a>
           <a href="https://github.com/SashaRX">GitHub ↗</a>
@@ -75,16 +41,16 @@ links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(
         <nav class="language-switch" aria-label="Site language"><a href="/" hreflang="en" lang="en" data-language="en" aria-current="true">EN</a><a href="/ru/" hreflang="ru" lang="ru" data-language="ru">RU</a></nav>
       </div>
     </header>
-    <main>
+    <main id="main">
       <section id="about" class="about" aria-labelledby="name">
         <div>
-          <p class="eyebrow">About me</p>
-          <h1 id="name">SashaRX</h1>
-          <p class="lead">Tools, experiments and projects.</p>
+          <p class="eyebrow">SashaRX · tools &amp; experiments</p>
+          <h1 id="name">3D tools &amp; graphics.</h1>
+          <p class="lead">Batch model workflows and real-time experiments.</p>
         </div>
         <div class="note">
-          <h2>Hello, and welcome.</h2>
-          <p>This is where I share my projects and their guides. More about me will be added here soon.</p>
+          <h2>About me</h2>
+          <p>My tools, projects and practical guides. More about me coming soon.</p>
           <a href="https://github.com/SashaRX">Find me on GitHub ↗</a>
         </div>
       </section>
@@ -93,6 +59,7 @@ links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(
           <h2 id="projects-title">Projects</h2>
           <span>Tools, demos &amp; documentation</span>
         </div>
+        <div class="project-grid">
         <article class="project">
           <div class="project-copy">
             <span class="badge">3DS MAX 2022-2027 · VERSION 1.2.1</span>
@@ -101,10 +68,10 @@ links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(
             <div class="features" aria-label="Plugin features">
               <span>FBX export &amp; import</span><span>UV seams</span><span>LOD preview</span><span>Export tags</span><span>Auto updates</span>
             </div>
-            <a class="button" href="/modelbatch/">Explore the plugin &amp; guide →</a>
+            <a class="button" href="/modelbatch/">Plugin guide →</a>
           </div>
           <a class="project-image" href="/modelbatch/" aria-label="Open the MAX ModelBatch illustrated guide">
-            <img src="/modelbatch/preview.png" alt="MAX ModelBatch's Models page in 3ds Max, with Dummy roots, destination paths and tag controls" width="802" height="522">
+            <img src="/modelbatch/preview.png" alt="MAX ModelBatch's Models page in 3ds Max, with Dummy roots, destination paths and tag controls" width="802" height="522" decoding="async">
           </a>
         </article>
         <article class="project" id="fbx-patch" aria-labelledby="fbx-patch-title">
@@ -118,14 +85,16 @@ links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(
           </div>
           <div class="demo-launch">
             <div class="demo-actions">
-              <a class="button" href="/fbx-patch/">Command builder &amp; guide →</a>
+              <a class="button" href="/fbx-patch/">Build a command →</a>
               <a class="button button-secondary" href="https://github.com/SashaRX/MaxModelBatch/releases/download/patch-fbx-v1.0.0/patch_fbx_v1.0.0_Windows_x64.zip">Download ZIP ↓</a>
             </div>
             <p>Extract the archive and run <code>patch_fbx.exe</code> from PowerShell. Start with an audit or preview repairs with <code>--dry-run</code>.</p>
             <p>GitHub downloads currently require access to the private MaxModelBatch repository.</p>
           </div>
+        <div class="command-preview"><span>POWERSHELL · BATCH AUDIT</span><pre><code>.\patch_fbx.exe -r -v --report-file audit.md "D:\Models"</code></pre><p>Audit a whole library; FBX files stay unchanged.</p></div>
         </article>
-        <article class="project" id="atmosphere" aria-labelledby="atmosphere-title">
+        <article class="project project-atmosphere" id="atmosphere" aria-labelledby="atmosphere-title">
+          <div class="atmosphere-info">
           <div class="project-copy">
             <span class="badge">BROWSER DEMO · WEBGPU / WEBGL2</span>
             <h3 id="atmosphere-title">Atmosphere</h3>
@@ -136,11 +105,12 @@ links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(
           </div>
           <div class="demo-launch">
             <div class="demo-actions">
-              <a class="button" href="https://sasharx.github.io/Atmosphere/" target="_blank" rel="noopener">Open demo · WebGPU ↗</a>
-              <a class="button button-secondary" href="https://sasharx.github.io/Atmosphere/?webgl2" target="_blank" rel="noopener">Open in WebGL2 ↗</a>
+              <a class="button" href="https://sasharx.github.io/Atmosphere/" target="_blank" rel="noopener">WebGPU demo ↗</a>
+              <a class="button button-secondary" href="https://sasharx.github.io/Atmosphere/?webgl2" target="_blank" rel="noopener">WebGL2 ↗</a>
             </div>
-            <p>The main demo uses WebGPU when available and falls back to WebGL2. The second link forces WebGL2.</p>
-            <p class="shader-note"><strong>Allow time for shader compilation</strong>On first launch, the browser compiles shaders. The scene may take a while to appear, with brief pauses during initialization. Please wait for it to load.</p>
+            <p>WebGPU with a WebGL2 fallback; the second link forces WebGL2.</p>
+            <p class="shader-note"><strong>Allow time for shader compilation</strong>First launch may pause while shaders compile. Give the scene time to load.</p>
+          </div>
           </div>
           <div class="atmosphere-gallery" aria-label="Atmosphere screenshots captured in WebGPU">
             <figure>
@@ -157,13 +127,14 @@ links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(
             </figure>
           </div>
         </article>
+        </div>
       </section>
       <section class="upcoming" aria-labelledby="more-title">
         <div><h2 id="more-title">More projects</h2><p>Project links will be added here later.</p></div>
         <div class="future-projects"><span>Mesh Lab</span><span>Nohero</span></div>
       </section>
     </main>
-    <footer><span>SashaRX · Tools &amp; projects</span><a href="https://github.com/SashaRX">GitHub ↗</a></footer>
+    <footer class="site-footer"><span>SashaRX · Tools &amp; projects</span><a href="https://github.com/SashaRX">GitHub ↗</a></footer>
   </div>
 </body>
 </html>

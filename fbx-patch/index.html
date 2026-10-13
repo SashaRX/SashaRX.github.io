@@ -13,6 +13,7 @@
   <meta property="og:description" content="Build PowerShell commands for whole folders of FBX models. Batch audit, repair previews and a compact guide to materials, UVs, collisions and units.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://sasharx.github.io/fbx-patch/">
+  <link rel="stylesheet" href="/assets/site.css">
   <link rel="stylesheet" href="/fbx-patch/guide.css">
   <link rel="stylesheet" href="/fbx-patch/builder.css">
   <script type="module" src="/fbx-patch/command-builder.js"></script>
@@ -24,12 +25,13 @@ const update=()=>links.forEach(link=>link.href=routes[link.dataset.language]+loc
 links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(key,link.dataset.language)}catch{}}));});})();
   </script>
 </head>
-<body>
+<body class="fbx-page">
+<a class="skip-link" href="#main">Skip to content</a>
   <div class="wrap">
-    <header><a class="brand" href="/">SashaRX</a><div class="header-actions"><a class="back" href="/#projects">← All projects</a><nav class="language-switch" aria-label="Site language"><a href="/fbx-patch/" hreflang="en" lang="en" data-language="en" aria-current="true">EN</a><a href="/ru/fbx-patch/" hreflang="ru" lang="ru" data-language="ru">RU</a></nav></div></header>
-    <main>
-      <div class="hero"><p class="eyebrow">WINDOWS X64 · VERSION 1.0.0 · COMMAND LINE</p><h1>FBX Patch Tool</h1><p class="lead">Scan whole folders of FBX models, collect issues in one report and preview batch fixes before reimporting into your DCC or game engine. No 3ds Max or Unity installation required.</p><div class="actions"><a class="button" href="https://github.com/SashaRX/MaxModelBatch/releases/download/patch-fbx-v1.0.0/patch_fbx_v1.0.0_Windows_x64.zip">Download Windows x64 ZIP ↓</a><a class="button secondary" href="https://github.com/SashaRX/MaxModelBatch/releases/tag/patch-fbx-v1.0.0">Release notes & checksums ↗</a></div><div class="notice"><p><strong>GitHub access required.</strong> The download is hosted in the private MaxModelBatch repository. Sign in with an account that has access.</p></div><div class="batch-benefits"><p><strong>Find problem files</strong>Check a library in one run instead of opening every model: UVs, colors, materials and optional normals/axis checks.</p><p><strong>Plan consistent cleanup</strong>Preview the same collision, texture or scale cleanup across files from different sources.</p><p><strong>Keep an overview</strong>Scan subfolders and multiple inputs together. A Markdown report groups findings by category.</p></div></div>
-      <nav class="contents" aria-label="Contents"><a href="#builder">Command builder</a><a href="#install">1. Start here</a><a href="#commands">2. Commands</a><a href="#options">3. Options</a><a href="#channels">4. UV & collisions</a><a href="#backups">5. Backups</a><a href="#exit-codes">6. Return codes</a></nav>
+    <header class="site-header"><a class="brand" href="/">SashaRX</a><div class="header-actions"><a class="back" href="/#projects">← All projects</a><nav class="language-switch" aria-label="Site language"><a href="/fbx-patch/" hreflang="en" lang="en" data-language="en" aria-current="true">EN</a><a href="/ru/fbx-patch/" hreflang="ru" lang="ru" data-language="ru">RU</a></nav></div></header>
+    <main id="main">
+      <div class="hero"><p class="eyebrow">WINDOWS X64 · VERSION 1.0.0 · COMMAND LINE</p><h1>FBX Patch Tool</h1><p class="lead">Batch-audit FBX files, collect reports and preview fixes before reimporting into your DCC or engine. No Max or Unity required.</p><div class="actions"><a class="button" href="#builder">Build a command</a><a class="button secondary" href="https://github.com/SashaRX/MaxModelBatch/releases/download/patch-fbx-v1.0.0/patch_fbx_v1.0.0_Windows_x64.zip">Windows x64 ZIP ↓</a><a class="button secondary" href="https://github.com/SashaRX/MaxModelBatch/releases/tag/patch-fbx-v1.0.0">Release &amp; SHA256 ↗</a></div><div class="notice"><p><strong>GitHub access required.</strong> The ZIP is in the private MaxModelBatch repository. Sign in to GitHub with access.</p></div><details class="page-contents"><summary>How it helps with a library of FBX files</summary><div class="batch-benefits"><p><strong>Find problem files</strong>Check a library in one run instead of opening every model: UVs, colors, materials and optional normals/axis checks.</p><p><strong>Plan consistent cleanup</strong>Preview the same collision, texture or scale cleanup across files from different sources.</p><p><strong>Keep an overview</strong>Scan subfolders and multiple inputs together. A Markdown report groups findings by category.</p></div></details></div>
+      <details class="page-contents"><summary>On this page</summary><nav class="contents" aria-label="Contents"><a href="#builder">Command builder</a><a href="#install">1. Start here</a><a href="#commands">2. Commands</a><a href="#options">3. Options</a><a href="#channels">4. UV & collisions</a><a href="#backups">5. Backups</a><a href="#exit-codes">6. Return codes</a></nav></details>
 
       <section id="builder" aria-labelledby="builder-title">
         <h2 id="builder-title">Command builder</h2>
@@ -113,7 +115,7 @@ links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(
       <section id="backups" aria-labelledby="backups-title"><h2 id="backups-title">5. Backups</h2><p>By default, each successful rewrite creates <code>&lt;file&gt;.fbx.bak</code>, for example <code>SM_Chair.fbx.bak</code>. A later rewrite refreshes this backup. Audits, dry runs and repairs that have nothing to change leave the FBX and its backup untouched.</p><p>To undo a repair, copy the backup over the FBX or restore it under a new <code>.fbx</code> name. <code>--no-backup</code> disables backup creation. Clamping and cleanup can discard data; inspect the preview before applying them.</p><p>Saving through the FBX SDK is not byte-identical to the input. This utility works with FBX; it does not produce GLB or meshopt output.</p></section>
       <section id="exit-codes" aria-labelledby="exit-codes-title"><h2 id="exit-codes-title">6. Return codes</h2><div class="table-wrap"><table><thead><tr><th scope="col">Code</th><th scope="col">Meaning</th></tr></thead><tbody><tr><td><code>0</code></td><td>Completed. Reported findings alone do not make the run fail.</td></tr><tr><td><code>1</code></td><td>Invalid command line or no eligible FBX inputs found.</td></tr><tr><td><code>2</code></td><td>At least one file could not be imported or processed.</td></tr></tbody></table></div></section>
     </main>
-    <footer><span>SashaRX · Tools & projects</span><a href="https://github.com/SashaRX">GitHub ↗</a></footer>
+    <footer class="site-footer"><span>SashaRX · Tools & projects</span><a href="https://github.com/SashaRX">GitHub ↗</a></footer>
   </div>
 </body>
 </html>

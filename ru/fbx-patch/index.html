@@ -13,6 +13,7 @@
   <meta property="og:description" content="Собери команду PowerShell для целых папок FBX. Пакетный аудит, предпросмотр исправлений и компактная справка по материалам, UV, коллизиям и единицам.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://sasharx.github.io/ru/fbx-patch/">
+  <link rel="stylesheet" href="/assets/site.css">
   <link rel="stylesheet" href="/fbx-patch/guide.css">
   <link rel="stylesheet" href="/fbx-patch/builder.css">
   <script type="module" src="/fbx-patch/command-builder.js"></script>
@@ -24,12 +25,13 @@ const update=()=>links.forEach(link=>link.href=routes[link.dataset.language]+loc
 links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(key,link.dataset.language)}catch{}}));});})();
   </script>
 </head>
-<body>
+<body class="fbx-page">
+<a class="skip-link" href="#main">К содержимому</a>
   <div class="wrap">
-    <header><a class="brand" href="/ru/">SashaRX</a><div class="header-actions"><a class="back" href="/ru/#projects">← Все проекты</a><nav class="language-switch" aria-label="Язык сайта"><a href="/fbx-patch/" hreflang="en" lang="en" data-language="en">EN</a><a href="/ru/fbx-patch/" hreflang="ru" lang="ru" data-language="ru" aria-current="true">RU</a></nav></div></header>
-    <main>
-      <div class="hero"><p class="eyebrow">WINDOWS X64 · ВЕРСИЯ 1.0.0 · КОМАНДНАЯ СТРОКА</p><h1>FBX Patch Tool</h1><p class="lead">Проверь целые папки FBX, собери проблемы в один отчёт и просмотри пакетные исправления перед повторным импортом в DCC или движок. Установка 3ds Max или Unity не требуется.</p><div class="actions"><a class="button" href="https://github.com/SashaRX/MaxModelBatch/releases/download/patch-fbx-v1.0.0/patch_fbx_v1.0.0_Windows_x64.zip">Скачать ZIP для Windows x64 ↓</a><a class="button secondary" href="https://github.com/SashaRX/MaxModelBatch/releases/tag/patch-fbx-v1.0.0">Описание релиза и контрольные суммы ↗</a></div><div class="notice"><p><strong>Для скачивания нужен доступ к GitHub-репозиторию.</strong> Архив размещён в приватном репозитории MaxModelBatch. Войди в аккаунт, которому предоставлен доступ.</p></div><div class="batch-benefits"><p><strong>Найти проблемные файлы</strong>Проверка библиотеки за один запуск: UV, цвета и материалы, а при необходимости — нормали и оси.</p><p><strong>Согласовать очистку</strong>Предпросмотр одинаковых исправлений коллизий, текстур и масштаба для файлов из разных источников.</p><p><strong>Получить общую картину</strong>Несколько папок и вложения за один запуск. Отчёт Markdown группирует найденные проблемы по категориям.</p></div></div>
-      <nav class="contents" aria-label="Содержание"><a href="#builder">Конструктор команд</a><a href="#install">1. Начало работы</a><a href="#commands">2. Команды</a><a href="#options">3. Параметры</a><a href="#channels">4. UV и коллизии</a><a href="#backups">5. Резервные копии</a><a href="#exit-codes">6. Коды возврата</a></nav>
+    <header class="site-header"><a class="brand" href="/ru/">SashaRX</a><div class="header-actions"><a class="back" href="/ru/#projects">← Все проекты</a><nav class="language-switch" aria-label="Язык сайта"><a href="/fbx-patch/" hreflang="en" lang="en" data-language="en">EN</a><a href="/ru/fbx-patch/" hreflang="ru" lang="ru" data-language="ru" aria-current="true">RU</a></nav></div></header>
+    <main id="main">
+      <div class="hero"><p class="eyebrow">WINDOWS X64 · ВЕРСИЯ 1.0.0 · КОМАНДНАЯ СТРОКА</p><h1>FBX Patch Tool</h1><p class="lead">Пакетный аудит FBX, отчёты и предпросмотр исправлений перед импортом в DCC или движок. Без установки Max и Unity.</p><div class="actions"><a class="button" href="#builder">Собрать команду</a><a class="button secondary" href="https://github.com/SashaRX/MaxModelBatch/releases/download/patch-fbx-v1.0.0/patch_fbx_v1.0.0_Windows_x64.zip">ZIP · Windows x64 ↓</a><a class="button secondary" href="https://github.com/SashaRX/MaxModelBatch/releases/tag/patch-fbx-v1.0.0">Релиз и SHA256 ↗</a></div><div class="notice"><p><strong>Для скачивания нужен доступ.</strong> ZIP в приватном репозитории MaxModelBatch. Войди в GitHub с доступом.</p></div><details class="page-contents"><summary>Как помогает в работе с библиотекой FBX</summary><div class="batch-benefits"><p><strong>Найти проблемные файлы</strong>Проверка библиотеки за один запуск: UV, цвета и материалы, а при необходимости — нормали и оси.</p><p><strong>Согласовать очистку</strong>Предпросмотр одинаковых исправлений коллизий, текстур и масштаба для файлов из разных источников.</p><p><strong>Получить общую картину</strong>Несколько папок и вложения за один запуск. Отчёт Markdown группирует найденные проблемы по категориям.</p></div></details></div>
+      <details class="page-contents"><summary>На этой странице</summary><nav class="contents" aria-label="Содержание"><a href="#builder">Конструктор команд</a><a href="#install">1. Начало работы</a><a href="#commands">2. Команды</a><a href="#options">3. Параметры</a><a href="#channels">4. UV и коллизии</a><a href="#backups">5. Резервные копии</a><a href="#exit-codes">6. Коды возврата</a></nav></details>
 
       <section id="builder" aria-labelledby="builder-title">
         <h2 id="builder-title">Конструктор команд</h2>
@@ -113,7 +115,7 @@ links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(
       <section id="backups" aria-labelledby="backups-title"><h2 id="backups-title">5. Резервные копии</h2><p>По умолчанию при каждой успешной перезаписи создаётся <code>&lt;файл&gt;.fbx.bak</code>, например <code>SM_Chair.fbx.bak</code>. Следующая перезапись обновляет эту копию. Аудит, предпросмотр и исправления без фактических изменений не трогают FBX и его резервную копию.</p><p>Для отмены исправления скопируй резервную копию поверх FBX или восстанови её под новым именем с расширением <code>.fbx</code>. Флаг <code>--no-backup</code> отключает создание копий. Ограничение диапазонов и очистка могут удалять данные — проверяй предпросмотр перед применением.</p><p>Сохранение через FBX SDK не сохраняет побайтовое совпадение с исходным файлом. Утилита работает с FBX; вывод GLB и meshopt в ней отсутствует.</p></section>
       <section id="exit-codes" aria-labelledby="exit-codes-title"><h2 id="exit-codes-title">6. Коды возврата</h2><div class="table-wrap"><table><thead><tr><th scope="col">Код</th><th scope="col">Что делает</th></tr></thead><tbody><tr><td><code>0</code></td><td>Обработка завершена. Сами найденные проблемы не означают ошибку выполнения.</td></tr><tr><td><code>1</code></td><td>Ошибка командной строки или не найдено подходящих FBX.</td></tr><tr><td><code>2</code></td><td>Хотя бы один файл не удалось импортировать или обработать.</td></tr></tbody></table></div></section>
     </main>
-    <footer><span>SashaRX · Инструменты и проекты</span><a href="https://github.com/SashaRX">GitHub ↗</a></footer>
+    <footer class="site-footer"><span>SashaRX · Инструменты и проекты</span><a href="https://github.com/SashaRX">GitHub ↗</a></footer>
   </div>
 </body>
 </html>

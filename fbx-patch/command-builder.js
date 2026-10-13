@@ -1,4 +1,4 @@
-import { options } from './options-catalog.js?v=20261014-full';
+import { options } from './options-catalog.js?v=20261014-fbx101';
 
 const selectable = new Map(options.filter(option => ['repair', 'diagnostic', 'modifier'].includes(option.kind)).map(option => [option.flag, option]));
 const aliases = new Map(options.flatMap(option => option.aliases.map(alias => [alias, option.flag])));
@@ -72,7 +72,7 @@ function initBuilder() {
     audit: 'Только проверка и отчёт. Исходные FBX не меняются; можно выбрать отдельные диагностики.',
     inspect: 'Подробные данные мешей и материалов в консоли. Без исправлений и файла отчёта.',
     preview: 'Показать планируемые изменения. FBX и резервные копии не записываются.',
-    apply: 'Перезаписывает FBX; по умолчанию создаёт .fbx.bak. В 1.0.0 запись может завершиться известной ошибкой; пока рекомендуется аудит или предпросмотр.',
+    apply: 'Применяет выбранные исправления и создаёт .fbx.bak по умолчанию. Сначала проверь предпросмотр. Неоднозначные общие UV-привязки сохраняются с предупреждением UVSET-CONFLICT.',
     help: 'Встроенная полная справка EXE. Входные файлы не нужны.', version: 'Версии EXE и встроенного FBX SDK. Входные файлы не нужны.',
     dependencies: flags => ` Добавлены зависимости: ${flags.join(', ')}.`, selected: count => `выбрано: ${count}`,
     ready: count => `Готово · путей: ${count}. Запусти в PowerShell из папки с patch_fbx.exe.`
@@ -86,7 +86,7 @@ function initBuilder() {
     audit: 'Scan and report only. Original FBX files stay unchanged; select individual diagnostics as needed.',
     inspect: 'Detailed mesh and material data in the console. No repairs or report file.',
     preview: 'Show proposed changes. No FBX writes or backups.',
-    apply: 'Rewrites FBX with a .fbx.bak backup by default. Saving can fail in 1.0.0 due to the known issue; audit or preview is recommended for now.',
+    apply: 'Applies the selected repairs with a .fbx.bak backup by default. Check the preview first. Ambiguous shared UV bindings are preserved with a UVSET-CONFLICT warning.',
     help: 'Complete built-in EXE help. No input files needed.', version: 'Tool and linked FBX SDK versions. No input files needed.',
     dependencies: flags => ` Added dependencies: ${flags.join(', ')}.`, selected: count => `${count} selected`,
     ready: count => `Ready · ${count} input path(s). Run in PowerShell beside patch_fbx.exe.`

@@ -75,7 +75,7 @@
 <details class="workflow-shot"><summary>Show the interface screenshot</summary><figure><img src="/modelbatch/guide/images/fbx-import.png" width="800" height="520" loading="lazy" decoding="async" alt="FBX Import: directory, file selection, options and per-file status."><figcaption>FBX Import: directory, file selection, options and per-file status. · Max 2024 · 1.2.0</figcaption></figure></details>
 </div></details><details class="workflow" id="fbx-audit" data-tool="fbx" data-keywords="audit report cli command terminal batch check аудит отчёт команда библиотека">
 <summary><span class="workflow-title"><strong>Audit an FBX library and get one report</strong><small>Scan subfolders without modifying models. No Max installation required.</small></span><span class="workflow-tool">FBX Patch Tool</span></summary>
-<div class="workflow-body"><p>Extract FBX Patch Tool 1.0.0 and open PowerShell beside <code>patch_fbx.exe</code>. Replace the example folder below with your own.</p><ol>
+<div class="workflow-body"><p>Extract FBX Patch Tool 1.0.1 and open PowerShell beside <code>patch_fbx.exe</code>. Replace the example folder below with your own.</p><ol>
 <li>Check the executable with <code>.\patch_fbx.exe --version</code>.</li>
 <li>Run the audit command below: <code>-r</code> includes subfolders, <code>-v</code> prints per-file results and <code>-j 4</code> limits processing to four workers.</li>
 <li>Read <code>audit.md</code> in the current directory and inspect the reported models. An existing report with that name will be overwritten.</li>
@@ -90,13 +90,13 @@
 <li>Run the command below with your model folder. Keep <code>-n</code>: it selects dry-run.</li>
 <li>Review proposed tangent/binormal removal and UV/vertex-color cleanup on collision meshes.</li>
 <li>In the command builder, choose <strong>Preview</strong> to combine other operations. For example, UV clamping changes out-of-range coordinates; it does not unwrap or pack lightmaps.</li>
-<li>In release 1.0.0, remain in audit or preview mode. Applying repairs has a confirmed staged-export failure; the guide includes its exact error and limitations.</li>
+<li>After reviewing the preview, remove -n to apply the selected repairs. Version 1.0.1 fixes the staged-export failure and keeps .fbx.bak backups by default.</li>
 </ol>
 <div class="workflow-command"><pre><code>.\patch_fbx.exe -n -r --strip-tbn --strip-col-data &#x27;D:\Models&#x27;</code></pre><button class="command-copy" type="button" hidden>Copy command</button><span class="copy-status" role="status" aria-live="polite"></span></div>
-<div class="workflow-result"><p><strong>Check the result.</strong> The command previews changes without writing FBX files or backups. This page does not recommend an apply command for the affected 1.0.0 release.</p></div>
-<div class="notice"><p>Known 1.0.0 error: <code>staged export is no longer the file that was validated</code> (exit 2). If an earlier apply attempt names a .bak.tmp file in its error, keep that file.</p></div>
+<div class="workflow-result"><p><strong>Check the result.</strong> The command previews changes without writing FBX files or backups. Remove -n only after checking the selected repairs and input paths.</p></div>
+<div class="notice"><p>1.0.1 verified two repair sets on 329 copied production files, including exact backups and repeat runs. Conflicting shared UV0 bindings are reported as UVSET-CONFLICT and preserved.</p></div>
 <div class="demo-actions"><a href="/fbx-patch/#builder">Command builder →</a><a href="/downloads/#fbx">Downloads ↓</a></div>
 </div></details></div>
-<details class="capture-note"><summary>Release context</summary><p style="padding:16px">MAX ModelBatch 1.2.1 and FBX Patch Tool 1.0.0. Screenshots are the existing Max 2024 test captures from 1.2.0 and show some earlier labels. Native runtime validation is confirmed for Max 2024; other hosts have SDK build and test coverage. Release packages and original SHA-256 checksums are publicly available.</p></details></main>
+<details class="capture-note"><summary>Release context</summary><p style="padding:16px">MAX ModelBatch 1.2.1 and FBX Patch Tool 1.0.1. Screenshots are the existing Max 2024 test captures from 1.2.0 and show some earlier labels. Native runtime validation is confirmed for Max 2024; other hosts have SDK build and test coverage. Release packages and SHA-256 checksums are publicly available.</p></details></main>
 <footer class="site-footer"><span>SashaRX · Tools &amp; projects</span><a href="/">← All projects</a></footer></div>
 </body></html>

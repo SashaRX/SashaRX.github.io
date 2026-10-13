@@ -75,7 +75,7 @@
 <details class="workflow-shot"><summary>Показать скриншот интерфейса</summary><figure><img src="/modelbatch/guide/images/fbx-import.png" width="800" height="520" loading="lazy" decoding="async" alt="FBX Import: папка, выделение файлов, настройки и статусы."><figcaption>FBX Import: папка, выделение файлов, настройки и статусы. · Max 2024 · 1.2.0</figcaption></figure></details>
 </div></details><details class="workflow" id="fbx-audit" data-tool="fbx" data-keywords="audit report cli command terminal batch check аудит отчёт команда библиотека">
 <summary><span class="workflow-title"><strong>Проверить библиотеку FBX и получить общий отчёт</strong><small>Сканирование вложенных папок без изменения моделей. Max не требуется.</small></span><span class="workflow-tool">FBX Patch Tool</span></summary>
-<div class="workflow-body"><p>Распакуй FBX Patch Tool 1.0.0 и открой PowerShell рядом с <code>patch_fbx.exe</code>. Замени пример папки ниже своей.</p><ol>
+<div class="workflow-body"><p>Распакуй FBX Patch Tool 1.0.1 и открой PowerShell рядом с <code>patch_fbx.exe</code>. Замени пример папки ниже своей.</p><ol>
 <li>Проверь программу командой <code>.\patch_fbx.exe --version</code>.</li>
 <li>Запусти аудит ниже: <code>-r</code> включает вложенные папки, <code>-v</code> показывает результаты по файлам, <code>-j 4</code> ограничивает обработку четырьмя процессами.</li>
 <li>Открой <code>audit.md</code> в текущей папке и проверь найденные модели. Существующий отчёт с таким именем будет перезаписан.</li>
@@ -90,13 +90,13 @@
 <li>Запусти команду ниже со своей папкой моделей. Оставь <code>-n</code>: это режим dry-run.</li>
 <li>Проверь план удаления тангенсов/бинормалей и очистки UV/цветов вершин у мешей коллизий.</li>
 <li>Для других операций выбери <strong>Предпросмотр</strong> в конструкторе команд. Например, ограничение UV меняет координаты вне диапазона, но не создаёт и не упаковывает lightmap-развёртку.</li>
-<li>В релизе 1.0.0 используй аудит или предпросмотр. У применения исправлений подтверждена ошибка временного экспорта; её текст и ограничения есть в полной инструкции.</li>
+<li>После проверки предпросмотра убери -n, чтобы применить выбранные исправления. В 1.0.1 ошибка временного экспорта исправлена; по умолчанию создаётся .fbx.bak.</li>
 </ol>
 <div class="workflow-command"><pre><code>.\patch_fbx.exe -n -r --strip-tbn --strip-col-data &#x27;D:\Models&#x27;</code></pre><button class="command-copy" type="button" hidden>Копировать команду</button><span class="copy-status" role="status" aria-live="polite"></span></div>
-<div class="workflow-result"><p><strong>Проверь результат.</strong> Команда показывает план без записи FBX и резервных копий. Для проблемного релиза 1.0.0 здесь не предлагается команда применения.</p></div>
-<div class="notice"><p>Известная ошибка 1.0.0: <code>staged export is no longer the file that was validated</code> (код 2). Если предыдущая попытка применения указала файл .bak.tmp в ошибке, сохрани его.</p></div>
+<div class="workflow-result"><p><strong>Проверь результат.</strong> Команда показывает план без записи FBX и резервных копий. Убирай -n после проверки выбранных исправлений и входных путей.</p></div>
+<div class="notice"><p>В 1.0.1 два набора исправлений проверены на 329 копиях рабочих файлов, включая точные резервные копии и повторное применение. Конфликтующие общие UV0-привязки отмечаются как UVSET-CONFLICT и сохраняются.</p></div>
 <div class="demo-actions"><a href="/ru/fbx-patch/#builder">Конструктор команд →</a><a href="/ru/downloads/#fbx">Скачать ↓</a></div>
 </div></details></div>
-<details class="capture-note"><summary>Версии и иллюстрации</summary><p style="padding:16px">MAX ModelBatch 1.2.1 и FBX Patch Tool 1.0.0. Используются существующие тестовые снимки Max 2024 из версии 1.2.0, поэтому на них встречаются старые названия. Проверка в самом Max подтверждена для 2024; остальные версии имеют SDK-сборки и тесты. Готовые пакеты и оригинальные SHA-256 доступны публично.</p></details></main>
+<details class="capture-note"><summary>Версии и иллюстрации</summary><p style="padding:16px">MAX ModelBatch 1.2.1 и FBX Patch Tool 1.0.1. Используются существующие тестовые снимки Max 2024 из версии 1.2.0, поэтому на них встречаются старые названия. Проверка в самом Max подтверждена для 2024; остальные версии имеют SDK-сборки и тесты. Готовые пакеты и SHA-256 доступны публично.</p></details></main>
 <footer class="site-footer"><span>SashaRX · Инструменты и проекты</span><a href="/ru/">← Все проекты</a></footer></div>
 </body></html>

@@ -176,8 +176,8 @@ export const options = [
     "flag": "--apply-materials-patch",
     "group": "materials",
     "kind": "repair",
-    "en": "Enable texture shading, fill empty relative texture paths and bind diffuse textures to UV0. These three repairs are off by default.",
-    "ru": "Включить текстурный шейдинг, заполнить пустые относительные пути текстур и привязать diffuse к UV0. По умолчанию эти три исправления выключены.",
+    "en": "Enable render-mesh texture shading, fill empty relative paths and bind diffuse textures to UV0. Shared UVSet conflicts are reported and preserved; repairs are off by default.",
+    "ru": "Включить шейдинг render-мешей, заполнить пустые относительные пути и привязать diffuse к UV0. Конфликтующие общие привязки отмечаются и сохраняются; исправления по умолчанию выключены.",
     "aliases": [],
     "requires": [],
     "argument": ""

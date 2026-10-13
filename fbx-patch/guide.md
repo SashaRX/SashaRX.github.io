@@ -1,10 +1,10 @@
-# FBX Patch Tool 1.0.0
+# FBX Patch Tool 1.0.1
 
 Complete Windows x64 command reference. No Max, Unity or Qt installation is needed.
 
 Audit and repair existing FBX libraries: materials, textures, UVs, vertex colors, collisions, normals, smoothing, units, axes, geometry and metadata. Process multiple files and folders in one run.
 
-Download: https://github.com/SashaRX/MaxModelBatch-Releases/releases/tag/patch-fbx-v1.0.0
+Download: https://github.com/SashaRX/MaxModelBatch-Releases/releases/tag/patch-fbx-v1.0.1
 
 ## Quick start
 
@@ -20,7 +20,8 @@ Extract the ZIP and open PowerShell beside patch_fbx.exe. This is a console prog
 
 Without repair flags the tool only audits. -n previews repairs without FBX/backup writes; --inspect always reads only. --report-file can write a report during a dry run.
 
-**Known issue in 1.0.0:** applying repairs can fail with `staged export is no longer the file that was validated`, exit code 2. Use audit or preview for now. Keep the `.bak.tmp` named in the error. This documentation update does not fix the EXE issue.
+
+Shared diffuse textures used by meshes with different UV0 names are reported as UVSET-CONFLICT. Their UVSet is preserved; rename the source UV0 channels consistently or use separate texture/material bindings before retrying that repair.
 
 ## All 62 user-facing options
 
@@ -43,7 +44,7 @@ Without repair flags the tool only audits. -n previews repairs without FBX/backu
 
 | Option | Behavior |
 |---|---|
-| `--apply-materials-patch` | Enable texture shading, fill empty relative texture paths and bind diffuse textures to UV0. These three repairs are off by default. |
+| `--apply-materials-patch` | Enable render-mesh texture shading, fill empty relative texture paths and bind diffuse textures to UV0. Conflicting shared UV bindings are reported and preserved. These repairs are off by default. |
 | `--fix-mat-layers` | Repair render-mesh material layers: move a valid assignment to layer 0 and remove eNone placeholders. Geometry channels stay intact. |
 | `--upgrade-material-to-phong` | Convert Lambert or generic materials to Phong while keeping names, diffuse values and diffuse textures; zero specular/reflection. |
 | `--create-default-material-from-pool` | Give render meshes with no material a Phong material based on the most frequent pool entry. Needs --material-pool and a usable donor in the input set. |

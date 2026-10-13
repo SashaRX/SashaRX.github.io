@@ -1,0 +1,1019 @@
+patch_fbx.exe [options] <path>...
+
+Scan FBX files and report (and optionally fix) common categories of
+issues that prevent clean round-trips back into 3ds Max or other
+DCCs (or trip Unity import):
+
+  1. Materials (opt-in fix, --apply-materials-patch):
+     - FbxNode::SetShadingMode(eTextureShading) on every node with at
+       least one material attached.
+     - FbxFileTexture::SetRelativeFileName(<basename>) on every file
+       texture whose relative-path slot is empty.
+     - Diffuse-texture UVSet realignment to mesh UV[0].
+     The analyzer reports gaps in this trio unconditionally so
+     --report-file surfaces them, but the rewrite pipeline only
+     applies the trio when --apply-materials-patch is set. Without
+     it, files are rewritten ONLY when an explicitly enabled fix
+     flag (e.g. --strip-tangents-binormals) matches a finding.
+
+  2. UV2 range (opt-in fix):
+     UV2 is the third UV channel (FBX index 2 = UVChannel_3 in Max).
+     Out-of-range values (outside [0, 1] with 1e-4 tolerance) are
+     reported. Pass --clamp-uv2 to clamp them in place.
+
+  3. Vertex color range (opt-in fix):
+     Vertex color RGBA values outside [0, 1] across all vertex color
+     elements on every mesh. Pass --clamp-vcolor to clamp them.
+
+  4. Missing vertex color (opt-in fix):
+     Meshes that ship without any vertex color element. Unity shaders
+     that multiply by mesh.color can read these as (0,0,0,0). Pass
+     --fill-missing-vcolor to add an eByControlPoint / eDirect layer
+     filled with (1,1,1,1) on every such mesh.
+
+  5. Collision (_COL) mesh data (opt-in fix):
+     Meshes whose owning node name ends in "_COL" (case-insensitive)
+     are collision-only and never render. They get skipped by every
+     check above (materials, UV2, vcolor range, missing vcolor). Pass
+     --strip-col-data to remove every UV channel and every vertex
+     color layer on such meshes.
+
+Options:
+  -r, --recursive             Recurse into directories. Without it,
+                              directories are scanned at the top level
+                              only.
+  -n, --dry-run               Scan only - do not modify any file.
+                              Reports which files would be patched and
+                              what would change.
+      --no-backup             Skip writing <name>.fbx.bak before
+                              patching. By default a backup is written.
+      --apply-materials-patch
+                              Opt into the materials patch trio
+                              (SetShadingMode flag, FbxFileTexture
+                              relative-path fill-in, diffuse-texture
+                              UVSet realignment to render mesh UV[0]).
+                              Shared textures with conflicting UV0
+                              names are left unchanged and reported
+                              as UVSET-CONFLICT; one UVSet property
+                              cannot select several channel names.
+                              DEFAULT IS OFF — without this flag, a
+                              file is rewritten ONLY when at least
+                              one explicitly enabled fix flag (e.g.
+                              --strip-tangents-binormals) matches a
+                              finding on that file; the materials
+                              trio's findings are reported but not
+                              applied. Set --apply-materials-patch
+                              to restore the legacy always-on
+                              behaviour where any materials-trio
+                              finding also qualifies as a rewrite
+                              trigger and pulls all three sites
+                              (SetShadingMode, relative-path,
+                              UVSet) into ApplyPatch. Pair with
+                              --strip-tangents-binormals etc. when
+                              you DO want the materials cleanup
+                              alongside the explicit fix.
+      --clamp-uv1             Clamp UV1 (second UV channel) values to
+                              [0, 1] when out of range. Default: off
+                              (scan only).
+      --clamp-uv2             Clamp UV2 (third UV channel) values to
+                              [0, 1] when out of range. Default: off
+                              (scan only).
+      --clamp-vcolor          Clamp vertex color RGBA values to [0, 1]
+                              when out of range. Default: off (scan
+                              only).
+      --fill-missing-vcolor   Add a vertex color layer filled with
+                              (1,1,1,1) on every mesh that has none.
+                              eByControlPoint / eDirect mapping.
+                              Default: off (scan only).
+      --fill-missing-uv1      Synthesise the second UV channel
+                              ("UVChannel_2", FBX index 1) on every
+                              non-_COL mesh that ships without one.
+                              Each entry is (1.0, 1.0); mapping mode
+                              and entry count mirror UV[0] so the
+                              new channel matches the file's
+                              authoring convention. Lets shaders
+                              that read UV1 unconditionally see
+                              deterministic data instead of
+                              uninitialized GPU memory. Default:
+                              off.
+      --fill-missing-uv2      Same as --fill-missing-uv1, but for
+                              the third UV channel ("UVChannel_3",
+                              FBX index 2). Often the channel that
+                              non-Max DCC tools forget to author.
+                              Default: off.
+      --fix-mat-layers        Remove FbxLayerElementMaterial entries
+                              with mapping=eNone (the binary FBX
+                              "NoMappingInformation" placeholder)
+                              that some non-Max DCC exporters drop
+                              on layer 0, with the actual ByPolygon
+                              assignment buried on a higher layer.
+                              3ds Max reads layer 0 first and treats
+                              eNone as "no material", silently
+                              dropping the material from the imported
+                              mesh. With this flag set, the patcher
+                              clones the first valid matEl onto layer
+                              0 (or creates a fresh eAllSame one if
+                              none exists) and removes every eNone
+                              placeholder from every layer. Geometry
+                              layer elements (UV, normals, vcolor,
+                              tangents, smoothing) are NOT touched.
+                              Default: off.
+      --create-default-material-from-pool
+                              Synthesise an FbxSurfacePhong on every
+                              non-_COL node whose mesh ships without
+                              any FbxSurfaceMaterial (some DCC tools
+                              strip materials on export, leaving the
+                              mesh un-shadeable on import). The
+                              synthesised material adopts the name
+                              and diffuse texture of the pool's
+                              most-frequent entry (so a SovietBuilding
+                              dataset gets M_SovietBuilding_BaseAtlas_01
+                              with its canonical albedo automatically),
+                              and the mesh gets an eAllSame matEl on
+                              layer 0 pointing at material index 0.
+                              Requires --material-pool. Default: off.
+      --strip-extra-vcolor-layers
+                              Drop every FbxLayerElementVertexColor
+                              beyond layer 0 on every non-_COL mesh.
+                              Some DCC exporters ship multiple vcolor
+                              layers (typically with layer 0 empty
+                              and the actual data on layer 2);
+                              3ds Max surfaces every extra layer as
+                              an unnamed map channel (4:map, 5:map...)
+                              that clutters Map Channel Info and
+                              confuses material setup. Before stripping,
+                              an empty layer 0 is populated from the
+                              first non-empty higher layer, preserving
+                              authored color data. Default: off.
+      --detect-broken-tbn     Diagnostic flag (no auto-fix). For
+                              every render mesh that ships an
+                              FbxLayerElementTangent, fan-triangulate
+                              UV[0] and accumulate per-polygon
+                              signed area. A mesh that has both
+                              positive AND negative UV-winding
+                              polygons is mirrored; combined with an
+                              explicit tangent layer that's the
+                              canonical signature of the FBX SDK
+                              tangent.w handedness encoding
+                              (pIgnoreTangentFlip=false default)
+                              that Unity's MikkT reader disagrees
+                              with on the flipped islands. Reports
+                              meshes with mirrored UV + tangent
+                              layer plus the minority-winding polygon
+                              count (a 1/2000 split is benign, a
+                              50/50 split is severe). Pair with
+                              --strip-tangents-binormals to actually
+                              fix the flagged set. Cost: O(polygons
+                              * avg-degree) per mesh, opt-in to keep
+                              clean-run wallclock down. Default: off.
+      --strip-tangents-binormals  (alias --strip-tbn)
+                              Fully remove every
+                              FbxLayerElementTangent and
+                              FbxLayerElementBinormal from every
+                              mesh. Smoothing groups, normals, UV,
+                              vcolor, and materials stay untouched.
+                              Lets Unity recompute MikkTSpace
+                              tangents on import — fixes the FBX
+                              SDK tangent.w handedness encoding
+                              (pIgnoreTangentFlip=false default in
+                              GenerateTangentsData) that Unity reads
+                              as inverted on mirrored-UV meshes.
+                              Implementation calls Destroy() on each
+                              layer element (not just SetTangents
+                              (nullptr) — the latter only nulls the
+                              layer's slot pointer while the
+                              element itself stays in
+                              FbxGeometryBase's element list and
+                              the FBX exporter writes it back on
+                              serialise). Idempotent on meshes that
+                              already have no tangents; applied to
+                              _COL meshes too (cheap no-op since
+                              colliders don't carry tangents in
+                              practice). Default: off.
+      --bake-tangents  (alias --bake-tbn)
+                              Write a fresh
+                              FbxLayerElementTangent +
+                              FbxLayerElementBinormal on every
+                              render mesh with a UV[0] layer via
+                              FbxMesh::GenerateTangentsData(0,
+                              /*overwrite=*/true,
+                              /*ignoreTangentFlip=*/true). The
+                              ignoreTangentFlip=true flag is the
+                              key — it suppresses the FBX SDK's
+                              default tangent.w handedness encoding
+                              (pIgnoreTangentFlip=false) that
+                              Unity's MikkTSpace reader inverts on
+                              mirrored UV islands and on hard /
+                              soft edge transitions of normal-
+                              mapped meshes. With it set, tangents
+                              are written in Unity-MikkT-
+                              compatible convention.
+                              
+                              Workflow on the Unity side: after
+                              bake, set the FBX importer's
+                              Model → Tangents dropdown from the
+                              default "Calculate" to "Import".
+                              Unity then uses our pre-baked
+                              tangents directly — sidesteps the
+                              broken normal-map shading at
+                              smooth/hard-edge transitions on
+                              meshes that ship without explicit
+                              tangents (the Unity FBX Exporter
+                              round-trip pattern).
+                              
+                              Mutually inclusive with --strip-
+                              tangents-binormals: strip runs first
+                              (removes any pre-existing tangent
+                              layers in non-Unity-MikkT
+                              convention), bake runs second
+                              (writes fresh in Unity-compatible
+                              convention). _COL meshes are
+                              skipped. Default: off.
+      --detect-broken-normals
+                              Diagnostic flag (no auto-fix). Audit
+                              every render mesh's
+                              FbxLayerElementNormal: count entries
+                              whose components are NaN / inf OR
+                              whose magnitude is below sqrt(1e-12)
+                              (legitimate normals are unit; anything
+                              below that is degenerate or zero-init
+                              data that breaks lighting in every
+                              downstream consumer). Also flags
+                              render meshes with NO normal layer at
+                              all — those force importers to fall
+                              back to face-flat shading. The
+                              underlying bug: --strip-tangents-
+                              binormals lets Unity rebuild tangents
+                              via MikkTSpace, which derives
+                              tangent-space FROM the normals — so
+                              broken normals produce broken tangents
+                              regardless of whether the original
+                              tangent layer was stripped or not.
+                              Pair with --rebuild-normals-from-
+                              smoothing to fix on the spot (when a
+                              smoothing layer is present) or
+                              re-export from source. Cost:
+                              O(normalEntries) per mesh; opt-in.
+                              Default: off.
+      --detect-missing-smoothing
+                              Diagnostic flag (no auto-fix). Flag
+                              render meshes that ship with no
+                              FbxLayerElementSmoothing on layer 0,
+                              OR with the layer present but every
+                              polygon's smGroup bitmask is 0 (every
+                              edge hard). The latter is the
+                              canonical Unity FBX Exporter
+                              fingerprint: Unity carries smoothing
+                              as edge flags, not bitmask groups, and
+                              re-exports come back with empty / all-
+                              zero smoothing data. Our own
+                              --rebuild-normals-from-smoothing
+                              depends on this layer to average
+                              normals correctly; without it the
+                              rebuild falls back to face-flat (every
+                              edge hard), which is rarely what the
+                              artist intended. Default: off.
+      --detect-faceted-normals
+                              Diagnostic flag (no auto-fix). For
+                              every render mesh, compare each
+                              polygon corner's stored normal against
+                              the polygon's geometric face normal
+                              (cross product of edge vectors). When
+                              every corner matches the face normal
+                              within ~0.8 angular degrees, the
+                              polygon is "faceted" — every edge is
+                              hard. A mesh with 100% faceted polys
+                              shades as a low-poly faceted prop
+                              even when the source authoring used
+                              smooth shading; the canonical
+                              fingerprint of a Unity FBX Exporter
+                              round-trip that dropped smoothing
+                              groups. Distinct from --detect-
+                              missing-smoothing because a mesh CAN
+                              ship a non-empty smoothing layer and
+                              still be fully faceted (every face
+                              gets its own unique smGroup bit).
+                              Surfaces both causes through the
+                              faceted-poly count. Pair the diagnosis
+                              with --rebuild-normals-from-smoothing
+                              when an authored smoothing layer
+                              exists, or fix at source by re-
+                              exporting with proper smoothing
+                              groups. Cost: O(polygons * avg-
+                              corners) per mesh; opt-in. Default:
+                              off.
+      --rebuild-shading       Full shading rebuild for files where
+                              Unity FBX Exporter (or similar
+                              re-exporter) dropped smoothing groups
+                              but preserved per-corner normals that
+                              encode hard / soft edges. Two-path
+                              algorithm:
+                                1. If the mesh has eByPolygon
+                                   FbxLayerElementSmoothing with
+                                   non-zero data, delegate to the
+                                   same logic --rebuild-normals-
+                                   from-smoothing uses.
+                                2. Otherwise: derive smoothing
+                                   groups from the existing per-
+                                   corner normal layer. Adjacent
+                                   polygons sharing an edge whose
+                                   corner normals match on both
+                                   sides (dot >= 0.9999) are
+                                   united into one smoothing
+                                   island via union-find; each
+                                   island gets a unique smGroup
+                                   bit (recycled mod 32 if more
+                                   than 32 islands). Writes the
+                                   derived bitfield back as
+                                   FbxLayerElementSmoothing AND
+                                   regenerates per-corner normals
+                                   using the same smGroup-aware
+                                   averaging rule.
+                              
+                              Result: a self-contained FBX where
+                              Unity reads explicit normals
+                              (Normals: Calculate not required),
+                              3ds Max sees proper smoothing groups,
+                              MikkTSpace tangent computation gets
+                              consistent input. Skipped on _COL
+                              meshes. Default: off.
+      --rebuild-shading-from-uv
+                              Shading rebuild driven by UV-shell
+                              topology instead of per-corner normals.
+                              For each polygon pair sharing an edge,
+                              compare UV[0] coordinates at both
+                              endpoints: a UV seam (different UVs on
+                              either side) becomes a hard smoothing
+                              seam, welded UVs stay inside one
+                              smoothing island. Union-find produces
+                              the components, each gets a unique
+                              smGroup bit (recycled mod 32 if more
+                              than 32 islands). Writes the derived
+                              bitfield back as FbxLayerElementSmoothing
+                              AND regenerates per-corner normals
+                              using the same smGroup-aware averaging
+                              rule --rebuild-shading uses.
+                              
+                              Use case: FBX from a workflow that
+                              stripped BOTH smoothing and explicit
+                              normals but where the UV layout was
+                              authored with chart edges aligned to
+                              the intended hard seams (RizomUV /
+                              Maya / Blender conventional output).
+                              The normals path (--rebuild-shading)
+                              has no signal to derive smoothing from
+                              in that case — UV charts ARE the
+                              signal.
+                              
+                              Runs BEFORE --rebuild-shading so the
+                              combination (both flags set) ends with
+                              UV-derived smGroups + normals consistent
+                              with them. Skipped on _COL meshes and
+                              on meshes without UV[0]. Default: off.
+      --fix-normal-w  (alias --zero-normal-w)
+                              Zero out the W component on every
+                              entry of every FbxLayerElementNormal
+                              on every mesh. Unity FBX Exporter
+                              (package 5.x) writes W=1 on every
+                              normal; per FBX SDK convention W
+                              should be 0 because normals are
+                              direction vectors, not positions
+                              (homogeneous-coordinate position bit
+                              must be zero for vectors). Downstream
+                              consumers that read normals as float4
+                              and multiply by a 4x4 model matrix
+                              get the model's translation folded
+                              into the normal vector — visibly
+                              broken lighting at any non-origin
+                              transform, custom shaders that sample
+                              normal.w stuck at 1.
+                              
+                              The fix walks every normal layer's
+                              direct array and zeroes W where
+                              |W| > 1e-12. Idempotent on already-
+                              correct files; XYZ direction
+                              preserved verbatim. Default: off.
+      --rebuild-normals-from-smoothing
+                              Replace every FbxLayerElementNormal
+                              on every render mesh with a freshly-
+                              computed eByPolygonVertex / eDirect
+                              layer built from the per-polygon
+                              smoothing-group bitmasks (FbxLayer 0's
+                              FbxLayerElementSmoothing). Averaging
+                              rule mirrors Max/Maya canonical
+                              semantics: two adjacent faces share a
+                              smooth (averaged) normal at a shared
+                              control point iff (smP & smQ) is
+                              non-zero AND smP != 0. smGroup == 0
+                              on a face means "every edge of that
+                              face is hard" so the face contributes
+                              its own face-normal only.
+                              _COL meshes are skipped (collision
+                              meshes don't render). When the mesh
+                              has no smoothing layer the rebuild is
+                              a no-op for that mesh — surface that
+                              case via --detect-missing-smoothing
+                              first. Default: off.
+      --strip-broken-uv-layers
+                              Detach UV layer-elements whose direct
+                              array is empty OR whose index array
+                              size doesn't match the mapping mode's
+                              required count (cpCount /
+                              polygonVertexCount / polygonCount /
+                              1). Both 3ds Max and Unity surface
+                              this state as "Invalid UV index
+                              table(s)" / "[LayerElement] Bad
+                              number of elements in array
+                              (UVIndex)" because importers walk
+                              the index array assuming N entries
+                              and stuff arbitrary values into the
+                              gaps. Detach happens via FbxLayer::
+                              SetUVs(nullptr,type) (same mechanism
+                              as --strip-col-data); applied to
+                              both render and _COL meshes. Runs
+                              BEFORE --fill-missing-uv* so a fresh
+                              replacement can take the freed slot.
+                              Default: off.
+      --convert-to-meters     Convert the scene's system unit to
+                              meters by calling FbxSystemUnit::m.
+                              ConvertScene(scene). The SDK
+                              implements the conversion by stamping
+                              a compensating LclScaling on the root
+                              child (e.g. cm -> m leaves the root
+                              child with S=0.01) rather than
+                              rewriting geometry directly. PAIR
+                              with --bake-non-identity-scale to
+                              collapse that compensating scale
+                              into the descendant geometry — order
+                              is enforced internally (convert first,
+                              then bake), so passing both in any
+                              order on the command line works.
+                              Final state with both flags: identity
+                              scale on every node, meter-sized
+                              translations, meter-sized geometry,
+                              and Unity reads "1m (File) to 1m
+                              (Unity)" with no auto-scale.
+                              No-op when already in meters.
+                              Default: off.
+      --restore-mesh-names-from-node
+                              For every mesh whose attribute name
+                              is a generic placeholder ("Scene",
+                              "Geometry", "Default", "MyMesh",
+                              "Mesh", or empty), copy the owning
+                              FbxNode's name into the mesh
+                              attribute. 3ds Max's FBX importer
+                              resets every mesh to "Scene" on
+                              re-export, which Unity surfaces as
+                              auto-numbered MeshAsset 0/1/2 names
+                              instead of meaningful identifiers.
+                              Default: off.
+      --restore-texture-names-from-file
+                              For every FbxFileTexture whose name
+                              matches a 3ds Max default channel
+                              label ("DiffuseColor_Texture",
+                              "BumpColor_Texture",
+                              "SpecularColor_Texture", etc.),
+                              SetName() to the basename of
+                              GetFileName() minus extension. The
+                              Max FBX path rewrites every texture
+                              name to a generic channel label,
+                              losing the human-readable identity
+                              that material editors and Unity show.
+                              Default: off.
+      --strip-animation       Remove every FbxAnimStack /
+                              FbxAnimLayer / FbxAnimCurveNode /
+                              FbxAnimCurve in the scene. 3ds Max's
+                              FBX exporter ships static meshes
+                              with a default "Take 001" stack
+                              containing zero-curve layers — pure
+                              overhead bytes that bloat the file
+                              and slow Unity's import pipeline.
+                              No-op on files without animation.
+                              Default: off.
+      --strip-empty-meshes    Remove FbxNode objects whose attached
+                              FbxMesh has zero control points OR
+                              zero polygons. These are junk left
+                              behind by upstream operations
+                              (failed boolean ops, deleted geometry
+                              whose node was kept, hidden meshes
+                              whose attribute got cleared) — they
+                              bloat the scene graph and confuse
+                              Unity's mesh-asset enumeration.
+                              The node is detached from its parent
+                              and destroyed; runs after every
+                              fill / strip pass so we don't drop a
+                              node that --fill-missing-vcolor /
+                              -uv* would have populated.
+                              Default: off.
+      --strip-non-mesh-nodes  Detach + destroy every FbxNode whose
+                              attribute type is anything other than
+                              FbxMesh / FbxNull / unset — drops
+                              cameras, lights, skeletons, NURBS,
+                              patches, markers, IK effectors, and
+                              other junk DCC tools sometimes leave
+                              in the FBX even when the asset is
+                              supposed to be a static prop. The
+                              mesh hierarchy is preserved.
+                              Default: off.
+      --strip-hidden-nodes    Detach + destroy every FbxNode whose
+                              Visibility property is false. Hidden
+                              nodes ship in the FBX even when the
+                              source app doesn't show them; Unity
+                              imports them silently and they bloat
+                              the asset. Skipped on _COL nodes —
+                              some collision-mesh conventions hide
+                              the collider in the viewport for
+                              clarity, and dropping the collision
+                              data would change the asset's
+                              behaviour. Default: off.
+      --strip-empty-dummies   Detach + destroy every FbxNode that is
+                              a leaf dummy with identity transform
+                              (no children, attribute is null /
+                              FbxNull, T=(0,0,0) R=(0,0,0) S=(1,1,1)).
+                              Pure structural junk left by hierarchy
+                              edits that didn't compact the empty
+                              groups they vacated. Roots and dummies
+                              that own a child or carry a non-
+                              identity transform stay — they're
+                              load-bearing. Default: off.
+      --upgrade-material-to-phong
+                              Re-create every FbxSurfaceLambert
+                              (or generic FbxSurfaceMaterial) as
+                              FbxSurfacePhong with the same name +
+                              diffuse value + diffuse texture
+                              connections. Phong is the canonical
+                              "rich" FBX material class — Max's
+                              FBX importer maps Phong's sDiffuse
+                              to Physical Material Base Color
+                              reliably, while Lambert sometimes
+                              loses the diffuse-texture link
+                              during the auto-conversion. Specular,
+                              Shininess, Reflection on the new
+                              Phong are zeroed so the visual
+                              result matches the source Lambert.
+                              Runs AFTER --replace-col-placeholder-
+                              materials so donor materials get
+                              upgraded too. _COL placeholder
+                              materials destroyed earlier are NOT
+                              affected. Default: off.
+      --detect-non-ascii-names
+                              Diagnostic-only: scan every
+                              name-like string in the scene
+                              (node / mesh / material / texture
+                              names, UV / vcolor layer names,
+                              texture file paths) for Cyrillic
+                              codepoints, CJK / Hiragana /
+                              Katakana / Hangul, Windows-illegal
+                              chars (< > : " | ? *), and ASCII
+                              control codes. Counts and a sample
+                              of offending strings appear in the
+                              per-file [would patch] / [skipped]
+                              line. Useful for triaging assets
+                              from non-Latin pipelines before
+                              they hit Unity's filesystem-naming
+                              rules. Default: off.
+      --detect-modified       Diagnostic-only: flag files whose
+                              FbxDocumentInfo is empty / missing as
+                              "modified" — strong signal a metadata-
+                              stripping tool re-saved the file
+                              (MeshLab, TS plugin, ad-hoc rewriters).
+                              Original FBX exports from any major
+                              DCC populate Original_ApplicationName
+                              + LastSaved_ApplicationName at minimum;
+                              an empty SceneInfo means someone re-
+                              saved the file without preserving
+                              identity. Useful for triaging mixed
+                              asset libraries. Default: off.
+      --detect-unity-modified
+                              Diagnostic-only: flag files whose
+                              FbxDocumentInfo identifies Unity as the
+                              originator OR last saver (Original_/
+                              LastSaved_ ApplicationName /
+                              ApplicationVendor contains "Unity").
+                              Unity's FBX Exporter package re-encodes
+                              geometry through its own pipeline,
+                              often shipping side-effects we want to
+                              triage separately from the empty-
+                              SceneInfo case (--detect-modified):
+                              dropped vertex colors, custom-property
+                              bloat, animation curve quantization.
+                              Orthogonal to --detect-modified — a
+                              file can match both, only one, or
+                              neither. Default: off.
+      --detect-negative-scale
+                              Diagnostic-only: count nodes whose
+                              accumulated LclScaling has negative
+                              determinant — means an odd number of
+                              axes are flipped, which inverts polygon
+                              winding when the scale is collapsed
+                              into geometry. Unity reads inverted
+                              normals as backface-culled, leaving
+                              the mesh transparent from the front.
+                              No auto-fix: flipping every polygon's
+                              vertex order has too many edge cases
+                              to ship under a default flag. Default:
+                              off.
+      --uv2-y-zero            Synthesis-only flag: when used with
+                              --fill-missing-uv2, change the synth
+                              value from (1.0, 1.0) to (1.0, 0.0)
+                              so newly-created UV[2] channels use
+                              the project convention (UV2.Y = 0).
+                              Existing UV2 data on meshes that
+                              already have the channel is NOT
+                              touched — authored UV2 content
+                              (lightmap pack data, per-vertex
+                              metadata, etc.) is preserved verbatim.
+                              Default: off.
+      --strip-embedded-media  Clear embedded texture binary content
+                              from every FbxVideo in the scene
+                              (ContentClear()). Some DCC tools save
+                              FBX with the "Embed Media" option,
+                              packing every referenced texture's
+                              binary directly into the FBX —
+                              bloats by megabytes and fights
+                              Unity's asset pipeline (texture gets
+                              extracted to a temp dir on import,
+                              re-imported, then deduped). The
+                              FbxVideo and FbxFileTexture path
+                              reference both stay so importers
+                              resolve from disk normally.
+                              Default: off.
+      --rebind-missing-textures
+                              Re-resolve materials whose attached
+                              FbxFileTexture points at a file that
+                              doesn't exist on disk (dangling
+                              reference: paths from another machine,
+                              deleted assets, embedded-only blobs
+                              whose binary was stripped by
+                              --strip-embedded-media). Without this
+                              flag, --guess-textures only fires for
+                              materials with NO FbxFileTexture
+                              attached at all; with it, broken-path
+                              connections are disconnected and
+                              re-bound to a resolved match through
+                              the same naming-convention / pool /
+                              texture-root search. Existence is
+                              checked against the absolute path AND
+                              the relative path resolved against the
+                              FBX's own directory. Requires
+                              --guess-textures (which the resolver
+                              actually runs). Default: off.
+      --remove-orphan-vertices
+                              Remove control points (vertices) NOT
+                              referenced by any polygon. MeshLab's
+                              decimation / welding passes can leave
+                              isolated CPs in the mesh's vertex
+                              array; they bloat the count, push
+                              the AABB outward (breaking Unity
+                              bounds + lightmap-scale heuristics),
+                              and confuse mesh-analysis tools.
+                              The patch rebuilds the CP array,
+                              remaps every polygon-vertex index,
+                              and remaps every per-CP layer element
+                              (UV / vcolor / normal / tangent /
+                              binormal in eDirect or eIndexToDirect
+                              form). Layer elements with mapping
+                              != eByControlPoint are untouched.
+                              Default: off.
+      --remove-degenerate-polys
+                              Remove bad polygons via FbxMesh::
+                              RemoveBadPolygons (drops polygons
+                              with < 3 vertices and polygons with
+                              duplicate vertex indices) plus a
+                              manual zero-area triangle check
+                              (cross product of edge vectors with
+                              magnitude below epsilon). Both
+                              categories cause black flickering /
+                              lighting glitches in Unity and
+                              lightmap-baking artifacts; MeshLab's
+                              decimation and welding passes are
+                              typical sources. Default: off.
+      --replace-col-placeholder-materials
+                              Replace placeholder materials
+                              ("Lit", "Default", "Material",
+                              empty name + no diffuse texture)
+                              attached to _COL / _Collider /
+                              _Collision nodes with a render-mesh
+                              donor material from the same FBX.
+                              Donor preference: first non-_COL
+                              material with a connected diffuse
+                              FbxFileTexture; falls back to first
+                              non-placeholder non-_COL material;
+                              no-op if neither exists in the file.
+                              Fixes Unity's import-settings showing
+                              "Lit | None (Material)" in the
+                              Remapped Materials list. Default: off.
+      --bake-non-identity-scale
+                              Bake every node's LclScaling into its
+                              mesh control points. Walks the scene
+                              recursively from each root child with
+                              an accumulating parent scale: each
+                              mesh's vertices are multiplied by the
+                              accumulated scale, each child node's
+                              translation is multiplied by its
+                              parent's accumulated scale, and every
+                              node's LclScaling is reset to (1,1,1).
+                              Pivot/offset transforms and Geometric*
+                              properties are NOT touched. Useful for
+                              MeshLab-style exports where the root
+                              ends up with LclScaling = 0.01 and
+                              100x compensated geometry, which Unity
+                              imports with broken bounds, prefab
+                              overrides, lightmap scale, and
+                              batching. Default: off.
+      --bake-geometric-transforms
+                              Bake every FbxNode's
+                              GeometricTranslation / GeometricRotation
+                              / GeometricScaling into the attached
+                              mesh's control points and reset the
+                              GeometricXYZ properties to identity.
+                              The Geometric* triple is FBX SDK's
+                              "second pivot" — applied BEFORE the
+                              node's LclTransform and not propagated
+                              to children. Some Max workflows stash
+                              a non-zero pivot offset there; Unity
+                              and other DCC consumers ignore the
+                              GeometricXYZ properties entirely, so
+                              the offset visually disappears on
+                              import. Baking moves the offset into
+                              geometry so every consumer sees the
+                              intended placement. Default: off.
+      --strip-col-mat-layers  Same matEl-placeholder cleanup as
+                              --fix-mat-layers, but specifically
+                              targets _COL meshes (which the regular
+                              --fix-mat-layers skips because
+                              collision meshes don't render). Useful
+                              when the importer logs warnings about
+                              malformed collision data even though
+                              the meshes display correctly. Independent
+                              of --fix-mat-layers — set both for full
+                              cleanup. Default: off.
+      --strip-col-data        For every mesh whose owning node name
+                              ends in "_COL" (case-insensitive),
+                              remove all UV channels and all vertex
+                              color layers. Default: off (scan only).
+      --guess-textures        For every material whose diffuse slot
+                              has no texture attached, derive an
+                              expected albedo filename from the
+                              material name ("M_Foo" -> "T_Foo_
+                              Albedo") and look for a matching
+                              file. Search strategies, in order:
+                                (1) FBX's own dir + Textures/ sub.
+                                (2) Walk up parents probing
+                                    <parent>/Textures/ at each
+                                    level (up to 5).
+                                (3) Path mirror: replace any
+                                    Meshes/ segment in the FBX
+                                    dir path with Textures/ and
+                                    probe that mirrored dir + its
+                                    parents (Unreal-style global
+                                    asset trees).
+                                (4) --texture-root if given.
+                              Extensions tried in this order: png,
+                              tga, jpg, tif, dds. Default: off.
+      --debug-textures        Per-material diagnostic for missing-
+                              albedo lookups: prints the candidate
+                              stems tried for each material that
+                              didn't match any texture. Useful for
+                              tuning the naming convention against
+                              an unfamiliar asset library. Default:
+                              off.
+      --classify-source       Diagnostic flag (no auto-fix). Reads
+                              FbxDocumentInfo on every file and
+                              classifies the source into one of:
+                                empty, blender, 3ds-max-stock,
+                                maya-stock, unity-fbx,
+                                3ds-max-sdk-custom, other-named
+                              Adds a per-source breakdown to the
+                              summary and a SOURCE-<name> per-file
+                              row in --report-file (extras carry
+                              origVendor / origApp / lastVendor /
+                              lastApp). Subsumes --detect-modified
+                              (= empty bucket) and --detect-unity-
+                              modified (= unity-fbx bucket) but
+                              with wider categorisation; older
+                              flags stay around for backward-
+                              compat. Default: off.
+      --detect-broken-axis    Diagnostic flag (no auto-fix). Scene-
+                              level audit of GlobalSettings axis-
+                              system + unit-scale header. Flags any
+                              file where:
+                                - OriginalUpAxis is the FBX-SDK
+                                  "axis conversion never invoked"
+                                  sentinel (writer skipped
+                                  FbxAxisSystem::ConvertScene)
+                                - UnitScaleFactor disagrees with
+                                  the live SystemUnit (header lies
+                                  about the unit data was written
+                                  in)
+                                - UpAxis declared as Y in the
+                                  header but no root-level node
+                                  carries a compensating PreRotation
+                                  around X (canonical Z-up→Y-up
+                                  bake is missing — header lies
+                                  about data orientation)
+                              Pair with --detect-axis-mismatch for
+                              the geometric counterpart (vertices
+                              vs normals living in different
+                              frames). Read-only: the actual fix
+                              needs FbxAxisSystem::ConvertScene
+                              which is destructive (rewrites every
+                              node transform / mesh control point /
+                              normal). The audit categorises files
+                              so the user can triage which assets
+                              need a one-time re-export. Cost:
+                              O(rootChildren) per file. Default:
+                              off.
+      --fix-axis-system       Opt-in fix: rewrite the scene's
+                              axis-system header + invoke
+                              FbxAxisSystem::ConvertScene to bring
+                              data and header into agreement on a
+                              Y-up convention (Unity-friendly
+                              target). Two sub-paths:
+                                A) "OriginalUpAxis sentinel" — header
+                                   looks consistent with data, only
+                                   the axis-conversion stamp is
+                                   missing. Calling
+                                   MayaYUp.ConvertScene refreshes the
+                                   stamp with no rotation when the
+                                   header already matches Y-up.
+                                B) "Header lies" — header declares
+                                   Y-up but vertex/normal mismatch
+                                   audit confirms the data is in
+                                   Z-up. Patcher first overwrites
+                                   GlobalSettings::AxisSystem with
+                                   Max (Z-up RH) so the SDK source-
+                                   axis matches truth, THEN calls
+                                   MayaYUp.ConvertScene — SDK now
+                                   applies the honest -90 deg X
+                                   rotation. Severity-gated: needs
+                                   mismatch ratio >= 0.25 across
+                                   >= 50 scored polys to fire path B.
+                              
+                              Order is fixed: runs as ApplyPatch
+                              PRE-PASS 0, BEFORE --convert-to-meters
+                              (PRE-PASS 1) and BEFORE every per-mesh
+                              patch. ConvertScene rebuilds layer
+                              elements during its walk and would
+                              silently revert per-mesh fixes if
+                              they ran first.
+                              
+                              Forces --detect-broken-axis +
+                              --detect-axis-mismatch ON during
+                              Analyze regardless of the user's
+                              flags — the fix needs the audits to
+                              choose A vs B.
+                              
+                              Destructive: rewrites every node
+                              transform, mesh control point, normal.
+                              Always backed up via .bak unless
+                              --no-backup is set. Idempotent on
+                              already-Y-up-consistent files.
+                              Default: off.
+      --detect-axis-mismatch  Diagnostic flag (no auto-fix). Per-mesh
+                              geometric consistency check: for every
+                              non-_COL render mesh, fan-triangulate
+                              each polygon, compute the geometric
+                              face normal via cross product of
+                              control-point edges, then average the
+                              per-corner normals across the polygon's
+                              corners. A polygon is flagged when
+                              |dot(face, avgCorner)| < 0.5 (~60°
+                              divergence) — the canonical signature
+                              of vertices stored in one coordinate
+                              system while normals were written in
+                              another. Reports per-mesh and per-file
+                              totals so triage is severity-aware (a
+                              5/2000 split is noise, a 1500/2000
+                              split means the file's geometry and
+                              normals literally describe different
+                              axes). Pair with --detect-broken-axis
+                              for the header-level counterpart. No
+                              fix path: the only safe rewrite is
+                              FbxAxisSystem::ConvertScene (see
+                              --detect-broken-axis docs). Cost:
+                              O(polygons * avg-degree) per affected
+                              mesh. Default: off.
+      --short-paths           Print FBX paths in console diagnostics
+                              and --report-file rows starting at the
+                              first 'Assets' or 'Content' directory
+                              segment (case-insensitive). Useful when
+                              the input root is e.g.
+                                C:\Foo\bar\Assets\Content\Meshes\X
+                              and every report row otherwise repeats
+                              the absolute prefix. Falls back to the
+                              full path when neither segment is
+                              present. Default: off.
+      --material-pool         Two-phase texture resolution. Phase 1
+                              surveys every input FBX read-only and
+                              records which diffuse texture each
+                              material is observed with; the most-
+                              frequent texture wins per material.
+                              Phase 2 patches with that pool plumbed
+                              in, so a material missing a diffuse
+                              connection inherits the texture its
+                              namesakes elsewhere in the input set
+                              are using before any naming-convention
+                              search runs. Doubles process spawn
+                              count (one survey + one patch per
+                              file). The pool also supplies
+                              --create-default-material-from-pool;
+                              it can be used without --guess-textures
+                              for that workflow.
+                              Default: off.
+      --inspect               Read-only inspection mode. Loads each
+                              FBX and prints a per-node summary of
+                              materials, attached textures (absolute
+                              path redacted, relative path escaped),
+                              mesh stats, and
+                              _COL detection. Skips every patch
+                              path: no rewrite, no .bak, no Stats.
+                              Useful for verifying what a patched
+                              file actually contains.
+      --texture-root PATH     Root directory walked recursively at
+                              startup, indexed by texture basename.
+                              Used as fallback search root by
+                              --guess-textures when the FBX's own
+                              folder doesn't contain the texture.
+      --report-file PATH      Write a single grouped-by-category
+                              report to PATH (overwrites). Format is
+                              chosen by extension: a `.md` suffix
+                              produces Markdown with a summary table
+                              plus one collapsible <details> block
+                              per category (paths in code spans,
+                              extras as columns, raw category token
+                              preserved in an HTML comment for grep);
+                              any other extension writes the legacy
+                              plain-text grouped layout. One row per
+                              FBX per category, with category-
+                              specific extras (counts / sub-fields).
+                              Sections emitted (only when the file
+                              has the issue):
+                                ERROR PATCHED SCANNED
+                                UNITY-FBX EMPTY-SCENEINFO
+                                CYRILLIC CJK ILLEGAL-CHARS CONTROL-CHARS
+                                NEGATIVE-SCALE
+                                BROKEN-NORMALS MISSING-NORMALS
+                                MISSING-SMOOTHING ALL-ZERO-SMOOTHING
+                                NORMALS-REBUILT SHADING-REBUILT
+                                FACETED-NORMALS FULLY-FACETED
+                                TANGENTS-BAKED NONZERO-NORMAL-W
+                                BROKEN-ALBEDO UNRESOLVED-ALBEDO
+                                TANGENT-BINORMAL BROKEN-TBN
+                                UV1-MISSING UV2-MISSING
+                                UV1-OUT-OF-RANGE UV2-OUT-OF-RANGE
+                                VCOLOR-MISSING VCOLOR-OUT-OF-RANGE
+                                EXTRA-VCOLOR-LAYERS BROKEN-UV-LAYERS
+                                MATEL-PLACEHOLDER UVSET-MISMATCH
+                                UVSET-CONFLICT
+                                NON-PHONG-MATERIALS NO-MATERIAL-NODES
+                                COL-PLACEHOLDER-MAT COL-DATA
+                                GENERIC-MESH-NAMES MAX-DEFAULT-TEX-NAMES
+                                ANIMATION-STACKS EMBEDDED-MEDIA
+                                EMPTY-MESH-NODES NON-MESH-NODES
+                                HIDDEN-NODES EMPTY-DUMMIES
+                                NON-IDENTITY-SCALE GEOMETRIC-TRANSFORMS
+                                DEGENERATE-POLYS ORPHAN-VERTICES
+                                NOT-IN-METERS
+                              With --classify-source the report
+                              also gets one SOURCE-<bucket> section
+                              per FbxDocumentInfo category:
+                                SOURCE-empty SOURCE-blender
+                                SOURCE-3ds-max-stock SOURCE-maya-stock
+                                SOURCE-unity-fbx
+                                SOURCE-3ds-max-sdk-custom
+                                SOURCE-other-named
+                              Workers append per-pid tmps which
+                              the master concatenates + groups
+                              after dispatch; tmps are deleted on
+                              success. Default: off (no report).
+  -j N, --jobs N              Run up to N worker PROCESSES in
+                              parallel (not threads). Each worker
+                              processes EXACTLY ONE FBX, then exits;
+                              the parent dispatches the next file to
+                              the freed slot. One file per worker is
+                              the safe pattern for FBX SDK 2020.3.9
+                              (Autodesk: SDK is not thread-safe and
+                              accumulates internal global state
+                              across imports). Default: auto
+                              (std::thread::hardware_concurrency()),
+                              clamped to MAXIMUM_WAIT_OBJECTS (64).
+                              Use -j 1 for fully sequential output
+                              and a single in-process FbxManager.
+                              Per-file lines from different workers
+                              may interleave at line boundaries
+                              when N > 1.
+  -v, --verbose               Print per-file results, not just the
+                              summary.
+  -h, --help                  Show this help and exit 0.
+      --version               Show tool and FBX SDK versions and exit 0.
+
+Each <path> can be a .fbx file or a directory. Non-.fbx files are
+silently skipped. Directories without --recursive are scanned at the
+top level only.
+
+Exit codes:
+  0  one or more files patched (or, with --dry-run, would be patched)
+     OR no files needed patching (clean run)
+  1  command-line error (unknown flag, no paths, etc.)
+  2  one or more files failed to open / parse

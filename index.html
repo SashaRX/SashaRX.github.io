@@ -15,6 +15,8 @@
   <meta property="og:locale" content="en_US">
   <meta property="og:url" content="https://sasharx.github.io/">
   <meta property="og:image" content="https://sasharx.github.io/modelbatch/preview.png">
+  <link rel="stylesheet" href="/assets/gallery.css">
+  <script src="/assets/gallery.js" defer></script>
   <script>
 (()=>{const key='sasharx.siteLanguage';const locale="en";const routes={"en":"/","ru":"/ru/"};
 try{if(true&&localStorage.getItem(key)==='ru'){location.replace(routes.ru+location.search+location.hash);return}localStorage.setItem(key,locale)}catch{}
@@ -142,13 +144,13 @@ links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(
           </div>
           <div class="atmosphere-gallery" aria-label="Atmosphere screenshots captured in WebGPU">
             <figure>
-              <a href="/assets/atmosphere/orbit.jpg" target="_blank" rel="noopener" aria-label="Open the orbital view screenshot at full size">
+              <a href="/assets/atmosphere/orbit.jpg" aria-label="View the orbital screenshot in the gallery">
                 <img src="/assets/atmosphere/orbit.jpg" alt="A blue atmospheric rim around the lit side of a planet against space" width="1280" height="660" loading="lazy" decoding="async">
               </a>
               <figcaption>Planetary atmosphere from orbit · WebGPU</figcaption>
             </figure>
             <figure>
-              <a href="/assets/atmosphere/limb.jpg" target="_blank" rel="noopener" aria-label="Open the atmospheric limb screenshot at full size">
+              <a href="/assets/atmosphere/limb.jpg" aria-label="View the atmospheric limb screenshot in the gallery">
                 <img src="/assets/atmosphere/limb.jpg" alt="A closer view of the glowing blue atmospheric limb and the transition into the planet's shadow" width="1280" height="660" loading="lazy" decoding="async">
               </a>
               <figcaption>Closer view of the atmospheric limb · WebGPU</figcaption>

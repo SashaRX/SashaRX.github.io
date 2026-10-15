@@ -46,15 +46,24 @@ Dock the panel wherever it suits your workspace. The **Export** tab keeps **Proj
 
 Place one asset's render meshes and collision meshes under one Dummy. If you already have that hierarchy, start with Analyze.
 
-These steps describe the compact UI. In earlier releases, open **Export → Preparation** and use **Create Dummy from Selection** instead. The downloadable PDF and screenshots show that earlier UI.
+The steps below match the downloadable **1.2.1** build, PDF and screenshots. For compact source builds, use the [compact UI instructions](#compact-ui).
 
-1. Select the meshes of one asset in Max. Open **Export → Models**.
-2. Enter an informative **Asset name**, such as `TrashCan`. Toggle **At center / At bottom** and click **Create Dummy**.
+1. Select the meshes of one asset in Max. Open **Export → Preparation**.
+2. Enter an informative **Asset name**, such as `TrashCan`. Choose the Dummy position and click **Create Dummy from Selection**.
 3. Set **Project folder**, the common base for all relative tag routes.
 4. Click **Analyze**. With objects selected, the plugin collects their Dummy roots. With no selection, it searches Dummies throughout the scene.
 5. In **Models**, check names, **Destination** and root checkboxes. Assign a tag in the last column if needed.
 6. Review **Export settings** and **Mesh channels**, then click **Export FBX**.
 7. Read the operation status at the bottom. Open **Details** or **Log** for errors.
+
+<a id="compact-ui"></a>
+### Compact UI in source builds
+
+The compact UI is not included in the 1.2.1 downloads linked above. If your build has the compact controls:
+
+1. Open **Export → Models** and select the meshes of one asset.
+2. Enter **Asset name**, toggle **At center / At bottom**, optionally enable **Auto LODs**, and click **Create Dummy** above the model list.
+3. Continue with **Project folder**, **Analyze** and export as in steps 3–7 above. Scene utilities remain in **Preparation**; naming, geometry placement and Undo behavior are unchanged.
 
 Each checked root that is visible through the current tag filter produces a separate file named after its Dummy, for example `SM_TrashCan.fbx`. Its hierarchy, including `_COL` meshes, goes into that file.
 
@@ -75,20 +84,20 @@ Do not assign a different LOD number to every part of a multipart model. Use pol
 
 ![Dummy creation controls and scene tools](guide/images/preparation.png)
 
-*Earlier UI capture. In the compact UI, Dummy creation is above the Models list; scene utilities stay in Preparation. Organize LOD / COL layers works on the whole scene.*
+*1.2.1 UI capture: export-root creation at the top of Preparation, scene utilities below. Compact source builds put creation above the Models list. Organize LOD / COL layers works on the whole scene.*
 
-**At center / At bottom** toggles the root's location:
+**Dummy position** determines the root's location:
 
 | Mode | Position |
 |---|---|
-| At center | Center of the combined world-space geometry bounds |
-| At bottom | The same X/Y center at the lowest geometry Z |
+| Group center | Center of the combined world-space geometry bounds |
+| Bottom center (floor) | The same X/Y center at the lowest geometry Z |
 
 “Floor” means the bottom of the selected model, not world `Z = 0`. Creating the root preserves the geometry's world placement.
 
 Enter a shared base name in **Asset name** or leave it blank to let the plugin choose an informative selected name. Automatic naming uses heuristics. If it finds no suitable candidate, it asks for a name. An explicit name is useful when a scene still contains names such as `Plane003`, numbers or temporary placeholders.
 
-The root gets `SM_` without trailing `_COL` or `_LOD#`: `SM_TrashCan`. Child names lose the `SM_` prefix. **Auto LODs** gives every LOD the same base name: more polygons means a lower LOD number; equal counts use selection order. A selected group's count includes its render descendants. Collision branches are excluded and retain `_COL`. Automatic ranking supports up to ten LOD alternatives.
+The root gets `SM_` without trailing `_COL` or `_LOD#`: `SM_TrashCan`. Child names lose the `SM_` prefix. **Assign LOD0-LOD9 by polygon count** gives every LOD the same base name: more polygons means a lower LOD number; equal counts use selection order. A selected group's count includes its render descendants. Collision branches are excluded and retain `_COL`. Automatic ranking supports up to ten LOD alternatives.
 
 One **Ctrl+Z** undoes Dummy creation, naming and parenting.
 

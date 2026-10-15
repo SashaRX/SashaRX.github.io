@@ -40,15 +40,22 @@ links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(
 <p><em>Models: папка проекта, фильтр, список корней, теги и кнопка экспорта. На снимке показаны три тестовых корня.</em></p>
 <h2 id="quickstart">2. Первый экспорт</h2>
 <p>Для одного ассета собери визуальные меши и коллизии под одним Dummy. Если такая иерархия уже есть, переходи сразу к Analyze.</p>
-<p>Эти шаги описывают компактный интерфейс. В ранних версиях открой <strong>Export → Preparation</strong> и используй <strong>Create Dummy from Selection</strong>. PDF и скриншоты показывают этот прежний интерфейс.</p>
+<p>Шаги ниже соответствуют скачиваемой сборке <strong>1.2.1</strong>, PDF и скриншотам. Для сборок из исходников с компактным интерфейсом смотри <a href="#compact-ui">отдельные шаги</a>.</p>
 <ol>
-<li>Выдели меши одной модели в Max. Открой <strong>Export → Models</strong>.</li>
-<li>Введи понятную основу в <strong>Asset name</strong>, например <code>TrashCan</code>. Переключи <strong>At center / At bottom</strong> и нажми <strong>Create Dummy</strong>.</li>
+<li>Выдели меши одной модели в Max. Открой <strong>Export → Preparation</strong>.</li>
+<li>Введи понятную основу в <strong>Asset name</strong>, например <code>TrashCan</code>. Выбери положение Dummy и нажми <strong>Create Dummy from Selection</strong>.</li>
 <li>Укажи <strong>Project folder</strong> - общую папку, относительно которой будут рассчитываться пути тегов.</li>
 <li>Нажми <strong>Analyze</strong>. Если выделены объекты, анализируются их корни Dummy. Если ничего не выделено, плагин ищет Dummy по всей сцене.</li>
 <li>На странице <strong>Models</strong> проверь имена, <strong>Destination</strong> и галочки корней. При необходимости назначь тег в последнем столбце.</li>
 <li>Проверь <strong>Export settings</strong> и <strong>Mesh channels</strong>. Нажми <strong>Export FBX</strong>.</li>
 <li>Посмотри результат операции снизу и открой <strong>Details</strong> или <strong>Log</strong>, если есть ошибки.</li>
+</ol>
+<h3 id="compact-ui">Компактный интерфейс в сборках из исходников</h3>
+<p>Компактный интерфейс не входит в архивы 1.2.1, ссылки на которые приведены выше. Если в твоей сборке уже есть компактные элементы:</p>
+<ol>
+<li>Открой <strong>Export → Models</strong> и выдели меши одной модели.</li>
+<li>Введи <strong>Asset name</strong>, переключи <strong>At center / At bottom</strong>, при необходимости включи <strong>Auto LODs</strong> и нажми <strong>Create Dummy</strong> над списком моделей.</li>
+<li>Продолжи с <strong>Project folder</strong>, <strong>Analyze</strong> и экспортом по шагам 3–7 выше. Инструменты сцены остаются в <strong>Preparation</strong>; правила имён, положение геометрии и отмена не меняются.</li>
 </ol>
 <p>Каждый отмеченный корень, видимый через текущий фильтр тегов, экспортируется в отдельный файл с именем Dummy: например <code>SM_TrashCan.fbx</code>. В файл входит его иерархия, включая <code>_COL</code>.</p>
 <p>Пример структуры одного ассета:</p>
@@ -61,8 +68,8 @@ links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(
 <p>LOD не нужно включать для каждой детали составной модели. Используй LOD-ранжирование, когда выбранные объекты или группы представляют альтернативные уровни детализации одного ассета.</p>
 <h2 id="preparation">3. Dummy, имена и подготовка</h2>
 <p><a class="zoom-link" href="/modelbatch/guide/images/preparation.png"><img data-asset="guide/images/preparation.png" src="/modelbatch/guide/images/preparation.png" loading="lazy" decoding="async" alt="Создание Dummy и инструменты сцены" width="806" height="671"></a></p>
-<p><em>Снимок прежнего интерфейса. В компактном интерфейсе создание Dummy находится над списком Models, инструменты сцены остаются в Preparation. Organize LOD / COL layers работает со всей сценой.</em></p>
-<p><strong>At center / At bottom</strong> переключает точку корня:</p>
+<p><em>Снимок интерфейса 1.2.1: создание корня сверху в Preparation, инструменты сцены ниже. В сборках из исходников с компактным интерфейсом создание находится над списком Models. Organize LOD / COL layers работает со всей сценой.</em></p>
+<p><strong>Dummy position</strong> задаёт точку корня:</p>
 <div class="table-wrap" tabindex="0">
 <table>
 <thead>
@@ -72,18 +79,18 @@ links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(
 </tr>
 </thead>
 <tbody><tr>
-<td>At center</td>
+<td>Group center</td>
 <td>В центре общего bounding box геометрии выбранной иерархии</td>
 </tr>
 <tr>
-<td>At bottom</td>
+<td>Bottom center (floor)</td>
 <td>В том же центре по X/Y, но на нижней границе геометрии по Z</td>
 </tr>
 </tbody></table>
 </div>
 <p>«У пола» означает низ выбранной модели, а не мировой <code>Z = 0</code>. Положение видимой геометрии при создании корня сохраняется.</p>
 <p>В <strong>Asset name</strong> можно явно задать общую основу имени. Если оставить поле пустым, плагин ищет информативное имя среди выделенных объектов. Автоматический выбор использует эвристики; когда подходящей основы нет, появится запрос имени. Явное имя удобнее, если в сцене остались <code>Plane003</code>, числовые или временные названия.</p>
-<p>Корень получает <code>SM_</code>, но не постфиксы <code>_COL</code> и <code>_LOD#</code>: <code>SM_TrashCan</code>. У дочерних объектов <code>SM_</code> убирается. <strong>Auto LODs</strong> присваивает всем LOD общую основу: больше полигонов - меньший номер; при равенстве учитывается порядок выделения. Выбранная группа считается по сумме её render-мешей. Коллизии исключаются из ранжирования и сохраняют <code>_COL</code>. Автоматическое ранжирование рассчитано максимум на десять LOD-вариантов.</p>
+<p>Корень получает <code>SM_</code>, но не постфиксы <code>_COL</code> и <code>_LOD#</code>: <code>SM_TrashCan</code>. У дочерних объектов <code>SM_</code> убирается. <strong>Assign LOD0-LOD9 by polygon count</strong> присваивает всем LOD общую основу: больше полигонов - меньший номер; при равенстве учитывается порядок выделения. Выбранная группа считается по сумме её render-мешей. Коллизии исключаются из ранжирования и сохраняют <code>_COL</code>. Автоматическое ранжирование рассчитано максимум на десять LOD-вариантов.</p>
 <p>Создание Dummy, переименование и переподчинение отменяются одним <strong>Ctrl+Z</strong>.</p>
 <p>Инструменты сцены:</p>
 <div class="table-wrap" tabindex="0">

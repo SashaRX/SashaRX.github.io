@@ -46,6 +46,8 @@ Dock the panel wherever it suits your workspace. The **Export** tab keeps **Proj
 
 Place one asset's render meshes and collision meshes under one Dummy. If you already have that hierarchy, start with Analyze.
 
+The steps below match the downloadable **1.2.1** build, PDF and screenshots. For compact source builds, use the [compact UI instructions](#compact-ui).
+
 1. Select the meshes of one asset in Max. Open **Export → Preparation**.
 2. Enter an informative **Asset name**, such as `TrashCan`. Choose the Dummy position and click **Create Dummy from Selection**.
 3. Set **Project folder**, the common base for all relative tag routes.
@@ -53,6 +55,15 @@ Place one asset's render meshes and collision meshes under one Dummy. If you alr
 5. In **Models**, check names, **Destination** and root checkboxes. Assign a tag in the last column if needed.
 6. Review **Export settings** and **Mesh channels**, then click **Export FBX**.
 7. Read the operation status at the bottom. Open **Details** or **Log** for errors.
+
+<a id="compact-ui"></a>
+### Compact UI in source builds
+
+The compact UI is not included in the 1.2.1 downloads linked above. If your build has the compact controls:
+
+1. Open **Export → Models** and select the meshes of one asset.
+2. Enter **Asset name**, toggle **At center / At bottom**, optionally enable **Auto LODs**, and click **Create Dummy** above the model list.
+3. Continue with **Project folder**, **Analyze** and export as in steps 3–7 above. Scene utilities remain in **Preparation**; naming, geometry placement and Undo behavior are unchanged.
 
 Each checked root that is visible through the current tag filter produces a separate file named after its Dummy, for example `SM_TrashCan.fbx`. Its hierarchy, including `_COL` meshes, goes into that file.
 
@@ -73,7 +84,7 @@ Do not assign a different LOD number to every part of a multipart model. Use pol
 
 ![Dummy creation controls and scene tools](guide/images/preparation.png)
 
-*Preparation: export-root creation at the top, scene utilities below. Organize LOD / COL layers works on the whole scene.*
+*1.2.1 UI capture: export-root creation at the top of Preparation, scene utilities below. Compact source builds put creation above the Models list. Organize LOD / COL layers works on the whole scene.*
 
 **Dummy position** determines the root's location:
 

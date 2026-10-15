@@ -13,49 +13,45 @@ const update=()=>links.forEach(link=>link.href=routes[link.dataset.language]+loc
 links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(key,link.dataset.language)}catch{}}));});})();
 </script>
 <link rel="stylesheet" href="/assets/site.css?v=20261013">
-<link rel="stylesheet" href="/modelbatch/guide.css?v=20261013"></head><body class="modelbatch-page">
+<link rel="stylesheet" href="/modelbatch/guide.css?v=1.3.2"></head><body class="modelbatch-page">
 <a class="skip-link" href="#main">Skip to content</a>
-<aside class="sidebar"><div class="sidebar-top"><a class="home-link" href="/">← SashaRX / Projects</a><nav class="language-switch" aria-label="Site language"><a href="/modelbatch/" hreflang="en" lang="en" data-language="en" aria-current="true">EN</a><a href="/ru/modelbatch/" hreflang="ru" lang="ru" data-language="ru">RU</a></nav></div><div class="sidebar-title"><div><div class="brand">MAX ModelBatch</div><div class="version">USER GUIDE · 1.2.1</div></div><button class="mobile-top" id="menu-toggle" aria-expanded="false" aria-controls="guide-contents">Contents</button></div>
-<nav id="guide-contents" class="contents-nav" aria-label="Contents"><a href="#install">1. Install and open</a><a href="#quickstart">2. Your first export</a><a href="#preparation">3. Create Dummies and prepare the scene</a><a href="#models">4. Work with the export table</a><a href="#tags">5. Tags, colors and project folders</a><a href="#settings">6. Export settings</a><a href="#unity">7. Scale and Unity directions</a><a href="#channels">8. UV channels and vertex colors</a><a href="#seams">9. Display UV seams</a><a href="#lod">10. Preview LODs and organize layers</a><a href="#import">11. Batch-import FBX files</a><a href="#updates">12. Update and roll back</a><a href="#meshalign">13. Optional Mesh Align</a><a href="#help">14. Saved settings and troubleshooting</a></nav>
-<div class="actions"><a href="guide.pdf?v=20261013-public">PDF (1.2.1 UI)</a><button id="print">Print</button><a href="guide.md?v=20261015-compact">Markdown</a></div>
+<aside class="sidebar"><div class="sidebar-top"><a class="home-link" href="/">← SashaRX / Projects</a><nav class="language-switch" aria-label="Site language"><a href="/modelbatch/" hreflang="en" lang="en" data-language="en" aria-current="true">EN</a><a href="/ru/modelbatch/" hreflang="ru" lang="ru" data-language="ru">RU</a></nav></div><div class="sidebar-title"><div><div class="brand">MAX ModelBatch</div><div class="version">USER GUIDE · 1.3.2</div></div><button class="mobile-top" id="menu-toggle" aria-expanded="false" aria-controls="guide-contents">Contents</button></div>
+<nav id="guide-contents" class="contents-nav" aria-label="Contents"><a href="#install">1. Install and open</a><a href="#quickstart">2. Your first export</a><a href="#preparation">3. Create Dummies and prepare the scene</a><a href="#models">4. Work with the export table</a><a href="#tags">5. Tags, colors and project folders</a><a href="#settings">6. Export settings</a><a href="#unity">7. Scale and Unity directions</a><a href="#channels">8. UV channels and vertex colors</a><a href="#seams">9. Display UV seams</a><a href="#lod">10. Preview LODs and organize layers</a><a href="#import">11. Batch-import FBX files</a><a href="#updates">12. Update and roll back</a><a href="#meshalign">13. Optional Mesh Align</a><a href="#glb">14. Optional GLB / meshopt</a><a href="#help">15. Saved settings and troubleshooting</a></nav>
+<div class="actions"><a href="guide.pdf?v=1.3.2">PDF (v1.3.2)</a><button id="print">Print</button><a href="guide.md?v=1.3.2">Markdown</a></div>
 </aside>
 <main id="main"><div class="guide-hero"><div class="eyebrow">Batch model workflows in 3ds Max</div><h1>MAX ModelBatch</h1><div class="hero-actions"><a class="primary" href="#quickstart">Start the guide</a><a href="/downloads/#modelbatch">Choose a build</a><a href="/workflows/?tool=max">Task guides</a></div>
-<p class="guide-meta"><strong>Version 1.2.1 · 3ds Max 2022-2027 · FBX workflows · examples from Max 2024</strong></p>
+<p class="guide-meta"><strong>Version 1.3.2 · 3ds Max 2022-2027 · FBX + optional GLB · examples from Max 2024</strong></p>
 <p>Batch-import, prepare and export models in 3ds Max. Dummy hierarchies, one FBX per asset, UV seams, LOD previews and folder routing in one panel.</p>
-<details class="capture-note"><summary>About these screenshots & host support</summary><p>MAX ModelBatch is the new name of TS_UnityExport. Version 1.2.1 uses the new name, repository and plugin filename, while retaining saved settings and scene metadata. The illustrations are actual Max 2024 captures from development test scenes and retain those earlier UI labels. The workflow captures come from version 1.2.0; the rename, old scene tags/routes and real FBX export were verified in a separate Max 2024 run. All twelve SDK build variants pass their regression suites. Object names, paths, checkbox states and version labels in the captures are examples rather than recommended defaults. These earlier captures do not establish runtime compatibility of the new release in every supported Max host.</p></details>
+<details class="capture-note"><summary>About these screenshots & host support</summary><p>Version 1.3.2 includes the compact Dummy and Updates controls described below. It retains saved settings and scene metadata from earlier MAX ModelBatch / TS_UnityExport installations. Screenshots are real Max 2024 captures from version 1.2.0 and retain earlier UI labels; they are historical illustrations, not screenshots of 1.3.2. All 24 host/feature Release variants passed SDK builds and 360 CTest checks. Native Max runs and visual acceptance of the compact UI remain pending; earlier Max 2024 checks do not establish runtime acceptance of this version or every supported host. Names, paths and checked options in screenshots are examples.</p></details>
 
 </div>
-<section class="pdf-contents"><h2>Contents</h2><ul><li><a href="#install">1. Install and open</a></li><li><a href="#quickstart">2. Your first export</a></li><li><a href="#preparation">3. Create Dummies and prepare the scene</a></li><li><a href="#models">4. Work with the export table</a></li><li><a href="#tags">5. Tags, colors and project folders</a></li><li><a href="#settings">6. Export settings</a></li><li><a href="#unity">7. Scale and Unity directions</a></li><li><a href="#channels">8. UV channels and vertex colors</a></li><li><a href="#seams">9. Display UV seams</a></li><li><a href="#lod">10. Preview LODs and organize layers</a></li><li><a href="#import">11. Batch-import FBX files</a></li><li><a href="#updates">12. Update and roll back</a></li><li><a href="#meshalign">13. Optional Mesh Align</a></li><li><a href="#help">14. Saved settings and troubleshooting</a></li></ul></section><h2 id="install">1. Install and open</h2>
+<section class="pdf-contents"><h2>Contents</h2><ul><li><a href="#install">1. Install and open</a></li><li><a href="#quickstart">2. Your first export</a></li><li><a href="#preparation">3. Create Dummies and prepare the scene</a></li><li><a href="#models">4. Work with the export table</a></li><li><a href="#tags">5. Tags, colors and project folders</a></li><li><a href="#settings">6. Export settings</a></li><li><a href="#unity">7. Scale and Unity directions</a></li><li><a href="#channels">8. UV channels and vertex colors</a></li><li><a href="#seams">9. Display UV seams</a></li><li><a href="#lod">10. Preview LODs and organize layers</a></li><li><a href="#import">11. Batch-import FBX files</a></li><li><a href="#updates">12. Update and roll back</a></li><li><a href="#meshalign">13. Optional Mesh Align</a></li><li><a href="#glb">14. Optional GLB / meshopt</a></li><li><a href="#help">15. Saved settings and troubleshooting</a></li></ul></section><h2 id="install">1. Install and open</h2>
 <ol>
-<li>Open the <a href="https://github.com/SashaRX/MaxModelBatch-Releases/releases/tag/v1.2.1">1.2.1 release</a>. Download the archive <strong>for your exact Max year</strong>. For Max 2024, <a href="https://github.com/SashaRX/MaxModelBatch-Releases/releases/download/v1.2.1/MaxModelBatch_v1.2.1_3dsMax2024.zip">download the standard build</a>.</li>
+<li>Open the <a href="https://github.com/SashaRX/MaxModelBatch-Releases/releases/tag/v1.3.2">1.3.2 release</a>. Download the archive <strong>for your exact Max year</strong>. For Max 2024, <a href="https://github.com/SashaRX/MaxModelBatch-Releases/releases/download/v1.3.2/MaxModelBatch_v1.3.2_3dsMax2024.zip">download the standard build</a>.</li>
 <li>Close Max. Extract the archive into a permanent folder such as <code>C:\Tools\MaxModelBatch\2024</code>. The plugin file is <code>MaxModelBatch.dlu</code>. Historical releases through 1.2.0 use <code>TS_UnityExport.dlu</code>.</li>
 <li>In Max, open <strong>Customize → Configure System Paths → 3rd-Party Plug-Ins → Add</strong>. Add the folder containing the <code>.dlu</code>, then restart Max.</li>
-<li>In a renamed build, open <strong>Scripting → MAX ModelBatch</strong> on <strong>Max 2022-2024</strong>, or <strong>MAX ModelBatch → MAX ModelBatch</strong> on <strong>Max 2025-2027</strong>. The legacy menu fallback on older hosts is also <strong>MAX ModelBatch</strong>. In the published <strong>1.2.0</strong> build, the command is still <strong>Unity FBX Exporter</strong>, under <strong>Scripting</strong> or <strong>Unity Tools</strong>.</li>
+<li>Open <strong>Scripting → MAX ModelBatch</strong> on <strong>Max 2022-2024</strong>, or <strong>MAX ModelBatch → MAX ModelBatch</strong> on <strong>Max 2025-2027</strong>. The legacy menu fallback on older hosts is also <strong>MAX ModelBatch</strong>. In the published <strong>1.2.0</strong> build, the command is still <strong>Unity FBX Exporter</strong>, under <strong>Scripting</strong> or <strong>Unity Tools</strong>.</li>
 </ol>
 <p>For the first upgrade after the repository rename, close Max and manually replace the installation. Remove <code>TS_UnityExport.dlu</code> from all scanned plugin folders before installing <code>MaxModelBatch.dlu</code>, and keep one copy for each host. Existing scene tags and settings are retained.</p>
-<p>The standard archive includes every core feature in this guide. Experimental Mesh Align requires the separate <code>_MeshAlign.zip</code> variant. Max supplies the Qt runtime; do not copy additional Qt DLLs into the plugin folder. Manual ZIP downloads are public at MaxModelBatch-Releases. No GitHub sign-in is required.</p>
+<p>Choose <strong>Standard</strong>, <strong>Mesh Align</strong>, <strong>GLB</strong> or <strong>Mesh Align + GLB</strong> on <a href="/downloads/#modelbatch">Downloads</a>. Standard includes the FBX, UV, LOD, import and tag workflows. Mesh Align is experimental. GLB builds also require their matching separate Tools ZIP; see <a href="#glb">GLB setup</a>. Never mix Max years or plugin/worker variants. Max supplies Qt: do not install extra Qt DLLs. Public manual ZIP downloads need no GitHub account.</p>
 <p>Dock the panel wherever it suits your workspace. The <strong>Export</strong> tab keeps <strong>Project folder</strong> and <strong>Analyze</strong> at the top and <strong>Export FBX</strong> at the bottom. Four workflow pages fill the middle: <strong>Models</strong>, <strong>Preparation</strong>, <strong>Export settings</strong> and <strong>Mesh channels</strong>.</p>
-<p><a class="zoom-link" href="/modelbatch/guide/images/export-models.png"><img data-asset="guide/images/export-models.png" src="/modelbatch/guide/images/export-models.png" loading="lazy" decoding="async" alt="Export workspace with model roots, routing and workflow pages" width="800" height="520"></a></p>
+<p><a class="zoom-link" href="/modelbatch/guide/images/export-models.png"><img alt="Export workspace with model roots, routing and workflow pages" data-asset="guide/images/export-models.png" decoding="async" loading="lazy" src="/modelbatch/guide/images/export-models.png"/ width="800" height="520"></a></p>
 <p><em>Models: project folder, tag filter, export roots, destinations and tags. This capture shows three test roots.</em></p>
+
 <h2 id="quickstart">2. Your first export</h2>
-<p>Place one asset&#39;s render meshes and collision meshes under one Dummy. If you already have that hierarchy, start with Analyze.</p>
-<p>The steps below match the downloadable <strong>1.2.1</strong> build, PDF and screenshots. For compact source builds, use the <a href="#compact-ui">compact UI instructions</a>.</p>
+<p>Place one asset's render meshes and collision meshes under one Dummy. If you already have that hierarchy, start with Analyze.</p>
+<p>These steps match the public <strong>1.3.2</strong> downloads and the updated PDF. Screenshots show the earlier 1.2.0 layout.</p>
 <ol>
-<li>Select the meshes of one asset in Max. Open <strong>Export → Preparation</strong>.</li>
-<li>Enter an informative <strong>Asset name</strong>, such as <code>TrashCan</code>. Choose the Dummy position and click <strong>Create Dummy from Selection</strong>.</li>
+<li>Select the meshes of one asset in Max. Open <strong>Export → Models</strong>.</li>
+<li>Enter an informative <strong>Asset name</strong>, such as <code>TrashCan</code>. Toggle <strong>At center / At bottom</strong>, optionally enable <strong>Auto LODs</strong>, and click <strong>Create Dummy</strong> above the model list.</li>
 <li>Set <strong>Project folder</strong>, the common base for all relative tag routes.</li>
 <li>Click <strong>Analyze</strong>. With objects selected, the plugin collects their Dummy roots. With no selection, it searches Dummies throughout the scene.</li>
 <li>In <strong>Models</strong>, check names, <strong>Destination</strong> and root checkboxes. Assign a tag in the last column if needed.</li>
 <li>Review <strong>Export settings</strong> and <strong>Mesh channels</strong>, then click <strong>Export FBX</strong>.</li>
 <li>Read the operation status at the bottom. Open <strong>Details</strong> or <strong>Log</strong> for errors.</li>
 </ol>
-<h3 id="compact-ui">Compact UI in source builds</h3>
-<p>The compact UI is not included in the 1.2.1 downloads linked above. If your build has the compact controls:</p>
-<ol>
-<li>Open <strong>Export → Models</strong> and select the meshes of one asset.</li>
-<li>Enter <strong>Asset name</strong>, toggle <strong>At center / At bottom</strong>, optionally enable <strong>Auto LODs</strong>, and click <strong>Create Dummy</strong> above the model list.</li>
-<li>Continue with <strong>Project folder</strong>, <strong>Analyze</strong> and export as in steps 3–7 above. Scene utilities remain in <strong>Preparation</strong>; naming, geometry placement and Undo behavior are unchanged.</li>
-</ol>
+<h3 id="compact-ui">Compact Dummy controls in 1.3.2</h3>
+<p><strong>Asset name</strong>, <strong>At center / At bottom</strong>, <strong>Auto LODs</strong> and <strong>Create Dummy</strong> are directly above the Models list. Scene utilities remain in <strong>Preparation</strong>. Naming, geometry placement and single-Undo behavior are retained. In older 1.2.1 builds, creation was under <strong>Export → Preparation → Create Dummy from Selection</strong>.</p>
 <p>Each checked root that is visible through the current tag filter produces a separate file named after its Dummy, for example <code>SM_TrashCan.fbx</code>. Its hierarchy, including <code>_COL</code> meshes, goes into that file.</p>
 <p>Example hierarchy:</p>
 <pre><code class="language-text">SM_TrashCan                 ← export root and FBX filename
@@ -65,12 +61,12 @@ links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(
 └── TrashCan_COL             ← collision mesh
 </code></pre>
 <p>Do not assign a different LOD number to every part of a multipart model. Use polygon-count LOD naming when the selected objects or groups are alternative detail levels of the same asset.</p>
+
 <h2 id="preparation">3. Create Dummies and prepare the scene</h2>
-<p><a class="zoom-link" href="/modelbatch/guide/images/preparation.png"><img data-asset="guide/images/preparation.png" src="/modelbatch/guide/images/preparation.png" loading="lazy" decoding="async" alt="Dummy creation controls and scene tools" width="806" height="671"></a></p>
-<p><em>1.2.1 UI capture: export-root creation at the top of Preparation, scene utilities below. Compact source builds put creation above the Models list. Organize LOD / COL layers works on the whole scene.</em></p>
-<p><strong>Dummy position</strong> determines the root&#39;s location:</p>
-<div class="table-wrap" tabindex="0">
-<table>
+<p><a class="zoom-link" href="/modelbatch/guide/images/preparation.png"><img alt="Dummy creation controls and scene tools" data-asset="guide/images/preparation.png" decoding="async" loading="lazy" src="/modelbatch/guide/images/preparation.png"/ width="806" height="671"></a></p>
+<p><em>Historical 1.2.0 capture: Dummy creation was in Preparation. In 1.3.2 it is above the Models list; scene utilities remain in Preparation. Organize LOD / COL layers works on the whole scene.</em></p>
+<p><strong>At center / At bottom</strong> determines the root's location:</p>
+<div class="table-wrap" tabindex="0"><table>
 <thead>
 <tr>
 <th>Mode</th>
@@ -78,21 +74,19 @@ links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(
 </tr>
 </thead>
 <tbody><tr>
-<td>Group center</td>
+<td>At center</td>
 <td>Center of the combined world-space geometry bounds</td>
 </tr>
 <tr>
-<td>Bottom center (floor)</td>
+<td>At bottom</td>
 <td>The same X/Y center at the lowest geometry Z</td>
 </tr>
-</tbody></table>
-</div>
-<p>“Floor” means the bottom of the selected model, not world <code>Z = 0</code>. Creating the root preserves the geometry&#39;s world placement.</p>
+</tbody></table></div>
+<p>“Floor” means the bottom of the selected model, not world <code>Z = 0</code>. Creating the root preserves the geometry's world placement.</p>
 <p>Enter a shared base name in <strong>Asset name</strong> or leave it blank to let the plugin choose an informative selected name. Automatic naming uses heuristics. If it finds no suitable candidate, it asks for a name. An explicit name is useful when a scene still contains names such as <code>Plane003</code>, numbers or temporary placeholders.</p>
-<p>The root gets <code>SM_</code> without trailing <code>_COL</code> or <code>_LOD#</code>: <code>SM_TrashCan</code>. Child names lose the <code>SM_</code> prefix. <strong>Assign LOD0-LOD9 by polygon count</strong> gives every LOD the same base name: more polygons means a lower LOD number; equal counts use selection order. A selected group&#39;s count includes its render descendants. Collision branches are excluded and retain <code>_COL</code>. Automatic ranking supports up to ten LOD alternatives.</p>
+<p>The root gets <code>SM_</code> without trailing <code>_COL</code> or <code>_LOD#</code>: <code>SM_TrashCan</code>. Child names lose the <code>SM_</code> prefix. <strong>Auto LODs</strong> gives every LOD the same base name: more polygons means a lower LOD number; equal counts use selection order. A selected group's count includes its render descendants. Collision branches are excluded and retain <code>_COL</code>. Automatic ranking supports up to ten LOD alternatives.</p>
 <p>One <strong>Ctrl+Z</strong> undoes Dummy creation, naming and parenting.</p>
-<div class="table-wrap" tabindex="0">
-<table>
+<div class="table-wrap" tabindex="0"><table>
 <thead>
 <tr>
 <th>Scene tool</th>
@@ -101,7 +95,7 @@ links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(
 </thead>
 <tbody><tr>
 <td>Normalize Dummies</td>
-<td>Sets every Dummy helper&#39;s box size to 1×1×1</td>
+<td>Sets every Dummy helper's box size to 1×1×1</td>
 </tr>
 <tr>
 <td>Hide _COL</td>
@@ -113,28 +107,29 @@ links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(
 </tr>
 <tr>
 <td>Rebuild SG from UV</td>
-<td>Rebuilds smoothing groups from UV seams in the base object&#39;s Max channel 1</td>
+<td>Rebuilds smoothing groups from UV seams in the base object's Max channel 1</td>
 </tr>
 <tr>
 <td>Organize LOD / COL layers</td>
 <td>Routes the whole scene into shared LOD0, LOD1, … and COL layers</td>
 </tr>
-</tbody></table>
-</div>
+</tbody></table></div>
 <p>For <strong>Rebuild SG from UV</strong>, UV data must be in the base object. If it exists only in a UVW Mapping or Unwrap modifier, prepare/collapse that stack first. This tool changes smoothing; UV seam display only inspects the model.</p>
+
 <h2 id="models">4. Work with the export table</h2>
-<p><a class="zoom-link" href="/modelbatch/guide/images/export-picking.png"><img data-asset="guide/images/export-picking.png" src="/modelbatch/guide/images/export-picking.png" loading="lazy" decoding="async" alt="Expanded Dummy hierarchy and object selection in Export" width="626" height="671"></a></p>
+<p><a class="zoom-link" href="/modelbatch/guide/images/export-picking.png"><img alt="Expanded Dummy hierarchy and object selection in Export" data-asset="guide/images/export-picking.png" decoding="async" loading="lazy" src="/modelbatch/guide/images/export-picking.png"/ width="626" height="671"></a></p>
 <p><em>An expanded hierarchy shows Dummies, child objects and anticipated material-split outputs.</em></p>
 <ul>
 <li>A <strong>root checkbox</strong> includes the asset in export. Row selection is a separate action.</li>
 <li>Click <strong>Name</strong>, <strong>Status</strong> or <strong>Destination</strong> to select that object in Max. A Dummy selects itself and all descendants, including collapsed branches. A mesh row selects the mesh itself.</li>
 <li>Use <strong>Ctrl/Shift</strong> for multiple rows. The <strong>Tag</strong> column opens the tag dropdown without changing scene selection.</li>
 <li>Analyze starts with branches collapsed. <strong>Развернуть всё / Свернуть всё</strong> means <strong>Expand all / Collapse all</strong> and toggles all hierarchy levels shown by the current filter.</li>
-<li><strong>Выбрать все / Снять все / Инвертировать выбор</strong> mean <strong>Select all / Clear all / Invert selection</strong>. They change export checkboxes only for roots visible through the tag filter. Filtered-out models keep their checkboxes.</li>
+<li><strong>All / None / Invert</strong> change export checkboxes only for roots visible through the tag filter. Filtered-out models keep their checkboxes.</li>
 <li>Drag a column divider to resize it, or double-click it to fit the contents. Click a heading to sort; click again to reverse the order. Children remain under their root.</li>
 </ul>
 <p><strong>Split materials</strong> splits render meshes with Multi/Sub materials into meshes per material. Analyze previews the expected outputs. The button processes <strong>all models shown by the filter, regardless of root checkboxes</strong>. An output preview is not yet a scene object, so it cannot be selected in the viewport before the split.</p>
-<p>Analyze populates the table; it does not export or run Split. Some bulk-action labels currently remain in Russian; the translations above identify them in the captures.</p>
+<p>Analyze populates the table; it does not export or run Split. Historical screenshots can show longer or Russian labels; 1.3.2 uses <strong>All / None / Invert</strong> for export checkboxes.</p>
+
 <h2 id="tags">5. Tags, colors and project folders</h2>
 <p>A tag links an asset to a relative output folder. Each Dummy owns one tag for its whole hierarchy.</p>
 <p><a class="zoom-link" href="/modelbatch/guide/images/export-tags.png"><img data-asset="guide/images/export-tags.png" src="/modelbatch/guide/images/export-tags.png" loading="lazy" decoding="async" alt="Export tag keys, relative folders and colors" width="1004" height="602"></a></p>
@@ -347,20 +342,23 @@ Output             D:\Game\Assets\Models\Props\SM_TrashCan.fbx
 </ol>
 <p><strong>Refresh</strong> reloads the directory. <strong>Stop after current file</strong> ends the batch after the ongoing file finishes. Sort on headings and resize columns manually. The batch uses Max&#39;s FBX importer settings; it does not create a separate <code>.max</code> scene per file.</p>
 <h2 id="updates">12. Update and roll back</h2>
-<p><strong>First upgrade after the rename:</strong> pre-rename updaters check the old repository asset address strictly, so they need one manual installation of a renamed build. The steps below apply after that migration. New builds can read historical packages and replace the loaded filename in place, avoiding a second plugin copy.</p>
-<p><a class="zoom-link" href="/modelbatch/guide/images/updates.png"><img data-asset="guide/images/updates.png" src="/modelbatch/guide/images/updates.png" loading="lazy" decoding="async" alt="GitHub update controls" width="800" height="520"></a></p>
-<p><em>Updates capture from an earlier test build. Installed/Latest are historical labels; your check displays the actual versions.</em></p>
+<p><strong>Public manual update:</strong> download the 1.3.2 ZIP for your exact Max year and feature variant from <a href="/downloads/#modelbatch">Downloads</a>. Save your scene, close Max, replace the installed <code>.dlu</code> and restart. For GLB builds, also install the matching tools package. No GitHub account is needed for these public downloads.</p>
+<p>The <strong>in-plugin updater still uses the private development repository</strong>. Its actions require <code>gh auth login</code> with repository access and a writable plugin folder. Publishing public ZIPs does not change that requirement.</p>
+<p><a class="zoom-link" href="/modelbatch/guide/images/updates.png"><img alt="GitHub update controls" data-asset="guide/images/updates.png" decoding="async" loading="lazy" src="/modelbatch/guide/images/updates.png"/ width="800" height="520"></a></p>
+<p><em>Historical Updates capture from an earlier test build. 1.3.2 uses the compact labels below; versions and paths in this image are examples.</em></p>
 <ol>
 <li>Open <strong>Updates → Check now</strong>.</li>
-<li>If an update is available, click <strong>Install after Max closes</strong>. The package is downloaded and checked against the exact Max year and build variant.</li>
-<li>When the download is ready, save your scene and close Max. Installation waits for that process to exit.</li>
-<li>Restart Max after installation finishes and check <strong>Installed</strong>.</li>
+<li>If an update is available, click <strong>Install update</strong>. The package is downloaded and checked against the exact Max year and build variant.</li>
+<li>When ready, save your scene and close Max. Installation waits for that process to exit.</li>
+<li>Restart Max after installation finishes and check <strong>Installed</strong>, including the feature variant and <strong>+ GLB</strong> when enabled.</li>
 </ol>
-<p><strong>Check for updates at Max startup</strong> enables startup checks. <strong>Automatically download and install after Max closes</strong> enables automatic preparation and deferred installation. Both automatic options default to off.</p>
-<p><strong>Roll back</strong> prepares restoration of the previous binary after Max closes. <strong>Open GitHub releases</strong> opens the release page. If another process locks the binary, the installer keeps the staged package; <strong>Retry after Max closes</strong> retries installation.</p>
-<p>Version 1.2.1’s updater still uses private MaxModelBatch and requires <code>gh auth login</code> with repository access. Public ZIPs support manual updates. The plugin folder must be writable. Save your scene and close Max before replacing the <code>.dlu</code>; no hot reload.</p>
+<p><strong>Check at startup</strong> enables startup checks. <strong>Download and install after closing Max</strong> also enables the startup check and automatically prepares compatible updates. Both options default to off.</p>
+<p><strong>Roll back</strong> prepares restoration of the previous binary after Max closes. <strong>Retry install</strong> retries a prepared installation if another process prevented replacement. The previous binary is retained for rollback.</p>
+<p>Status text distinguishes information/progress, success/current, warnings/available updates and errors with different colors and explicit messages. <strong>Plugin file</strong> is read-only; its tooltip shows the complete loaded path. <strong>Website / guide</strong> opens this public manual.</p>
+<p>When migrating from <code>TS_UnityExport.dlu</code>, remove old copies from scanned folders and install the renamed plugin manually once. Keep one plugin copy per host. There is no hot reload.</p>
+
 <h2 id="meshalign">13. Optional Mesh Align</h2>
-<p><strong>Mesh Align</strong> appears only in <code>_MeshAlign.zip</code> builds. It aligns planes and border vertices of neighboring modular Editable Poly meshes. It is a geometry utility rather than a required FBX-export stage.</p>
+<p><strong>Mesh Align</strong> appears only in <code>_MeshAlign.zip</code> and <code>_MeshAlign_GLB.zip</code> builds. It aligns planes and border vertices of neighboring modular Editable Poly meshes. It is a geometry utility rather than a required FBX-export stage.</p>
 <ol>
 <li>Select modular meshes and click <strong>Analyze selection</strong> to detect planar regions and shared plane clusters.</li>
 <li>Inspect the results. Double-click a region or cluster to highlight its faces.</li>
@@ -368,7 +366,19 @@ Output             D:\Game\Assets\Models\Props\SM_TrashCan.fbx
 <li><strong>Weld borders (all clusters) / Weld borders (selected clusters)</strong> align border-vertex positions while respecting those planes.</li>
 </ol>
 <p>Analyze and highlighting are read-only. Project/Weld move existing vertices with Undo; they do not merge objects or add/remove polygons. Modification requires a base Editable Poly without a modifier stack. Distance parameters are relative to the selected bounds. UV-aware welding is not implemented yet.</p>
-<h2 id="help">14. Saved settings and troubleshooting</h2>
+
+<h2 id="glb">14. Optional GLB / meshopt</h2>
+<p>The <strong>GLB / meshopt</strong> tab is included only in <code>_GLB.zip</code> and <code>_MeshAlign_GLB.zip</code> plugin builds. Standard and Mesh Align builds without GLB keep the FBX workflows.</p>
+<ol>
+<li>Download the plugin and its matching <code>_GLB_Tools.zip</code> or <code>_MeshAlign_GLB_Tools.zip</code> for the <strong>same 1.3.2 version, Max year and feature variant</strong> from <a href="/downloads/#modelbatch">Downloads</a>.</li>
+<li>Extract the tools into a permanent writable folder. Keep the manifests and licenses. In GLB settings select its <code>gltfpack.exe</code> and <code>MaxModelBatchGlbWorker.exe</code>; the worker must match the plugin build. Replace the tools together with every GLB plugin update.</li>
+<li>Use <strong>Scene export</strong> to analyze Dummy roots, apply the shared tags/filter, check models and export current evaluated static geometry, including unsaved edits. GLB capture does not run FBX pivot preparation or collapse the scene stack.</li>
+<li>Use <strong>Pack existing GLB</strong> for existing files. Check the selected compatibility profile and validation report before using optimized output in your target application.</li>
+</ol>
+<p>GLB uses metres and right-handed Y-up / -Z forward. Unsupported skin/morph, animation and unsupported material/map features produce a report. Meshopt compression needs a compatible decoder. Optional meshlet bundles contain an ordinary GLB plus a versioned sidecar and manifest; they need consumer support and do not automatically enable GPU rendering or game behavior. Keep the default compatibility profile unless the target loader supports the chosen options.</p>
+<p>The updater replaces the plugin only, not this separate tools installation. Native acceptance of 1.3.2 and production game/GPU meshlet consumption remain pending.</p>
+
+<h2 id="help">15. Saved settings and troubleshooting</h2>
 <h3>What is saved</h3>
 <div class="table-wrap" tabindex="0">
 <table>
@@ -451,6 +461,6 @@ Output             D:\Game\Assets\Models\Props\SM_TrashCan.fbx
 <p>For a new Max 2024 build, try: create a Dummy → Analyze → assign a tag → export one FBX → import it → inspect UV Seams → preview LODs. Save and reopen the <code>.max</code> scene to verify filter, checkbox and tag persistence.</p>
 <p>Technical references in the plugin repository, subject to repository access: <a href="https://github.com/SashaRX/MaxModelBatch/blob/main/docs/UV_SEAMS.md">UV seams</a>, <a href="https://github.com/SashaRX/MaxModelBatch/blob/main/docs/EXPORT_TAGS.md">export tags</a>, <a href="https://github.com/SashaRX/MaxModelBatch/blob/main/docs/DUMMY_CREATION.md">Dummy creation</a>, <a href="https://github.com/SashaRX/MaxModelBatch/blob/main/docs/UNITY_AXES.md">Unity axes</a>, <a href="https://github.com/SashaRX/MaxModelBatch/blob/main/docs/EXPORT_UNITS.md">units</a>, <a href="https://github.com/SashaRX/MaxModelBatch/blob/main/docs/UPDATES.md">updates</a>, <a href="https://github.com/SashaRX/MaxModelBatch/blob/main/docs/MESHALIGN.md">Mesh Align</a>.</p>
 
-<p class="print-note">Interactive comparisons are available in the web guide. This PDF shows both depth-test states and two LOD states.</p><footer>MAX ModelBatch · Illustrated user guide · Actual Max 2024 test captures · October 13, 2026</footer></main>
+<p class="print-note">Interactive comparisons are available in the web guide. This PDF shows both depth-test states and two LOD states.</p><footer>MAX ModelBatch · Illustrated user guide · Actual Max 2024 test captures · October 15, 2026</footer></main>
 <dialog id="zoom" aria-label="Enlarged illustration"><button id="close-zoom" autofocus>Close</button><img alt="Enlarged illustration"></dialog>
 <script src="/modelbatch/guide.js?v=20261013" defer></script></body></html>

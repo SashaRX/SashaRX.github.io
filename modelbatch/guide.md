@@ -1,10 +1,10 @@
 # MAX ModelBatch: illustrated user guide
 
-**Version 1.2.1 · 3ds Max 2022-2027 · FBX workflows · examples from Max 2024**
+**Version 1.3.2 · 3ds Max 2022-2027 · FBX + optional GLB · examples from Max 2024**
 
 Batch-import, prepare and export models with a dockable Max panel: create export Dummies, write one FBX per asset, import files in batches, compare UV seams, preview LODs and route models into project folders using export tags.
 
-MAX ModelBatch is the new name of TS_UnityExport. Version 1.2.1 uses the new name, repository and plugin filename, while retaining saved settings and scene metadata. The illustrations are actual Max 2024 captures from development test scenes and retain those earlier UI labels. The workflow captures come from version 1.2.0; the rename, old scene tags/routes and real FBX export were verified in a separate Max 2024 run. All twelve SDK build variants pass their regression suites. Object names, paths, checkbox states and version labels in the captures are examples rather than recommended defaults. These earlier captures do not establish runtime compatibility of the new release in every supported Max host.
+Version 1.3.2 includes the compact Dummy and Updates controls described below. It retains saved settings and scene metadata from earlier MAX ModelBatch / TS_UnityExport installations. Screenshots are real Max 2024 captures from version 1.2.0 and retain earlier UI labels; they are historical illustrations, not screenshots of 1.3.2. All 24 host/feature Release variants passed SDK builds and 360 CTest checks. Native Max runs and visual acceptance of the compact UI remain pending; earlier Max 2024 checks do not establish runtime acceptance of this version or every supported host. Names, paths and checked options in screenshots are examples.
 
 ## Contents
 
@@ -21,19 +21,20 @@ MAX ModelBatch is the new name of TS_UnityExport. Version 1.2.1 uses the new nam
 - [11. Batch-import FBX files](#import)
 - [12. Update and roll back](#updates)
 - [13. Optional Mesh Align](#meshalign)
-- [14. Saved settings and troubleshooting](#help)
+- [14. Optional GLB / meshopt](#glb)
+- [15. Saved settings and troubleshooting](#help)
 
 <a id="install"></a>
 ## 1. Install and open
 
-1. Open the [1.2.1 release](https://github.com/SashaRX/MaxModelBatch-Releases/releases/tag/v1.2.1). Download the archive **for your exact Max year**. For Max 2024, [download the standard build](https://github.com/SashaRX/MaxModelBatch-Releases/releases/download/v1.2.1/MaxModelBatch_v1.2.1_3dsMax2024.zip).
+1. Open the [1.3.2 release](https://github.com/SashaRX/MaxModelBatch-Releases/releases/tag/v1.3.2). Download the archive **for your exact Max year**. For Max 2024, [download the standard build](https://github.com/SashaRX/MaxModelBatch-Releases/releases/download/v1.3.2/MaxModelBatch_v1.3.2_3dsMax2024.zip).
 2. Close Max. Extract the archive into a permanent folder such as `C:\Tools\MaxModelBatch\2024`. The plugin file is `MaxModelBatch.dlu`. Historical releases through 1.2.0 use `TS_UnityExport.dlu`.
 3. In Max, open **Customize → Configure System Paths → 3rd-Party Plug-Ins → Add**. Add the folder containing the `.dlu`, then restart Max.
-4. In a renamed build, open **Scripting → MAX ModelBatch** on **Max 2022-2024**, or **MAX ModelBatch → MAX ModelBatch** on **Max 2025-2027**. The legacy menu fallback on older hosts is also **MAX ModelBatch**. In the published **1.2.0** build, the command is still **Unity FBX Exporter**, under **Scripting** or **Unity Tools**.
+4. Open **Scripting → MAX ModelBatch** on **Max 2022-2024**, or **MAX ModelBatch → MAX ModelBatch** on **Max 2025-2027**. The legacy menu fallback on older hosts is also **MAX ModelBatch**. In the published **1.2.0** build, the command is still **Unity FBX Exporter**, under **Scripting** or **Unity Tools**.
 
 For the first upgrade after the repository rename, close Max and manually replace the installation. Remove `TS_UnityExport.dlu` from all scanned plugin folders before installing `MaxModelBatch.dlu`, and keep one copy for each host. Existing scene tags and settings are retained.
 
-The standard archive includes every core feature in this guide. Experimental Mesh Align requires the separate `_MeshAlign.zip` variant. Max supplies the Qt runtime; do not copy additional Qt DLLs into the plugin folder. Manual ZIP downloads are public at MaxModelBatch-Releases. No GitHub sign-in is required.
+Choose **Standard**, **Mesh Align**, **GLB** or **Mesh Align + GLB** on [Downloads](/downloads/#modelbatch). Standard includes the FBX, UV, LOD, import and tag workflows. Mesh Align is experimental. GLB builds also require their matching separate Tools ZIP; see [GLB setup](#glb). Never mix Max years or plugin/worker variants. Max supplies Qt: do not install extra Qt DLLs. Public manual ZIP downloads need no GitHub account.
 
 Dock the panel wherever it suits your workspace. The **Export** tab keeps **Project folder** and **Analyze** at the top and **Export FBX** at the bottom. Four workflow pages fill the middle: **Models**, **Preparation**, **Export settings** and **Mesh channels**.
 
@@ -46,10 +47,10 @@ Dock the panel wherever it suits your workspace. The **Export** tab keeps **Proj
 
 Place one asset's render meshes and collision meshes under one Dummy. If you already have that hierarchy, start with Analyze.
 
-The steps below match the downloadable **1.2.1** build, PDF and screenshots. For compact source builds, use the [compact UI instructions](#compact-ui).
+These steps match the public **1.3.2** downloads and the updated PDF. Screenshots show the earlier 1.2.0 layout.
 
-1. Select the meshes of one asset in Max. Open **Export → Preparation**.
-2. Enter an informative **Asset name**, such as `TrashCan`. Choose the Dummy position and click **Create Dummy from Selection**.
+1. Select the meshes of one asset in Max. Open **Export → Models**.
+2. Enter an informative **Asset name**, such as `TrashCan`. Toggle **At center / At bottom**, optionally enable **Auto LODs**, and click **Create Dummy** above the model list.
 3. Set **Project folder**, the common base for all relative tag routes.
 4. Click **Analyze**. With objects selected, the plugin collects their Dummy roots. With no selection, it searches Dummies throughout the scene.
 5. In **Models**, check names, **Destination** and root checkboxes. Assign a tag in the last column if needed.
@@ -57,13 +58,9 @@ The steps below match the downloadable **1.2.1** build, PDF and screenshots. For
 7. Read the operation status at the bottom. Open **Details** or **Log** for errors.
 
 <a id="compact-ui"></a>
-### Compact UI in source builds
+### Compact Dummy controls in 1.3.2
 
-The compact UI is not included in the 1.2.1 downloads linked above. If your build has the compact controls:
-
-1. Open **Export → Models** and select the meshes of one asset.
-2. Enter **Asset name**, toggle **At center / At bottom**, optionally enable **Auto LODs**, and click **Create Dummy** above the model list.
-3. Continue with **Project folder**, **Analyze** and export as in steps 3–7 above. Scene utilities remain in **Preparation**; naming, geometry placement and Undo behavior are unchanged.
+**Asset name**, **At center / At bottom**, **Auto LODs** and **Create Dummy** are directly above the Models list. Scene utilities remain in **Preparation**. Naming, geometry placement and single-Undo behavior are retained. In older 1.2.1 builds, creation was under **Export → Preparation → Create Dummy from Selection**.
 
 Each checked root that is visible through the current tag filter produces a separate file named after its Dummy, for example `SM_TrashCan.fbx`. Its hierarchy, including `_COL` meshes, goes into that file.
 
@@ -84,20 +81,20 @@ Do not assign a different LOD number to every part of a multipart model. Use pol
 
 ![Dummy creation controls and scene tools](guide/images/preparation.png)
 
-*1.2.1 UI capture: export-root creation at the top of Preparation, scene utilities below. Compact source builds put creation above the Models list. Organize LOD / COL layers works on the whole scene.*
+*Historical 1.2.0 capture: Dummy creation was in Preparation. In 1.3.2 it is above the Models list; scene utilities remain in Preparation. Organize LOD / COL layers works on the whole scene.*
 
-**Dummy position** determines the root's location:
+**At center / At bottom** determines the root's location:
 
 | Mode | Position |
 |---|---|
-| Group center | Center of the combined world-space geometry bounds |
-| Bottom center (floor) | The same X/Y center at the lowest geometry Z |
+| At center | Center of the combined world-space geometry bounds |
+| At bottom | The same X/Y center at the lowest geometry Z |
 
 “Floor” means the bottom of the selected model, not world `Z = 0`. Creating the root preserves the geometry's world placement.
 
 Enter a shared base name in **Asset name** or leave it blank to let the plugin choose an informative selected name. Automatic naming uses heuristics. If it finds no suitable candidate, it asks for a name. An explicit name is useful when a scene still contains names such as `Plane003`, numbers or temporary placeholders.
 
-The root gets `SM_` without trailing `_COL` or `_LOD#`: `SM_TrashCan`. Child names lose the `SM_` prefix. **Assign LOD0-LOD9 by polygon count** gives every LOD the same base name: more polygons means a lower LOD number; equal counts use selection order. A selected group's count includes its render descendants. Collision branches are excluded and retain `_COL`. Automatic ranking supports up to ten LOD alternatives.
+The root gets `SM_` without trailing `_COL` or `_LOD#`: `SM_TrashCan`. Child names lose the `SM_` prefix. **Auto LODs** gives every LOD the same base name: more polygons means a lower LOD number; equal counts use selection order. A selected group's count includes its render descendants. Collision branches are excluded and retain `_COL`. Automatic ranking supports up to ten LOD alternatives.
 
 One **Ctrl+Z** undoes Dummy creation, naming and parenting.
 
@@ -122,12 +119,12 @@ For **Rebuild SG from UV**, UV data must be in the base object. If it exists onl
 - Click **Name**, **Status** or **Destination** to select that object in Max. A Dummy selects itself and all descendants, including collapsed branches. A mesh row selects the mesh itself.
 - Use **Ctrl/Shift** for multiple rows. The **Tag** column opens the tag dropdown without changing scene selection.
 - Analyze starts with branches collapsed. **Развернуть всё / Свернуть всё** means **Expand all / Collapse all** and toggles all hierarchy levels shown by the current filter.
-- **Выбрать все / Снять все / Инвертировать выбор** mean **Select all / Clear all / Invert selection**. They change export checkboxes only for roots visible through the tag filter. Filtered-out models keep their checkboxes.
+- **All / None / Invert** change export checkboxes only for roots visible through the tag filter. Filtered-out models keep their checkboxes.
 - Drag a column divider to resize it, or double-click it to fit the contents. Click a heading to sort; click again to reverse the order. Children remain under their root.
 
 **Split materials** splits render meshes with Multi/Sub materials into meshes per material. Analyze previews the expected outputs. The button processes **all models shown by the filter, regardless of root checkboxes**. An output preview is not yet a scene object, so it cannot be selected in the viewport before the split.
 
-Analyze populates the table; it does not export or run Split. Some bulk-action labels currently remain in Russian; the translations above identify them in the captures.
+Analyze populates the table; it does not export or run Split. Historical screenshots can show longer or Russian labels; 1.3.2 uses **All / None / Invert** for export checkboxes.
 
 <a id="tags"></a>
 ## 5. Tags, colors and project folders
@@ -314,27 +311,31 @@ LOD preview temporarily filters the viewport. Layer organization changes scene-l
 <a id="updates"></a>
 ## 12. Update and roll back
 
-**First upgrade after the rename:** pre-rename updaters check the old repository asset address strictly, so they need one manual installation of a renamed build. The steps below apply after that migration. New builds can read historical packages and replace the loaded filename in place, avoiding a second plugin copy.
+**Public manual update:** download the 1.3.2 ZIP for your exact Max year and feature variant from [Downloads](/downloads/#modelbatch). Save your scene, close Max, replace the installed `.dlu` and restart. For GLB builds, also install the matching tools package. No GitHub account is needed for these public downloads.
+
+The **in-plugin updater still uses the private development repository**. Its actions require `gh auth login` with repository access and a writable plugin folder. Publishing public ZIPs does not change that requirement.
 
 ![GitHub update controls](guide/images/updates.png)
 
-*Updates capture from an earlier test build. Installed/Latest are historical labels; your check displays the actual versions.*
+*Historical Updates capture from an earlier test build. 1.3.2 uses the compact labels below; versions and paths in this image are examples.*
 
 1. Open **Updates → Check now**.
-2. If an update is available, click **Install after Max closes**. The package is downloaded and checked against the exact Max year and build variant.
-3. When the download is ready, save your scene and close Max. Installation waits for that process to exit.
-4. Restart Max after installation finishes and check **Installed**.
+2. If an update is available, click **Install update**. The package is downloaded and checked against the exact Max year and build variant.
+3. When ready, save your scene and close Max. Installation waits for that process to exit.
+4. Restart Max after installation finishes and check **Installed**, including the feature variant and **+ GLB** when enabled.
 
-**Check for updates at Max startup** enables startup checks. **Automatically download and install after Max closes** enables automatic preparation and deferred installation. Both automatic options default to off.
+**Check at startup** enables startup checks. **Download and install after closing Max** also enables the startup check and automatically prepares compatible updates. Both options default to off.
 
-**Roll back** prepares restoration of the previous binary after Max closes. **Open GitHub releases** opens the release page. If another process locks the binary, the installer keeps the staged package; **Retry after Max closes** retries installation.
+**Roll back** prepares restoration of the previous binary after Max closes. **Retry install** retries a prepared installation if another process prevented replacement. The previous binary is retained for rollback.
 
-Version 1.2.1’s updater still uses private MaxModelBatch and requires `gh auth login` with repository access. Public ZIPs support manual updates. The plugin folder must be writable. Save your scene and close Max before replacing the `.dlu`; no hot reload.
+Status text distinguishes information/progress, success/current, warnings/available updates and errors with different colors and explicit messages. **Plugin file** is read-only; its tooltip shows the complete loaded path. **Website / guide** opens this public manual.
+
+When migrating from `TS_UnityExport.dlu`, remove old copies from scanned folders and install the renamed plugin manually once. Keep one plugin copy per host. There is no hot reload.
 
 <a id="meshalign"></a>
 ## 13. Optional Mesh Align
 
-**Mesh Align** appears only in `_MeshAlign.zip` builds. It aligns planes and border vertices of neighboring modular Editable Poly meshes. It is a geometry utility rather than a required FBX-export stage.
+**Mesh Align** appears only in `_MeshAlign.zip` and `_MeshAlign_GLB.zip` builds. It aligns planes and border vertices of neighboring modular Editable Poly meshes. It is a geometry utility rather than a required FBX-export stage.
 
 1. Select modular meshes and click **Analyze selection** to detect planar regions and shared plane clusters.
 2. Inspect the results. Double-click a region or cluster to highlight its faces.
@@ -343,8 +344,22 @@ Version 1.2.1’s updater still uses private MaxModelBatch and requires `gh auth
 
 Analyze and highlighting are read-only. Project/Weld move existing vertices with Undo; they do not merge objects or add/remove polygons. Modification requires a base Editable Poly without a modifier stack. Distance parameters are relative to the selected bounds. UV-aware welding is not implemented yet.
 
+<a id="glb"></a>
+## 14. Optional GLB / meshopt
+
+The **GLB / meshopt** tab is included only in `_GLB.zip` and `_MeshAlign_GLB.zip` plugin builds. Standard and Mesh Align builds without GLB keep the FBX workflows.
+
+1. Download the plugin and its matching `_GLB_Tools.zip` or `_MeshAlign_GLB_Tools.zip` for the **same 1.3.2 version, Max year and feature variant** from [Downloads](/downloads/#modelbatch).
+2. Extract the tools into a permanent writable folder. Keep the manifests and licenses. In GLB settings select its `gltfpack.exe` and `MaxModelBatchGlbWorker.exe`; the worker must match the plugin build. Replace the tools together with every GLB plugin update.
+3. Use **Scene export** to analyze Dummy roots, apply the shared tags/filter, check models and export current evaluated static geometry, including unsaved edits. GLB capture does not run FBX pivot preparation or collapse the scene stack.
+4. Use **Pack existing GLB** for existing files. Check the selected compatibility profile and validation report before using optimized output in your target application.
+
+GLB uses metres and right-handed Y-up / -Z forward. Unsupported skin/morph, animation and unsupported material/map features produce a report. Meshopt compression needs a compatible decoder. Optional meshlet bundles contain an ordinary GLB plus a versioned sidecar and manifest; they need consumer support and do not automatically enable GPU rendering or game behavior. Keep the default compatibility profile unless the target loader supports the chosen options.
+
+The updater replaces the plugin only, not this separate tools installation. Native acceptance of 1.3.2 and production game/GPU meshlet consumption remain pending.
+
 <a id="help"></a>
-## 14. Saved settings and troubleshooting
+## 15. Saved settings and troubleshooting
 
 ### What is saved
 

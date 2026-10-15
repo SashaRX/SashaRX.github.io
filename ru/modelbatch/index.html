@@ -13,50 +13,46 @@ const update=()=>links.forEach(link=>link.href=routes[link.dataset.language]+loc
 links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(key,link.dataset.language)}catch{}}));});})();
 </script>
 <link rel="stylesheet" href="/assets/site.css?v=20261013">
-<link rel="stylesheet" href="/modelbatch/guide.css?v=20261013"></head><body class="modelbatch-page">
+<link rel="stylesheet" href="/modelbatch/guide.css?v=1.3.2"></head><body class="modelbatch-page">
 <a class="skip-link" href="#main">К содержимому</a>
-<aside class="sidebar"><div class="sidebar-top"><a class="home-link" href="/ru/">← SashaRX / Проекты</a><nav class="language-switch" aria-label="Язык сайта"><a href="/modelbatch/" hreflang="en" lang="en" data-language="en">EN</a><a href="/ru/modelbatch/" hreflang="ru" lang="ru" data-language="ru" aria-current="true">RU</a></nav></div><div class="sidebar-title"><div><div class="brand">MAX ModelBatch</div><div class="version">РУКОВОДСТВО · 1.2.1</div></div><button class="mobile-top" id="menu-toggle" aria-expanded="false" aria-controls="guide-contents">Содержание</button></div>
-<nav id="guide-contents" class="contents-nav" aria-label="Содержание"><a href="#install">1. Установка и открытие</a><a href="#quickstart">2. Первый экспорт</a><a href="#preparation">3. Dummy, имена и подготовка</a><a href="#models">4. Таблица экспортируемых моделей</a><a href="#tags">5. Теги, цвета и папки проекта</a><a href="#settings">6. Настройки экспорта</a><a href="#unity">7. Масштаб и направления Unity</a><a href="#channels">8. UV-каналы и цвета вершин</a><a href="#seams">9. Отображение UV-швов</a><a href="#lod">10. Просмотр LOD и общие слои</a><a href="#import">11. Пакетный импорт FBX</a><a href="#updates">12. Обновление и откат</a><a href="#meshalign">13. Mesh Align: дополнительная сборка</a><a href="#help">14. Сохранение настроек и частые вопросы</a></nav>
-<div class="actions"><a href="guide.pdf?v=20261013-public">PDF (интерфейс 1.2.1)</a><button id="print">Печать</button><a href="guide.md?v=20261015-compact">Markdown</a></div>
+<aside class="sidebar"><div class="sidebar-top"><a class="home-link" href="/ru/">← SashaRX / Проекты</a><nav class="language-switch" aria-label="Язык сайта"><a href="/modelbatch/" hreflang="en" lang="en" data-language="en">EN</a><a href="/ru/modelbatch/" hreflang="ru" lang="ru" data-language="ru" aria-current="true">RU</a></nav></div><div class="sidebar-title"><div><div class="brand">MAX ModelBatch</div><div class="version">РУКОВОДСТВО · 1.3.2</div></div><button class="mobile-top" id="menu-toggle" aria-expanded="false" aria-controls="guide-contents">Содержание</button></div>
+<nav id="guide-contents" class="contents-nav" aria-label="Содержание"><a href="#install">1. Установка и открытие</a><a href="#quickstart">2. Первый экспорт</a><a href="#preparation">3. Dummy, имена и подготовка</a><a href="#models">4. Таблица экспортируемых моделей</a><a href="#tags">5. Теги, цвета и папки проекта</a><a href="#settings">6. Настройки экспорта</a><a href="#unity">7. Масштаб и направления Unity</a><a href="#channels">8. UV-каналы и цвета вершин</a><a href="#seams">9. Отображение UV-швов</a><a href="#lod">10. Просмотр LOD и общие слои</a><a href="#import">11. Пакетный импорт FBX</a><a href="#updates">12. Обновление и откат</a><a href="#meshalign">13. Mesh Align: дополнительная сборка</a><a href="#glb">14. GLB / meshopt: дополнительная сборка</a><a href="#help">15. Сохранение настроек и частые вопросы</a></nav>
+<div class="actions"><a href="guide.pdf?v=1.3.2">PDF (v1.3.2)</a><button id="print">Печать</button><a href="guide.md?v=1.3.2">Markdown</a></div>
 </aside>
 <main id="main"><div class="guide-hero"><div class="eyebrow">Пакетная работа с моделями в 3ds Max</div><h1>MAX ModelBatch</h1><div class="hero-actions"><a class="primary" href="#quickstart">Начать с первого экспорта</a><a href="/ru/downloads/#modelbatch">Выбрать сборку</a><a href="/ru/workflows/?tool=max">Рабочие сценарии</a></div>
-<p class="guide-meta"><strong>Версия 1.2.1 · 3ds Max 2022-2027 · работа с FBX · примеры из Max 2024</strong></p>
+<p class="guide-meta"><strong>Версия 1.3.2 · 3ds Max 2022-2027 · FBX + дополнительный GLB · примеры из Max 2024</strong></p>
 <p>Импортируй, готовь и экспортируй модели пачкой. Dummy-иерархии, отдельный FBX на модель, UV-швы, LOD и маршруты по тегам в одной панели 3ds Max. FBX подходит для Unity и других инструментов.</p>
-<details class="capture-note"><summary>Об иллюстрациях и поддержке версий Max</summary><p>MAX ModelBatch - новое имя TS_UnityExport. Версия 1.2.1 использует новое название, репозиторий и имя файла плагина, сохраняя настройки и данные сцен. Иллюстрации сняты в настоящем Max 2024 на тестовых сценах версии 1.2.0, поэтому на них остаются прежние названия интерфейса. Переименование, старые теги и пути сцен, а также настоящий экспорт FBX проверены отдельно в Max 2024. Все двенадцать вариантов SDK-сборки проходят регрессионные тесты; проверка в остальных версиях самого Max ещё требуется. Имена объектов, пути, галочки и номера версий на снимках служат примерами, а не набором настроек по умолчанию.</p></details>
+<details class="capture-note"><summary>Об иллюстрациях и поддержке версий Max</summary><p>Версия 1.3.2 включает компактные элементы Dummy и Updates, описанные ниже. Настройки и данные сцен прежних MAX ModelBatch / TS_UnityExport сохраняются. Скриншоты сняты в настоящем Max 2024 на версии 1.2.0 и показывают прежние названия интерфейса; это исторические иллюстрации, а не снимки 1.3.2. Все 24 Release-варианта по годам Max и функциям прошли SDK-сборки и 360 проверок CTest. Запуски в Max и визуальная проверка компактного UI пока ожидаются; прежние проверки Max 2024 не подтверждают работу этой версии во всех хостах. Имена, пути и галочки на снимках служат примерами.</p></details>
 <p class="translation-note">Названия кнопок и вкладок ниже оставлены на английском, как в интерфейсе плагина, чтобы их было проще найти.</p>
 
 </div>
-<section class="pdf-contents"><h2>Содержание</h2><ul><li><a href="#install">1. Установка и открытие</a></li><li><a href="#quickstart">2. Первый экспорт</a></li><li><a href="#preparation">3. Dummy, имена и подготовка</a></li><li><a href="#models">4. Таблица экспортируемых моделей</a></li><li><a href="#tags">5. Теги, цвета и папки проекта</a></li><li><a href="#settings">6. Настройки экспорта</a></li><li><a href="#unity">7. Масштаб и направления Unity</a></li><li><a href="#channels">8. UV-каналы и цвета вершин</a></li><li><a href="#seams">9. Отображение UV-швов</a></li><li><a href="#lod">10. Просмотр LOD и общие слои</a></li><li><a href="#import">11. Пакетный импорт FBX</a></li><li><a href="#updates">12. Обновление и откат</a></li><li><a href="#meshalign">13. Mesh Align: дополнительная сборка</a></li><li><a href="#help">14. Сохранение настроек и частые вопросы</a></li></ul></section><h2 id="install">1. Установка и открытие</h2>
+<section class="pdf-contents"><h2>Содержание</h2><ul><li><a href="#install">1. Установка и открытие</a></li><li><a href="#quickstart">2. Первый экспорт</a></li><li><a href="#preparation">3. Dummy, имена и подготовка</a></li><li><a href="#models">4. Таблица экспортируемых моделей</a></li><li><a href="#tags">5. Теги, цвета и папки проекта</a></li><li><a href="#settings">6. Настройки экспорта</a></li><li><a href="#unity">7. Масштаб и направления Unity</a></li><li><a href="#channels">8. UV-каналы и цвета вершин</a></li><li><a href="#seams">9. Отображение UV-швов</a></li><li><a href="#lod">10. Просмотр LOD и общие слои</a></li><li><a href="#import">11. Пакетный импорт FBX</a></li><li><a href="#updates">12. Обновление и откат</a></li><li><a href="#meshalign">13. Mesh Align: дополнительная сборка</a></li><li><a href="#glb">14. GLB / meshopt: дополнительная сборка</a></li><li><a href="#help">15. Сохранение настроек и частые вопросы</a></li></ul></section><h2 id="install">1. Установка и открытие</h2>
 <ol>
-<li>Открой <a href="https://github.com/SashaRX/MaxModelBatch-Releases/releases/tag/v1.2.1">релиз 1.2.1</a>. Выбери архив <strong>для своего года Max</strong>. Для Max 2024: <a href="https://github.com/SashaRX/MaxModelBatch-Releases/releases/download/v1.2.1/MaxModelBatch_v1.2.1_3dsMax2024.zip">скачать стандартную сборку</a>.</li>
+<li>Открой <a href="https://github.com/SashaRX/MaxModelBatch-Releases/releases/tag/v1.3.2">релиз 1.3.2</a>. Выбери архив <strong>для своего года Max</strong>. Для Max 2024: <a href="https://github.com/SashaRX/MaxModelBatch-Releases/releases/download/v1.3.2/MaxModelBatch_v1.3.2_3dsMax2024.zip">скачать стандартную сборку</a>.</li>
 <li>Закрой Max. Распакуй архив в постоянную папку, например <code>C:\Tools\MaxModelBatch\2024</code>. Основной файл - <code>MaxModelBatch.dlu</code>. В исторических релизах до 1.2.0 включительно он назывался <code>TS_UnityExport.dlu</code>.</li>
 <li>В Max открой <strong>Customize → Configure System Paths → 3rd-Party Plug-Ins → Add</strong>. Добавь папку с <code>.dlu</code> и перезапусти Max.</li>
-<li>В новой сборке открой <strong>Scripting → MAX ModelBatch</strong> на <strong>Max 2022-2024</strong>, либо <strong>MAX ModelBatch → MAX ModelBatch</strong> на <strong>Max 2025-2027</strong>. Резервное меню на старых версиях Max также называется <strong>MAX ModelBatch</strong>. В опубликованной сборке <strong>1.2.0</strong> команда ещё называется <strong>Unity FBX Exporter</strong> и находится в <strong>Scripting</strong> или <strong>Unity Tools</strong>.</li>
+<li>Открой <strong>Scripting → MAX ModelBatch</strong> на <strong>Max 2022-2024</strong>, либо <strong>MAX ModelBatch → MAX ModelBatch</strong> на <strong>Max 2025-2027</strong>. Резервное меню на старых версиях Max также называется <strong>MAX ModelBatch</strong>. В опубликованной сборке <strong>1.2.0</strong> команда ещё называется <strong>Unity FBX Exporter</strong> и находится в <strong>Scripting</strong> или <strong>Unity Tools</strong>.</li>
 </ol>
 <p>При первом обновлении после переименования репозитория закрой Max и вручную замени установку. Удали <code>TS_UnityExport.dlu</code> из всех папок, которые Max сканирует при поиске плагинов, перед установкой <code>MaxModelBatch.dlu</code>. Для каждого года Max должна остаться одна подходящая копия. Настройки и теги существующих сцен сохраняются.</p>
-<p>Стандартный архив содержит все основные функции этого руководства, кроме экспериментального Mesh Align. Для него нужен архив с суффиксом <code>_MeshAlign.zip</code>. Qt поставляется вместе с Max: дополнительные Qt DLL в папку плагина копировать не нужно. ZIP доступны публично в MaxModelBatch-Releases, без входа в GitHub.</p>
+<p>На странице <a href="/ru/downloads/#modelbatch">Скачать</a> выбери <strong>Standard</strong>, <strong>Mesh Align</strong>, <strong>GLB</strong> или <strong>Mesh Align + GLB</strong>. Standard содержит FBX, UV, LOD, импорт и теги. Mesh Align экспериментальный. Для GLB нужен соответствующий отдельный Tools ZIP; см. <a href="#glb">настройку GLB</a>. Не смешивай годы Max и варианты плагина/worker. Qt поставляется с Max, дополнительные Qt DLL не нужны. Публичные ZIP скачиваются без аккаунта GitHub.</p>
 <p>Панель можно закрепить в удобной области окна Max. На вкладке <strong>Export</strong> папка проекта и <strong>Analyze</strong> находятся сверху, <strong>Export FBX</strong> - снизу. Между ними четыре страницы: <strong>Models</strong>, <strong>Preparation</strong>, <strong>Export settings</strong>, <strong>Mesh channels</strong>.</p>
-<p><a class="zoom-link" href="/modelbatch/guide/images/export-models.png"><img data-asset="guide/images/export-models.png" src="/modelbatch/guide/images/export-models.png" loading="lazy" decoding="async" alt="Панель Export с четырьмя страницами и списком моделей" width="800" height="520"></a></p>
+<p><a class="zoom-link" href="/modelbatch/guide/images/export-models.png"><img alt="Панель Export с четырьмя страницами и списком моделей" data-asset="guide/images/export-models.png" decoding="async" loading="lazy" src="/modelbatch/guide/images/export-models.png"/ width="800" height="520"></a></p>
 <p><em>Models: папка проекта, фильтр, список корней, теги и кнопка экспорта. На снимке показаны три тестовых корня.</em></p>
+
 <h2 id="quickstart">2. Первый экспорт</h2>
 <p>Для одного ассета собери визуальные меши и коллизии под одним Dummy. Если такая иерархия уже есть, переходи сразу к Analyze.</p>
-<p>Шаги ниже соответствуют скачиваемой сборке <strong>1.2.1</strong>, PDF и скриншотам. Для сборок из исходников с компактным интерфейсом смотри <a href="#compact-ui">отдельные шаги</a>.</p>
+<p>Шаги соответствуют публичным архивам <strong>1.3.2</strong> и обновлённому PDF. Скриншоты показывают прежний интерфейс 1.2.0.</p>
 <ol>
-<li>Выдели меши одной модели в Max. Открой <strong>Export → Preparation</strong>.</li>
-<li>Введи понятную основу в <strong>Asset name</strong>, например <code>TrashCan</code>. Выбери положение Dummy и нажми <strong>Create Dummy from Selection</strong>.</li>
+<li>Выдели меши одной модели в Max. Открой <strong>Export → Models</strong>.</li>
+<li>Введи понятную основу в <strong>Asset name</strong>, например <code>TrashCan</code>. Переключи <strong>At center / At bottom</strong>, при необходимости включи <strong>Auto LODs</strong> и нажми <strong>Create Dummy</strong> над списком моделей.</li>
 <li>Укажи <strong>Project folder</strong> - общую папку, относительно которой будут рассчитываться пути тегов.</li>
 <li>Нажми <strong>Analyze</strong>. Если выделены объекты, анализируются их корни Dummy. Если ничего не выделено, плагин ищет Dummy по всей сцене.</li>
 <li>На странице <strong>Models</strong> проверь имена, <strong>Destination</strong> и галочки корней. При необходимости назначь тег в последнем столбце.</li>
 <li>Проверь <strong>Export settings</strong> и <strong>Mesh channels</strong>. Нажми <strong>Export FBX</strong>.</li>
 <li>Посмотри результат операции снизу и открой <strong>Details</strong> или <strong>Log</strong>, если есть ошибки.</li>
 </ol>
-<h3 id="compact-ui">Компактный интерфейс в сборках из исходников</h3>
-<p>Компактный интерфейс не входит в архивы 1.2.1, ссылки на которые приведены выше. Если в твоей сборке уже есть компактные элементы:</p>
-<ol>
-<li>Открой <strong>Export → Models</strong> и выдели меши одной модели.</li>
-<li>Введи <strong>Asset name</strong>, переключи <strong>At center / At bottom</strong>, при необходимости включи <strong>Auto LODs</strong> и нажми <strong>Create Dummy</strong> над списком моделей.</li>
-<li>Продолжи с <strong>Project folder</strong>, <strong>Analyze</strong> и экспортом по шагам 3–7 выше. Инструменты сцены остаются в <strong>Preparation</strong>; правила имён, положение геометрии и отмена не меняются.</li>
-</ol>
+<h3 id="compact-ui">Компактные элементы Dummy в 1.3.2</h3>
+<p><strong>Asset name</strong>, <strong>At center / At bottom</strong>, <strong>Auto LODs</strong> и <strong>Create Dummy</strong> находятся прямо над списком Models. Инструменты сцены остаются в <strong>Preparation</strong>. Правила имён, положение геометрии и отмена одним Ctrl+Z сохраняются. В прежних сборках 1.2.1 создание было в <strong>Export → Preparation → Create Dummy from Selection</strong>.</p>
 <p>Каждый отмеченный корень, видимый через текущий фильтр тегов, экспортируется в отдельный файл с именем Dummy: например <code>SM_TrashCan.fbx</code>. В файл входит его иерархия, включая <code>_COL</code>.</p>
 <p>Пример структуры одного ассета:</p>
 <pre><code class="language-text">SM_TrashCan                 ← экспортный корень, имя файла
@@ -66,12 +62,12 @@ links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(
 └── TrashCan_COL             ← коллизия
 </code></pre>
 <p>LOD не нужно включать для каждой детали составной модели. Используй LOD-ранжирование, когда выбранные объекты или группы представляют альтернативные уровни детализации одного ассета.</p>
+
 <h2 id="preparation">3. Dummy, имена и подготовка</h2>
-<p><a class="zoom-link" href="/modelbatch/guide/images/preparation.png"><img data-asset="guide/images/preparation.png" src="/modelbatch/guide/images/preparation.png" loading="lazy" decoding="async" alt="Создание Dummy и инструменты сцены" width="806" height="671"></a></p>
-<p><em>Снимок интерфейса 1.2.1: создание корня сверху в Preparation, инструменты сцены ниже. В сборках из исходников с компактным интерфейсом создание находится над списком Models. Organize LOD / COL layers работает со всей сценой.</em></p>
-<p><strong>Dummy position</strong> задаёт точку корня:</p>
-<div class="table-wrap" tabindex="0">
-<table>
+<p><a class="zoom-link" href="/modelbatch/guide/images/preparation.png"><img alt="Создание Dummy и инструменты сцены" data-asset="guide/images/preparation.png" decoding="async" loading="lazy" src="/modelbatch/guide/images/preparation.png"/ width="806" height="671"></a></p>
+<p><em>Исторический снимок 1.2.0: создание Dummy было в Preparation. В 1.3.2 оно находится над списком Models; инструменты сцены остаются в Preparation. Organize LOD / COL layers работает со всей сценой.</em></p>
+<p><strong>At center / At bottom</strong> задаёт точку корня:</p>
+<div class="table-wrap" tabindex="0"><table>
 <thead>
 <tr>
 <th>Режим</th>
@@ -79,22 +75,20 @@ links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(
 </tr>
 </thead>
 <tbody><tr>
-<td>Group center</td>
+<td>At center</td>
 <td>В центре общего bounding box геометрии выбранной иерархии</td>
 </tr>
 <tr>
-<td>Bottom center (floor)</td>
+<td>At bottom</td>
 <td>В том же центре по X/Y, но на нижней границе геометрии по Z</td>
 </tr>
-</tbody></table>
-</div>
+</tbody></table></div>
 <p>«У пола» означает низ выбранной модели, а не мировой <code>Z = 0</code>. Положение видимой геометрии при создании корня сохраняется.</p>
 <p>В <strong>Asset name</strong> можно явно задать общую основу имени. Если оставить поле пустым, плагин ищет информативное имя среди выделенных объектов. Автоматический выбор использует эвристики; когда подходящей основы нет, появится запрос имени. Явное имя удобнее, если в сцене остались <code>Plane003</code>, числовые или временные названия.</p>
-<p>Корень получает <code>SM_</code>, но не постфиксы <code>_COL</code> и <code>_LOD#</code>: <code>SM_TrashCan</code>. У дочерних объектов <code>SM_</code> убирается. <strong>Assign LOD0-LOD9 by polygon count</strong> присваивает всем LOD общую основу: больше полигонов - меньший номер; при равенстве учитывается порядок выделения. Выбранная группа считается по сумме её render-мешей. Коллизии исключаются из ранжирования и сохраняют <code>_COL</code>. Автоматическое ранжирование рассчитано максимум на десять LOD-вариантов.</p>
+<p>Корень получает <code>SM_</code>, но не постфиксы <code>_COL</code> и <code>_LOD#</code>: <code>SM_TrashCan</code>. У дочерних объектов <code>SM_</code> убирается. <strong>Auto LODs</strong> присваивает всем LOD общую основу: больше полигонов - меньший номер; при равенстве учитывается порядок выделения. Выбранная группа считается по сумме её render-мешей. Коллизии исключаются из ранжирования и сохраняют <code>_COL</code>. Автоматическое ранжирование рассчитано максимум на десять LOD-вариантов.</p>
 <p>Создание Dummy, переименование и переподчинение отменяются одним <strong>Ctrl+Z</strong>.</p>
 <p>Инструменты сцены:</p>
-<div class="table-wrap" tabindex="0">
-<table>
+<div class="table-wrap" tabindex="0"><table>
 <thead>
 <tr>
 <th>Кнопка</th>
@@ -121,22 +115,23 @@ links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(
 <td>Organize LOD / COL layers</td>
 <td>Раскладывает объекты всей сцены по общим слоям LOD0, LOD1, … и COL</td>
 </tr>
-</tbody></table>
-</div>
+</tbody></table></div>
 <p>Для <strong>Rebuild SG from UV</strong> UV должны быть в базовом объекте: если они находятся только в модификаторе Unwrap/UVW Mapping, сначала подготовь стек. Этот инструмент меняет сглаживание; он отличается от просмотра UV-швов, который сцену не меняет.</p>
+
 <h2 id="models">4. Таблица экспортируемых моделей</h2>
-<p><a class="zoom-link" href="/modelbatch/guide/images/export-picking.png"><img data-asset="guide/images/export-picking.png" src="/modelbatch/guide/images/export-picking.png" loading="lazy" decoding="async" alt="Выделение объектов через иерархию Export" width="626" height="671"></a></p>
+<p><a class="zoom-link" href="/modelbatch/guide/images/export-picking.png"><img alt="Выделение объектов через иерархию Export" data-asset="guide/images/export-picking.png" decoding="async" loading="lazy" src="/modelbatch/guide/images/export-picking.png"/ width="626" height="671"></a></p>
 <p><em>В раскрытой иерархии видны Dummy, дочерние объекты и предполагаемые результаты разделения материалов.</em></p>
 <ul>
 <li><strong>Галочка у корня</strong> включает его в экспорт. Она отличается от обычного выделения строки.</li>
 <li>Клик по <strong>Name</strong>, <strong>Status</strong> или <strong>Destination</strong> выделяет соответствующий объект в Max. Dummy выделяется вместе со всеми потомками, даже когда ветка свёрнута. Клик по обычному мешу выбирает сам меш.</li>
 <li><strong>Ctrl/Shift</strong> позволяют выделять несколько строк. Столбец <strong>Tag</strong> открывает выпадающий список назначения тега и не меняет выделение сцены.</li>
 <li>После <strong>Analyze</strong> ветки свёрнуты. <strong>Развернуть всё / Свернуть всё</strong> переключает все уровни показанных иерархий.</li>
-<li><strong>Выбрать все</strong>, <strong>Снять все</strong>, <strong>Инвертировать выбор</strong> меняют экспортные галочки только у моделей, видимых через фильтр тегов. Скрытые фильтром модели сохраняют свои галочки.</li>
+<li><strong>All / None / Invert</strong> меняют экспортные галочки только у моделей, видимых через фильтр тегов. Скрытые фильтром модели сохраняют свои галочки.</li>
 <li>Потяни границу столбца, чтобы изменить ширину; двойной клик по границе подбирает её по содержимому. Клик по заголовку сортирует строки, повторный клик меняет порядок. Дочерние объекты остаются под своим корнем.</li>
 </ul>
 <p><strong>Split materials</strong> разделяет render-меши с Multi/Sub материалами на меши по материалам. Analyze заранее показывает предполагаемые результаты. Кнопка обрабатывает <strong>все показанные фильтром модели, независимо от экспортных галочек</strong>. Строка предполагаемого результата ещё не является объектом сцены, поэтому до разделения её нельзя выбрать во viewport.</p>
 <p>Analyze заполняет список, но сам по себе не экспортирует и не выполняет Split.</p>
+
 <h2 id="tags">5. Теги, цвета и папки проекта</h2>
 <p>Тег связывает модель с относительной папкой. У одного Dummy один тег для всей его иерархии.</p>
 <p><a class="zoom-link" href="/modelbatch/guide/images/export-tags.png"><img data-asset="guide/images/export-tags.png" src="/modelbatch/guide/images/export-tags.png" loading="lazy" decoding="async" alt="Список тегов и их относительных папок" width="1004" height="602"></a></p>
@@ -351,20 +346,23 @@ Result             D:\Game\Assets\Models\Props\SM_TrashCan.fbx
 </ol>
 <p><strong>Refresh</strong> перечитывает папку. <strong>Stop after current file</strong> останавливает пакет после завершения текущего файла. Заголовки сортируют таблицу; ширина столбцов настраивается вручную. Импорт использует настройки FBX-импортера Max; отдельные <code>.max</code> для каждого файла не создаются.</p>
 <h2 id="updates">12. Обновление и откат</h2>
-<p><strong>Первое обновление после переименования:</strong> старый автообновлятор строго проверяет адрес файлов прежнего репозитория, поэтому один раз нужно установить новую сборку вручную. Дальше работают шаги ниже. Новый автообновлятор понимает исторические пакеты и заменяет файл с уже загруженным именем, чтобы не создавать вторую копию плагина.</p>
-<p><a class="zoom-link" href="/modelbatch/guide/images/updates.png"><img data-asset="guide/images/updates.png" src="/modelbatch/guide/images/updates.png" loading="lazy" decoding="async" alt="Вкладка обновлений GitHub" width="800" height="520"></a></p>
-<p><em>Снимок вкладки Updates из теста предыдущей сборки. Installed/Latest здесь исторические; при проверке будут показаны фактические версии.</em></p>
+<p><strong>Публичное обновление вручную:</strong> скачай ZIP 1.3.2 для своего года Max и набора функций на странице <a href="/ru/downloads/#modelbatch">Скачать</a>. Сохрани сцену, закрой Max, замени установленный <code>.dlu</code> и перезапусти Max. Для GLB также установи соответствующий пакет инструментов. Аккаунт GitHub для публичных архивов не нужен.</p>
+<p><strong>Встроенный автообновитель по-прежнему использует закрытый репозиторий разработки.</strong> Для его действий нужны <code>gh auth login</code> с доступом к репозиторию и папка плагина, доступная для записи. Публикация ZIP не меняет это требование.</p>
+<p><a class="zoom-link" href="/modelbatch/guide/images/updates.png"><img alt="Вкладка обновлений GitHub" data-asset="guide/images/updates.png" decoding="async" loading="lazy" src="/modelbatch/guide/images/updates.png"/ width="800" height="520"></a></p>
+<p><em>Исторический снимок Updates из прежней тестовой сборки. В 1.3.2 используются компактные названия ниже; версии и пути на снимке служат примерами.</em></p>
 <ol>
 <li>Открой <strong>Updates → Check now</strong>.</li>
-<li>Если доступно обновление, нажми <strong>Install after Max closes</strong>. Плагин скачает и проверит пакет для своего года Max и варианта сборки.</li>
-<li>Когда загрузка готова, сохрани сцену и закрой Max. Установка выполняется после выхода процесса.</li>
-<li>Запусти Max после завершения установки. Проверь <strong>Installed</strong>.</li>
+<li>Если доступно обновление, нажми <strong>Install update</strong>. Плагин скачает и проверит пакет для своего года Max и варианта сборки.</li>
+<li>Когда всё готово, сохрани сцену и закрой Max. Установка выполняется после выхода процесса.</li>
+<li>Запусти Max после завершения установки. Проверь <strong>Installed</strong>, вариант сборки и <strong>+ GLB</strong>, если он включён.</li>
 </ol>
-<p><strong>Check for updates at Max startup</strong> включает проверку при запуске. <strong>Automatically download and install after Max closes</strong> включает автоматическую подготовку и установку после закрытия. По умолчанию автоматические опции выключены.</p>
-<p><strong>Roll back</strong> подготавливает восстановление предыдущей версии, также после закрытия Max. <strong>Open GitHub releases</strong> открывает страницу релизов. Если другой процесс удерживает <code>.dlu</code>, установка сохраняет подготовленный пакет; <strong>Retry after Max closes</strong> позволяет повторить её.</p>
-<p>Автообновитель 1.2.1 требует доступ к закрытому MaxModelBatch через <code>gh auth login</code>. Публичные ZIP обновляй вручную. Папка плагина должна быть доступна для записи. Сохрани сцену и закрой Max перед заменой <code>.dlu</code>; горячей замены нет.</p>
+<p><strong>Check at startup</strong> включает проверку при запуске. <strong>Download and install after closing Max</strong> также включает стартовую проверку и автоматически готовит совместимые обновления. По умолчанию обе опции выключены.</p>
+<p><strong>Roll back</strong> подготавливает восстановление предыдущего файла после закрытия Max. <strong>Retry install</strong> повторяет подготовленную установку, если другой процесс помешал замене. Предыдущая версия сохраняется для отката.</p>
+<p>Цвет текста различает информацию/прогресс, успех/актуальную версию, предупреждения/доступное обновление и ошибки; смысл также указан словами. <strong>Plugin file</strong> доступен только для чтения, полный путь виден в подсказке. <strong>Website / guide</strong> открывает это публичное руководство.</p>
+<p>При переходе с <code>TS_UnityExport.dlu</code> один раз установи переименованный плагин вручную и убери старые копии из папок плагинов. Для каждого года Max оставь одну подходящую копию. Горячей замены нет.</p>
+
 <h2 id="meshalign">13. Mesh Align: дополнительная сборка</h2>
-<p>Вкладка <strong>Mesh Align</strong> появляется только в архиве <code>_MeshAlign.zip</code>. Она помогает согласовать плоскости и границы соседних модульных Editable Poly. Это дополнительный инструмент работы с геометрией, не обязательный этап FBX-экспорта.</p>
+<p>Вкладка <strong>Mesh Align</strong> появляется в архивах <code>_MeshAlign.zip</code> и <code>_MeshAlign_GLB.zip</code>. Она помогает согласовать плоскости и границы соседних модульных Editable Poly. Это дополнительный инструмент работы с геометрией, не обязательный этап FBX-экспорта.</p>
 <ol>
 <li>Выдели модульные меши и нажми <strong>Analyze selection</strong>: найдутся плоские области и общие кластеры плоскостей.</li>
 <li>Проверь результаты; двойной клик по области или кластеру подсвечивает соответствующие полигоны.</li>
@@ -372,7 +370,19 @@ Result             D:\Game\Assets\Models\Props\SM_TrashCan.fbx
 <li><strong>Weld borders (all clusters) / Weld borders (selected clusters)</strong> совмещают позиции граничных вершин с учётом этих плоскостей.</li>
 </ol>
 <p>Analyze и подсветка не меняют геометрию. Project/Weld перемещают существующие вершины и имеют Undo; они не объединяют объекты и не добавляют/удаляют полигоны. Для операций изменения требуется базовый Editable Poly без стека модификаторов. Параметры расстояний относительные к bounding box выделения. UV-aware welding пока не реализован.</p>
-<h2 id="help">14. Сохранение настроек и частые вопросы</h2>
+
+<h2 id="glb">14. GLB / meshopt: дополнительная сборка</h2>
+<p>Вкладка <strong>GLB / meshopt</strong> входит только в сборки <code>_GLB.zip</code> и <code>_MeshAlign_GLB.zip</code>. Стандартная и Mesh Align без GLB сохраняют сценарии FBX.</p>
+<ol>
+<li>На странице <a href="/ru/downloads/#modelbatch">Скачать</a> возьми плагин и соответствующий <code>_GLB_Tools.zip</code> или <code>_MeshAlign_GLB_Tools.zip</code> для <strong>одинаковых версии 1.3.2, года Max и набора функций</strong>.</li>
+<li>Распакуй инструменты в постоянную папку с правом записи. Сохрани манифесты и лицензии. В настройках GLB выбери её <code>gltfpack.exe</code> и <code>MaxModelBatchGlbWorker.exe</code>: worker должен соответствовать сборке плагина. При каждом обновлении GLB-плагина обновляй и инструменты.</li>
+<li>В <strong>Scene export</strong> анализируй корни Dummy, применяй общие теги/фильтр, отмечай модели и экспортируй текущую вычисленную статическую геометрию, включая несохранённые правки. Захват GLB не запускает FBX-подготовку pivot и не схлопывает стек сцены.</li>
+<li><strong>Pack existing GLB</strong> работает с готовыми файлами. Перед использованием оптимизированного результата проверь профиль совместимости и отчёт проверки в целевом приложении.</li>
+</ol>
+<p>GLB использует метры и правую систему Y-up / -Z forward. Неподдерживаемые skin/morph, анимация, материалы и карты дают отчёт. Для meshopt-сжатия нужен совместимый декодер. Дополнительные meshlet-пакеты содержат обычный GLB, отдельный версионированный файл и манифест; им нужна поддержка потребителя, они сами не включают GPU-рендеринг или игровое поведение. Оставляй профиль совместимости по умолчанию, пока поддержка выбранных опций целевым загрузчиком не подтверждена.</p>
+<p>Автообновитель заменяет только плагин, а не отдельную установку инструментов. Приёмка 1.3.2 внутри Max и использование meshlet в рабочей игре/GPU пока ожидаются.</p>
+
+<h2 id="help">15. Сохранение настроек и частые вопросы</h2>
 <h3>Что запоминается</h3>
 <div class="table-wrap" tabindex="0">
 <table>
@@ -455,6 +465,6 @@ Result             D:\Game\Assets\Models\Props\SM_TrashCan.fbx
 <p>Для проверки новой сборки на Max 2024 пройди короткий маршрут: создание Dummy → Analyze → назначение тега → экспорт одного FBX → импорт → UV Seams → LOD View. Затем сохрани и открой <code>.max</code>, чтобы проверить сохранение фильтра, галочек и тегов.</p>
 <p>Технические материалы в репозитории плагина, доступные при наличии доступа к нему: <a href="https://github.com/SashaRX/MaxModelBatch/blob/main/docs/UV_SEAMS.md">UV-швы</a>, <a href="https://github.com/SashaRX/MaxModelBatch/blob/main/docs/EXPORT_TAGS.md">теги экспорта</a>, <a href="https://github.com/SashaRX/MaxModelBatch/blob/main/docs/DUMMY_CREATION.md">создание Dummy</a>, <a href="https://github.com/SashaRX/MaxModelBatch/blob/main/docs/UNITY_AXES.md">оси Unity</a>, <a href="https://github.com/SashaRX/MaxModelBatch/blob/main/docs/EXPORT_UNITS.md">единицы измерения</a>, <a href="https://github.com/SashaRX/MaxModelBatch/blob/main/docs/UPDATES.md">обновления</a>, <a href="https://github.com/SashaRX/MaxModelBatch/blob/main/docs/MESHALIGN.md">Mesh Align</a>.</p>
 
-<p class="print-note">Интерактивное переключение примеров доступно в HTML-версии руководства. В PDF показаны оба состояния Depth test и два состояния LOD.</p><footer>MAX ModelBatch · Инструкция на русском · Скриншоты тестовых сцен Max 2024 · 13 октября 2026</footer></main>
+<p class="print-note">Интерактивное переключение примеров доступно в HTML-версии руководства. В PDF показаны оба состояния Depth test и два состояния LOD.</p><footer>MAX ModelBatch · Инструкция на русском · Скриншоты тестовых сцен Max 2024 · 15 октября 2026</footer></main>
 <dialog id="zoom" aria-label="Увеличенная иллюстрация"><button id="close-zoom" autofocus>Закрыть</button><img alt="Увеличенная иллюстрация"></dialog>
 <script src="/modelbatch/guide.js?v=20261013" defer></script></body></html>

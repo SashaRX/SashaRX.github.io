@@ -74,6 +74,7 @@ footer { margin-top: 36px; color: var(--muted); font-size: 12px; border-top: 1px
 @media (max-width: 380px) { .sidebar.open .contents-nav { grid-template-columns: 1fr; } }
 @page { size: A4; margin: 17mm 16mm 18mm; }
 @media print {
+  :root { --bg: #fff; --panel: #fff; --surface: #f0f3f5; --line: #aeb9c2; --text: #172029; --muted: #445563; --accent: #1e5e4e; }
   html { scroll-padding-top: 0; }
   body { font: 10pt/1.42 "Segoe UI", Arial, sans-serif; }
   .sidebar, dialog, .compare-controls, .mobile-top, .actions, .eyebrow, .hero-actions { display: none !important; }

@@ -64,6 +64,8 @@
 .package-status { margin: 0; font-size: 13px; color: var(--muted); }
 .download-picker .notice { margin-top: 16px; }
 .download-picker .notice p { margin: 0; }
+.download-picker [hidden] { display: none !important; }
+#glb-tools-download { margin-top: 10px; }
 .all-builds { margin-top: 18px; }
 .all-builds > summary { min-height: 44px; padding: 10px 0; font-size: 14px; color: var(--accent); }
 .download-links { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 16px; font-size: 13px; }

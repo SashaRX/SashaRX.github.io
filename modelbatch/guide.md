@@ -1,10 +1,10 @@
 # MAX ModelBatch: illustrated user guide
 
-**Version 1.3.4 · 3ds Max 2022-2027 · FBX + optional GLB · examples from Max 2024**
+**Version 1.3.5 · 3ds Max 2022-2027 · FBX + optional GLB · examples from Max 2024**
 
 Batch-import, prepare and export models with a dockable Max panel: create export Dummies, write one FBX per asset, import files in batches, compare UV seams, preview LODs and route models into project folders using export tags.
 
-Version 1.3.4 uses native 3ds Max section headers and tabs. Collapsing sections keeps their controls compact; the open log uses the remaining panel height. Models, Export settings and Viewport below show this layout in Max 2024. Other workflow captures are from 1.2.0 and may show earlier labels. The Dummy position button supports the LOD0 pivot, and the saved dock tab reopens after restart. Existing settings and scene metadata are retained. Names, paths and checked options in screenshots are examples.
+Version 1.3.5 arranges export and viewport settings in compact columns that stack in narrow docks. Seam counters share a row. Native Max headers and independent rollout state are retained; active viewers stop before host shutdown. Export settings and Viewport below show the new layout in Max 2024. The Models capture is from 1.3.4; other workflow captures are from 1.2.0 and may show earlier labels. Dummy placement at the LOD0 pivot, dock restoration, saved options and scene metadata are retained. Names, paths and checked options in screenshots are examples.
 
 ## Contents
 
@@ -27,7 +27,7 @@ Version 1.3.4 uses native 3ds Max section headers and tabs. Collapsing sections 
 <a id="install"></a>
 ## 1. Install and open
 
-1. Open the [1.3.4 release](https://github.com/SashaRX/MaxModelBatch-Releases/releases/tag/v1.3.4). Download the archive **for your exact Max year**. For Max 2024, [download the standard build](https://github.com/SashaRX/MaxModelBatch-Releases/releases/download/v1.3.4/MaxModelBatch_v1.3.4_3dsMax2024.zip).
+1. Open the [1.3.5 release](https://github.com/SashaRX/MaxModelBatch-Releases/releases/tag/v1.3.5). Download the archive **for your exact Max year**. For Max 2024, [download the standard build](https://github.com/SashaRX/MaxModelBatch-Releases/releases/download/v1.3.5/MaxModelBatch_v1.3.5_3dsMax2024.zip).
 2. Close Max. Extract the archive into a permanent folder such as `C:\Tools\MaxModelBatch\2024`. The plugin file is `MaxModelBatch.dlu`. Historical releases through 1.2.0 use `TS_UnityExport.dlu`.
 3. In Max, open **Customize → Configure System Paths → 3rd-Party Plug-Ins → Add**. Add the folder containing the `.dlu`, then restart Max.
 4. Open **Scripting → MAX ModelBatch** on **Max 2022-2024**, or **MAX ModelBatch → MAX ModelBatch** on **Max 2025-2027**. The legacy menu fallback on older hosts is also **MAX ModelBatch**. In the published **1.2.0** build, the command is still **Unity FBX Exporter**, under **Scripting** or **Unity Tools**.
@@ -47,7 +47,7 @@ Dock the panel wherever it suits your workspace. The **Export** tab keeps **Proj
 
 Place one asset's render meshes and collision meshes under one Dummy. If you already have that hierarchy, start with Analyze.
 
-These steps match the public **1.3.4** downloads and the updated PDF. Models, Export settings and Viewport show the current layout; other workflow captures may have earlier labels.
+These steps match the public **1.3.5** downloads and the updated PDF. Models, Export settings and Viewport show the current layout; other workflow captures may have earlier labels.
 
 1. Select the meshes of one asset in Max. Open **Export → Models**.
 2. Enter an informative **Asset name**, such as `TrashCan`. Toggle **At center / At bottom / At LOD0 pivot**, optionally enable **Auto LODs**, and click **Create Dummy** above the model list.
@@ -58,7 +58,7 @@ These steps match the public **1.3.4** downloads and the updated PDF. Models, Ex
 7. Read the operation status at the bottom. Open **Details** or **Updates / Log → Log** for errors.
 
 <a id="compact-ui"></a>
-### Compact Dummy controls in 1.3.4
+### Compact Dummy controls in 1.3.5
 
 **Asset name**, **At center / At bottom / At LOD0 pivot**, **Auto LODs** and **Create Dummy** are directly above the Models list. Scene utilities are under **Models → Scene tools**. Naming, geometry placement and single-Undo behavior are retained. In older 1.2.1 builds, creation was under **Export → Preparation → Create Dummy from Selection**.
 
@@ -81,7 +81,7 @@ Do not assign a different LOD number to every part of a multipart model. Use pol
 
 ![Dummy creation controls and scene tools](guide/images/preparation.png)
 
-*Historical 1.2.0 capture: Dummy creation was in Preparation. In 1.3.4 it is above the Models list; scene utilities are in Models → Scene tools. Organize export layers works on the whole scene.*
+*Historical 1.2.0 capture: Dummy creation was in Preparation. In 1.3.5 it is above the Models list; scene utilities are in Models → Scene tools. Organize export layers works on the whole scene.*
 
 **At center / At bottom / At LOD0 pivot** determines the root's location:
 
@@ -127,7 +127,7 @@ For **Rebuild SG from UV**, UV data must be in the base object. If it exists onl
 
 **Split materials** splits render meshes with Multi/Sub materials into meshes per material. Analyze previews the expected outputs. The button processes **all models shown by the filter, regardless of root checkboxes**. An output preview is not yet a scene object, so it cannot be selected in the viewport before the split.
 
-Analyze populates the table; it does not export or run Split. Historical screenshots can show longer or Russian labels; 1.3.4 uses **All / None / Invert** for export checkboxes.
+Analyze populates the table; it does not export or run Split. Historical screenshots can show longer or Russian labels; 1.3.5 uses **All / None / Invert** for export checkboxes.
 
 <a id="tags"></a>
 ## 5. Tags, colors and project folders
@@ -169,9 +169,9 @@ Each Dummy's User Defined Properties carry its tag, relative path and color. Clo
 <a id="settings"></a>
 ## 6. Export settings
 
-![Geometry, pivot and FBX export options](guide/images/settings-v1.3.4.png)
+![Geometry, pivot and FBX export options](guide/images/settings-v1.3.5.png)
 
-*Export settings: Geometry / pivots, FBX / Unity and Mesh channels in independent native sections. Expand the sections you need.*
+*Export settings: Geometry / pivots on the left, FBX / Unity on the right, Mesh channels below at full width. Narrow docks stack the columns; each native section collapses independently.*
 
 | Option | Behavior |
 |---|---|
@@ -233,9 +233,9 @@ With fresh preferences, UV0 is on; UV1-UV3, Vertex Color and Vertex Alpha are of
 <a id="seams"></a>
 ## 9. Display UV seams
 
-![Viewport with compact native LOD and UV sections](guide/images/viewport-v1.3.4.png)
+![Viewport with compact native LOD and UV sections](guide/images/viewport-v1.3.5.png)
 
-*Viewport combines LOD preview, UV seams and the UV1 checker. Closing a section keeps the remaining controls in place.*
+*Viewport keeps LOD preview and scope full width. UV seams is on the left; UV1 checker and Display are stacked on the right. Seam counters share a row. Narrow docks return to one column without changing feature settings.*
 
 ![UV seam channel, scope, depth and refresh controls](guide/images/uv-seams.png)
 
@@ -322,13 +322,13 @@ LOD preview temporarily filters the viewport. Layer organization changes scene-l
 
 The **Updates / Log** page contains update actions and a collapsible **Log** section with Copy, Clear and Auto-scroll.
 
-**Public manual update:** download the 1.3.4 ZIP for your exact Max year and feature variant from [Downloads](/downloads/#modelbatch). Save your scene, close Max, replace the installed `.dlu` and restart. For GLB builds, also install the matching tools package. No GitHub account is needed for these public downloads.
+**Public manual update:** download the 1.3.5 ZIP for your exact Max year and feature variant from [Downloads](/downloads/#modelbatch). Save your scene, close Max, replace the installed `.dlu` and restart. For GLB builds, also install the matching tools package. No GitHub account is needed for these public downloads.
 
 The **in-plugin updater still uses the private development repository**. Its actions require `gh auth login` with repository access and a writable plugin folder. Publishing public ZIPs does not change that requirement.
 
 ![GitHub update controls](guide/images/updates.png)
 
-*Historical Updates capture from an earlier test build. 1.3.4 uses the compact labels below; versions and paths in this image are examples.*
+*Historical Updates capture from an earlier test build. 1.3.5 uses the compact labels below; versions and paths in this image are examples.*
 
 1. Open **Updates / Log → Check now**.
 2. If an update is available, click **Install update**. The package is downloaded and checked against the exact Max year and build variant.
@@ -360,7 +360,7 @@ Analyze and highlighting are read-only. Project/Weld move existing vertices with
 
 The **GLB / meshopt** tab is included only in `_GLB.zip` and `_MeshAlign_GLB.zip` plugin builds. Standard and Mesh Align builds without GLB keep the FBX workflows.
 
-1. Download the plugin and its matching `_GLB_Tools.zip` or `_MeshAlign_GLB_Tools.zip` for the **same 1.3.4 version, Max year and feature variant** from [Downloads](/downloads/#modelbatch).
+1. Download the plugin and its matching `_GLB_Tools.zip` or `_MeshAlign_GLB_Tools.zip` for the **same 1.3.5 version, Max year and feature variant** from [Downloads](/downloads/#modelbatch).
 2. Extract the tools into a permanent writable folder. Keep the manifests and licenses. In GLB settings select its `gltfpack.exe` and `MaxModelBatchGlbWorker.exe`; the worker must match the plugin build. Replace the tools together with every GLB plugin update.
 3. Use **Scene export** to analyze Dummy roots, apply the shared tags/filter, check models and export current evaluated static geometry, including unsaved edits. GLB capture does not run FBX pivot preparation or collapse the scene stack.
 4. Use **Pack existing GLB** for existing files. Check the selected compatibility profile and validation report before using optimized output in your target application.

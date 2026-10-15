@@ -6,7 +6,6 @@
   const download = picker.querySelector('#plugin-download');
   const tools = picker.querySelector('#glb-tools-download');
   const filename = picker.querySelector('.package-name');
-  const status = picker.querySelector('.package-status');
   const ru = document.documentElement.lang === 'ru';
   function update() {
     const option = host.selectedOptions[0];
@@ -19,7 +18,6 @@
     tools.hidden = !toolsUrl;
     if (toolsUrl) tools.href = toolsUrl;
     else tools.removeAttribute('href');
-    status.textContent = picker.dataset.status;
   }
   host.addEventListener('change', update);
   variant.addEventListener('change', update);

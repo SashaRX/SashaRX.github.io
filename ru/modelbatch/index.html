@@ -17,7 +17,7 @@ links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(
 <a class="skip-link" href="#main">К содержимому</a>
 <aside class="sidebar"><div class="sidebar-top"><a class="home-link" href="/ru/">← SashaRX / Проекты</a><nav class="language-switch" aria-label="Язык сайта"><a href="/modelbatch/" hreflang="en" lang="en" data-language="en">EN</a><a href="/ru/modelbatch/" hreflang="ru" lang="ru" data-language="ru" aria-current="true">RU</a></nav></div><div class="sidebar-title"><div><div class="brand">MAX ModelBatch</div><div class="version">РУКОВОДСТВО · 1.2.1</div></div><button class="mobile-top" id="menu-toggle" aria-expanded="false" aria-controls="guide-contents">Содержание</button></div>
 <nav id="guide-contents" class="contents-nav" aria-label="Содержание"><a href="#install">1. Установка и открытие</a><a href="#quickstart">2. Первый экспорт</a><a href="#preparation">3. Dummy, имена и подготовка</a><a href="#models">4. Таблица экспортируемых моделей</a><a href="#tags">5. Теги, цвета и папки проекта</a><a href="#settings">6. Настройки экспорта</a><a href="#unity">7. Масштаб и направления Unity</a><a href="#channels">8. UV-каналы и цвета вершин</a><a href="#seams">9. Отображение UV-швов</a><a href="#lod">10. Просмотр LOD и общие слои</a><a href="#import">11. Пакетный импорт FBX</a><a href="#updates">12. Обновление и откат</a><a href="#meshalign">13. Mesh Align: дополнительная сборка</a><a href="#help">14. Сохранение настроек и частые вопросы</a></nav>
-<div class="actions"><a href="guide.pdf?v=20261013-public">PDF</a><button id="print">Печать</button><a href="guide.md?v=20261013-public">Markdown</a></div>
+<div class="actions"><a href="guide.pdf?v=20261013-public">PDF (интерфейс 1.2.1)</a><button id="print">Печать</button><a href="guide.md?v=20261015-compact">Markdown</a></div>
 </aside>
 <main id="main"><div class="guide-hero"><div class="eyebrow">Пакетная работа с моделями в 3ds Max</div><h1>MAX ModelBatch</h1><div class="hero-actions"><a class="primary" href="#quickstart">Начать с первого экспорта</a><a href="/ru/downloads/#modelbatch">Выбрать сборку</a><a href="/ru/workflows/?tool=max">Рабочие сценарии</a></div>
 <p class="guide-meta"><strong>Версия 1.2.1 · 3ds Max 2022-2027 · работа с FBX · примеры из Max 2024</strong></p>
@@ -40,9 +40,10 @@ links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(
 <p><em>Models: папка проекта, фильтр, список корней, теги и кнопка экспорта. На снимке показаны три тестовых корня.</em></p>
 <h2 id="quickstart">2. Первый экспорт</h2>
 <p>Для одного ассета собери визуальные меши и коллизии под одним Dummy. Если такая иерархия уже есть, переходи сразу к Analyze.</p>
+<p>Эти шаги описывают компактный интерфейс. В ранних версиях открой <strong>Export → Preparation</strong> и используй <strong>Create Dummy from Selection</strong>. PDF и скриншоты показывают этот прежний интерфейс.</p>
 <ol>
-<li>Выдели меши одной модели в Max. Открой <strong>Export → Preparation</strong>.</li>
-<li>Введи понятную основу в <strong>Asset name</strong>, например <code>TrashCan</code>. Выбери положение Dummy и нажми <strong>Create Dummy from Selection</strong>.</li>
+<li>Выдели меши одной модели в Max. Открой <strong>Export → Models</strong>.</li>
+<li>Введи понятную основу в <strong>Asset name</strong>, например <code>TrashCan</code>. Переключи <strong>At center / At bottom</strong> и нажми <strong>Create Dummy</strong>.</li>
 <li>Укажи <strong>Project folder</strong> - общую папку, относительно которой будут рассчитываться пути тегов.</li>
 <li>Нажми <strong>Analyze</strong>. Если выделены объекты, анализируются их корни Dummy. Если ничего не выделено, плагин ищет Dummy по всей сцене.</li>
 <li>На странице <strong>Models</strong> проверь имена, <strong>Destination</strong> и галочки корней. При необходимости назначь тег в последнем столбце.</li>
@@ -60,8 +61,8 @@ links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(
 <p>LOD не нужно включать для каждой детали составной модели. Используй LOD-ранжирование, когда выбранные объекты или группы представляют альтернативные уровни детализации одного ассета.</p>
 <h2 id="preparation">3. Dummy, имена и подготовка</h2>
 <p><a class="zoom-link" href="/modelbatch/guide/images/preparation.png"><img data-asset="guide/images/preparation.png" src="/modelbatch/guide/images/preparation.png" loading="lazy" decoding="async" alt="Создание Dummy и инструменты сцены" width="806" height="671"></a></p>
-<p><em>Preparation: создание корня сверху, инструменты сцены ниже. Organize LOD / COL layers работает со всей сценой.</em></p>
-<p><strong>Dummy position</strong> задаёт точку корня:</p>
+<p><em>Снимок прежнего интерфейса. В компактном интерфейсе создание Dummy находится над списком Models, инструменты сцены остаются в Preparation. Organize LOD / COL layers работает со всей сценой.</em></p>
+<p><strong>At center / At bottom</strong> переключает точку корня:</p>
 <div class="table-wrap" tabindex="0">
 <table>
 <thead>
@@ -71,18 +72,18 @@ links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(
 </tr>
 </thead>
 <tbody><tr>
-<td>Group center</td>
+<td>At center</td>
 <td>В центре общего bounding box геометрии выбранной иерархии</td>
 </tr>
 <tr>
-<td>Bottom center (floor)</td>
+<td>At bottom</td>
 <td>В том же центре по X/Y, но на нижней границе геометрии по Z</td>
 </tr>
 </tbody></table>
 </div>
 <p>«У пола» означает низ выбранной модели, а не мировой <code>Z = 0</code>. Положение видимой геометрии при создании корня сохраняется.</p>
 <p>В <strong>Asset name</strong> можно явно задать общую основу имени. Если оставить поле пустым, плагин ищет информативное имя среди выделенных объектов. Автоматический выбор использует эвристики; когда подходящей основы нет, появится запрос имени. Явное имя удобнее, если в сцене остались <code>Plane003</code>, числовые или временные названия.</p>
-<p>Корень получает <code>SM_</code>, но не постфиксы <code>_COL</code> и <code>_LOD#</code>: <code>SM_TrashCan</code>. У дочерних объектов <code>SM_</code> убирается. <strong>Assign LOD0-LOD9 by polygon count</strong> присваивает всем LOD общую основу: больше полигонов - меньший номер; при равенстве учитывается порядок выделения. Выбранная группа считается по сумме её render-мешей. Коллизии исключаются из ранжирования и сохраняют <code>_COL</code>. Автоматическое ранжирование рассчитано максимум на десять LOD-вариантов.</p>
+<p>Корень получает <code>SM_</code>, но не постфиксы <code>_COL</code> и <code>_LOD#</code>: <code>SM_TrashCan</code>. У дочерних объектов <code>SM_</code> убирается. <strong>Auto LODs</strong> присваивает всем LOD общую основу: больше полигонов - меньший номер; при равенстве учитывается порядок выделения. Выбранная группа считается по сумме её render-мешей. Коллизии исключаются из ранжирования и сохраняют <code>_COL</code>. Автоматическое ранжирование рассчитано максимум на десять LOD-вариантов.</p>
 <p>Создание Dummy, переименование и переподчинение отменяются одним <strong>Ctrl+Z</strong>.</p>
 <p>Инструменты сцены:</p>
 <div class="table-wrap" tabindex="0">

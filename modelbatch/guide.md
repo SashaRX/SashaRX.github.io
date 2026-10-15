@@ -46,8 +46,10 @@ Dock the panel wherever it suits your workspace. The **Export** tab keeps **Proj
 
 Place one asset's render meshes and collision meshes under one Dummy. If you already have that hierarchy, start with Analyze.
 
-1. Select the meshes of one asset in Max. Open **Export → Preparation**.
-2. Enter an informative **Asset name**, such as `TrashCan`. Choose the Dummy position and click **Create Dummy from Selection**.
+These steps describe the compact UI. In earlier releases, open **Export → Preparation** and use **Create Dummy from Selection** instead. The downloadable PDF and screenshots show that earlier UI.
+
+1. Select the meshes of one asset in Max. Open **Export → Models**.
+2. Enter an informative **Asset name**, such as `TrashCan`. Toggle **At center / At bottom** and click **Create Dummy**.
 3. Set **Project folder**, the common base for all relative tag routes.
 4. Click **Analyze**. With objects selected, the plugin collects their Dummy roots. With no selection, it searches Dummies throughout the scene.
 5. In **Models**, check names, **Destination** and root checkboxes. Assign a tag in the last column if needed.
@@ -73,20 +75,20 @@ Do not assign a different LOD number to every part of a multipart model. Use pol
 
 ![Dummy creation controls and scene tools](guide/images/preparation.png)
 
-*Preparation: export-root creation at the top, scene utilities below. Organize LOD / COL layers works on the whole scene.*
+*Earlier UI capture. In the compact UI, Dummy creation is above the Models list; scene utilities stay in Preparation. Organize LOD / COL layers works on the whole scene.*
 
-**Dummy position** determines the root's location:
+**At center / At bottom** toggles the root's location:
 
 | Mode | Position |
 |---|---|
-| Group center | Center of the combined world-space geometry bounds |
-| Bottom center (floor) | The same X/Y center at the lowest geometry Z |
+| At center | Center of the combined world-space geometry bounds |
+| At bottom | The same X/Y center at the lowest geometry Z |
 
 “Floor” means the bottom of the selected model, not world `Z = 0`. Creating the root preserves the geometry's world placement.
 
 Enter a shared base name in **Asset name** or leave it blank to let the plugin choose an informative selected name. Automatic naming uses heuristics. If it finds no suitable candidate, it asks for a name. An explicit name is useful when a scene still contains names such as `Plane003`, numbers or temporary placeholders.
 
-The root gets `SM_` without trailing `_COL` or `_LOD#`: `SM_TrashCan`. Child names lose the `SM_` prefix. **Assign LOD0-LOD9 by polygon count** gives every LOD the same base name: more polygons means a lower LOD number; equal counts use selection order. A selected group's count includes its render descendants. Collision branches are excluded and retain `_COL`. Automatic ranking supports up to ten LOD alternatives.
+The root gets `SM_` without trailing `_COL` or `_LOD#`: `SM_TrashCan`. Child names lose the `SM_` prefix. **Auto LODs** gives every LOD the same base name: more polygons means a lower LOD number; equal counts use selection order. A selected group's count includes its render descendants. Collision branches are excluded and retain `_COL`. Automatic ranking supports up to ten LOD alternatives.
 
 One **Ctrl+Z** undoes Dummy creation, naming and parenting.
 

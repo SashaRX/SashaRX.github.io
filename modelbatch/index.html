@@ -17,7 +17,7 @@ links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(
 <a class="skip-link" href="#main">Skip to content</a>
 <aside class="sidebar"><div class="sidebar-top"><a class="home-link" href="/">← SashaRX / Projects</a><nav class="language-switch" aria-label="Site language"><a href="/modelbatch/" hreflang="en" lang="en" data-language="en" aria-current="true">EN</a><a href="/ru/modelbatch/" hreflang="ru" lang="ru" data-language="ru">RU</a></nav></div><div class="sidebar-title"><div><div class="brand">MAX ModelBatch</div><div class="version">USER GUIDE · 1.2.1</div></div><button class="mobile-top" id="menu-toggle" aria-expanded="false" aria-controls="guide-contents">Contents</button></div>
 <nav id="guide-contents" class="contents-nav" aria-label="Contents"><a href="#install">1. Install and open</a><a href="#quickstart">2. Your first export</a><a href="#preparation">3. Create Dummies and prepare the scene</a><a href="#models">4. Work with the export table</a><a href="#tags">5. Tags, colors and project folders</a><a href="#settings">6. Export settings</a><a href="#unity">7. Scale and Unity directions</a><a href="#channels">8. UV channels and vertex colors</a><a href="#seams">9. Display UV seams</a><a href="#lod">10. Preview LODs and organize layers</a><a href="#import">11. Batch-import FBX files</a><a href="#updates">12. Update and roll back</a><a href="#meshalign">13. Optional Mesh Align</a><a href="#help">14. Saved settings and troubleshooting</a></nav>
-<div class="actions"><a href="guide.pdf?v=20261013-public">PDF</a><button id="print">Print</button><a href="guide.md?v=20261013-public">Markdown</a></div>
+<div class="actions"><a href="guide.pdf?v=20261013-public">PDF (1.2.1 UI)</a><button id="print">Print</button><a href="guide.md?v=20261015-compact">Markdown</a></div>
 </aside>
 <main id="main"><div class="guide-hero"><div class="eyebrow">Batch model workflows in 3ds Max</div><h1>MAX ModelBatch</h1><div class="hero-actions"><a class="primary" href="#quickstart">Start the guide</a><a href="/downloads/#modelbatch">Choose a build</a><a href="/workflows/?tool=max">Task guides</a></div>
 <p class="guide-meta"><strong>Version 1.2.1 · 3ds Max 2022-2027 · FBX workflows · examples from Max 2024</strong></p>
@@ -39,9 +39,10 @@ links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(
 <p><em>Models: project folder, tag filter, export roots, destinations and tags. This capture shows three test roots.</em></p>
 <h2 id="quickstart">2. Your first export</h2>
 <p>Place one asset&#39;s render meshes and collision meshes under one Dummy. If you already have that hierarchy, start with Analyze.</p>
+<p>These steps describe the compact UI. In earlier releases, open <strong>Export → Preparation</strong> and use <strong>Create Dummy from Selection</strong> instead. The downloadable PDF and screenshots show that earlier UI.</p>
 <ol>
-<li>Select the meshes of one asset in Max. Open <strong>Export → Preparation</strong>.</li>
-<li>Enter an informative <strong>Asset name</strong>, such as <code>TrashCan</code>. Choose the Dummy position and click <strong>Create Dummy from Selection</strong>.</li>
+<li>Select the meshes of one asset in Max. Open <strong>Export → Models</strong>.</li>
+<li>Enter an informative <strong>Asset name</strong>, such as <code>TrashCan</code>. Toggle <strong>At center / At bottom</strong> and click <strong>Create Dummy</strong>.</li>
 <li>Set <strong>Project folder</strong>, the common base for all relative tag routes.</li>
 <li>Click <strong>Analyze</strong>. With objects selected, the plugin collects their Dummy roots. With no selection, it searches Dummies throughout the scene.</li>
 <li>In <strong>Models</strong>, check names, <strong>Destination</strong> and root checkboxes. Assign a tag in the last column if needed.</li>
@@ -59,8 +60,8 @@ links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(
 <p>Do not assign a different LOD number to every part of a multipart model. Use polygon-count LOD naming when the selected objects or groups are alternative detail levels of the same asset.</p>
 <h2 id="preparation">3. Create Dummies and prepare the scene</h2>
 <p><a class="zoom-link" href="/modelbatch/guide/images/preparation.png"><img data-asset="guide/images/preparation.png" src="/modelbatch/guide/images/preparation.png" loading="lazy" decoding="async" alt="Dummy creation controls and scene tools" width="806" height="671"></a></p>
-<p><em>Preparation: export-root creation at the top, scene utilities below. Organize LOD / COL layers works on the whole scene.</em></p>
-<p><strong>Dummy position</strong> determines the root&#39;s location:</p>
+<p><em>Earlier UI capture. In the compact UI, Dummy creation is above the Models list; scene utilities stay in Preparation. Organize LOD / COL layers works on the whole scene.</em></p>
+<p><strong>At center / At bottom</strong> toggles the root&#39;s location:</p>
 <div class="table-wrap" tabindex="0">
 <table>
 <thead>
@@ -70,18 +71,18 @@ links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(
 </tr>
 </thead>
 <tbody><tr>
-<td>Group center</td>
+<td>At center</td>
 <td>Center of the combined world-space geometry bounds</td>
 </tr>
 <tr>
-<td>Bottom center (floor)</td>
+<td>At bottom</td>
 <td>The same X/Y center at the lowest geometry Z</td>
 </tr>
 </tbody></table>
 </div>
 <p>“Floor” means the bottom of the selected model, not world <code>Z = 0</code>. Creating the root preserves the geometry&#39;s world placement.</p>
 <p>Enter a shared base name in <strong>Asset name</strong> or leave it blank to let the plugin choose an informative selected name. Automatic naming uses heuristics. If it finds no suitable candidate, it asks for a name. An explicit name is useful when a scene still contains names such as <code>Plane003</code>, numbers or temporary placeholders.</p>
-<p>The root gets <code>SM_</code> without trailing <code>_COL</code> or <code>_LOD#</code>: <code>SM_TrashCan</code>. Child names lose the <code>SM_</code> prefix. <strong>Assign LOD0-LOD9 by polygon count</strong> gives every LOD the same base name: more polygons means a lower LOD number; equal counts use selection order. A selected group&#39;s count includes its render descendants. Collision branches are excluded and retain <code>_COL</code>. Automatic ranking supports up to ten LOD alternatives.</p>
+<p>The root gets <code>SM_</code> without trailing <code>_COL</code> or <code>_LOD#</code>: <code>SM_TrashCan</code>. Child names lose the <code>SM_</code> prefix. <strong>Auto LODs</strong> gives every LOD the same base name: more polygons means a lower LOD number; equal counts use selection order. A selected group&#39;s count includes its render descendants. Collision branches are excluded and retain <code>_COL</code>. Automatic ranking supports up to ten LOD alternatives.</p>
 <p>One <strong>Ctrl+Z</strong> undoes Dummy creation, naming and parenting.</p>
 <div class="table-wrap" tabindex="0">
 <table>

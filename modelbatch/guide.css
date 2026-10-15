@@ -83,6 +83,7 @@ footer { margin-top: 36px; color: var(--muted); font-size: 12px; border-top: 1px
   .guide-hero p { color: #18212a; font-size: 10pt; }
   h2 { font-size: 17pt; margin: 22pt 0 12pt; padding-top: 10pt; border-color: #aeb9c2; break-after: avoid; }
   h3 { font-size: 12pt; break-after: avoid; }
+  #compact-ui + p { break-inside: avoid; }
   p, li { orphans: 3; widows: 3; }
   li { margin: 4pt 0; }
   table { font-size: 8pt; break-inside: avoid; }

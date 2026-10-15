@@ -84,6 +84,8 @@ footer { margin-top: 36px; color: var(--muted); font-size: 12px; border-top: 1px
   h2 { font-size: 17pt; margin: 22pt 0 12pt; padding-top: 10pt; border-color: #aeb9c2; break-after: avoid; }
   h3 { font-size: 12pt; break-after: avoid; }
   #compact-ui + p { break-inside: avoid; }
+  #help ~ p { font-size: 8.5pt; line-height: 1.3; margin: 7pt 0; }
+  #help ~ .table-wrap th, #help ~ .table-wrap td { padding: 3pt 6pt; }
   p, li { orphans: 3; widows: 3; }
   li { margin: 4pt 0; }
   table { font-size: 8pt; break-inside: avoid; }
@@ -98,6 +100,7 @@ footer { margin-top: 36px; color: var(--muted); font-size: 12px; border-top: 1px
   .compare-pane[hidden] { display: block !important; }
   .compare-pane[data-extra=true] { display: none !important; }
   .compare-pane p, footer { color: #445563; font-size: 8pt; }
+  footer { margin-top: 6pt; padding-top: 4pt; break-inside: avoid; }
   .print-note { display: block; color: #445563; font-size: 8pt; }
   .pdf-contents { display: block; break-after: page; }
   .pdf-contents ul { list-style: none; padding: 0; columns: 2; column-gap: 24pt; font-size: 9pt; }

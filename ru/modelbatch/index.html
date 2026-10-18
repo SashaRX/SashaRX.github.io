@@ -13,46 +13,46 @@ const update=()=>links.forEach(link=>link.href=routes[link.dataset.language]+loc
 links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(key,link.dataset.language)}catch{}}));});})();
 </script>
 <link rel="stylesheet" href="/assets/site.css?v=20261013">
-<link rel="stylesheet" href="/modelbatch/guide.css?v=1.3.7-print2"></head><body class="modelbatch-page">
+<link rel="stylesheet" href="/modelbatch/guide.css?v=1.3.8-print2"></head><body class="modelbatch-page">
 <a class="skip-link" href="#main">К содержимому</a>
-<aside class="sidebar"><div class="sidebar-top"><a class="home-link" href="/ru/">← SashaRX / Проекты</a><nav class="language-switch" aria-label="Язык сайта"><a href="/modelbatch/" hreflang="en" lang="en" data-language="en">EN</a><a href="/ru/modelbatch/" hreflang="ru" lang="ru" data-language="ru" aria-current="true">RU</a></nav></div><div class="sidebar-title"><div><div class="brand">MAX ModelBatch</div><div class="version">РУКОВОДСТВО · 1.3.7</div></div><button class="mobile-top" id="menu-toggle" aria-expanded="false" aria-controls="guide-contents">Содержание</button></div>
-<nav id="guide-contents" class="contents-nav" aria-label="Содержание"><a href="#install">1. Установка и открытие</a><a href="#quickstart">2. Первый экспорт</a><a href="#preparation">3. Dummy, имена и подготовка</a><a href="#models">4. Таблица экспортируемых моделей</a><a href="#tags">5. Теги, цвета и папки проекта</a><a href="#settings">6. Настройки экспорта</a><a href="#unity">7. Масштаб и направления Unity</a><a href="#channels">8. UV-каналы и цвета вершин</a><a href="#seams">9. Отображение UV-швов</a><a href="#lod">10. Просмотр LOD и общие слои</a><a href="#import">11. Пакетный импорт FBX</a><a href="#updates">12. Обновление и откат</a><a href="#meshalign">13. Mesh Align: дополнительная сборка</a><a href="#glb">14. GLB / meshopt: дополнительная сборка</a><a href="#help">15. Сохранение настроек и частые вопросы</a></nav>
-<div class="actions"><a href="guide.pdf?v=1.3.7-print2">PDF (v1.3.7)</a><button id="print">Печать</button><a href="guide.md?v=1.3.7">Markdown</a></div>
+<aside class="sidebar"><div class="sidebar-top"><a class="home-link" href="/ru/">← SashaRX / Проекты</a><nav class="language-switch" aria-label="Язык сайта"><a href="/modelbatch/" hreflang="en" lang="en" data-language="en">EN</a><a href="/ru/modelbatch/" hreflang="ru" lang="ru" data-language="ru" aria-current="true">RU</a></nav></div><div class="sidebar-title"><div><div class="brand">MAX ModelBatch</div><div class="version">РУКОВОДСТВО · 1.3.8</div></div><button class="mobile-top" id="menu-toggle" aria-expanded="false" aria-controls="guide-contents">Содержание</button></div>
+<nav id="guide-contents" class="contents-nav" aria-label="Содержание"><a href="#install">1. Установка и открытие</a><a href="#quickstart">2. Первый экспорт</a><a href="#preparation">3. Dummy, имена и подготовка</a><a href="#models">4. Таблица экспортируемых моделей</a><a href="#tags">5. SubPath, теги имён и папки проекта</a><a href="#settings">6. Настройки экспорта</a><a href="#unity">7. Масштаб и направления Unity</a><a href="#channels">8. UV-каналы и цвета вершин</a><a href="#seams">9. Отображение UV-швов</a><a href="#lod">10. Просмотр LOD и общие слои</a><a href="#import">11. Пакетный импорт FBX</a><a href="#updates">12. Обновление и откат</a><a href="#meshalign">13. Mesh Align: дополнительная сборка</a><a href="#glb">14. GLB / meshopt: дополнительная сборка</a><a href="#help">15. Сохранение настроек и частые вопросы</a></nav>
+<div class="actions"><a href="guide.pdf?v=1.3.8-print2">PDF (v1.3.8)</a><button id="print">Печать</button><a href="guide.md?v=1.3.8">Markdown</a></div>
 </aside>
 <main id="main"><div class="guide-hero"><div class="eyebrow">Пакетная работа с моделями в 3ds Max</div><h1>MAX ModelBatch</h1><div class="hero-actions"><a class="primary" href="#quickstart">Начать с первого экспорта</a><a href="/ru/downloads/#modelbatch">Выбрать сборку</a><a href="/ru/workflows/?tool=max">Рабочие сценарии</a></div>
-<p class="guide-meta"><strong>Версия 1.3.7 · 3ds Max 2022-2027 · FBX + дополнительный GLB · примеры из Max 2024</strong></p>
-<p>Импортируй, готовь и экспортируй модели пачкой. Dummy-иерархии, отдельный FBX на модель, UV-швы, LOD и маршруты по тегам в одной панели 3ds Max. FBX подходит для Unity и других инструментов.</p>
-<details class="capture-note"><summary>Об иллюстрациях и поддержке версий Max</summary><p>В версии 1.3.7 очистка UV1 checker не выделяет память, в том числе после ошибки её выделения. Сохранены оптимизация отрисовки из 1.3.6, цвета, прозрачность и проверка глубины чекера. Настройки экспорта и Viewport сохраняют компактные колонки из 1.3.5, которые переходят в столбец на узкой панели. Счётчики швов размещены в строку. Сохранены нативные заголовки Max и независимое состояние разделов; viewer останавливается до завершения Max. Снимки Export settings и Viewport ниже сделаны в 1.3.5 в Max 2024; эта компоновка сохранена в 1.3.7. Снимок Models сделан в 1.3.4, остальные рабочие процессы - в 1.2.0 и могут содержать прежние названия. Сохранены Dummy по пивоту LOD0, восстановление вкладки, настройки и данные сцен. Имена, пути и галочки на снимках служат примерами.</p></details>
+<p class="guide-meta"><strong>Версия 1.3.8 · 3ds Max 2022-2027 · FBX + дополнительный GLB · примеры из Max 2024</strong></p>
+<p>Импортируй, готовь и экспортируй модели пачкой. Dummy-иерархии, отдельный FBX на модель, UV-швы, LOD и маршруты по маршрутам SubPath в одной панели 3ds Max. FBX подходит для Unity и других инструментов.</p>
+<details class="capture-note"><summary>Об иллюстрациях и поддержке версий Max</summary><p>В версии 1.3.8 маршруты экспорта SubPath отделены от пользовательских Tags в именах. Выбранная внутренняя вкладка сохраняется после перезапуска Max. Настройки экспорта и Viewport сохраняют компактные колонки из 1.3.5, которые переходят в столбец на узкой панели. Счётчики швов размещены в строку. Сохранены нативные заголовки Max и независимое состояние разделов; viewer останавливается до завершения Max. Снимки Export settings и Viewport ниже сделаны в 1.3.5 в Max 2024; эта компоновка сохранена в 1.3.8. Снимок Models сделан в 1.3.4, остальные рабочие процессы - в 1.2.0 и могут содержать прежние названия. Сохранены Dummy по пивоту LOD0, восстановление вкладки, настройки и данные сцен. Имена, пути и галочки на снимках служат примерами.</p></details>
 <p class="translation-note">Названия кнопок и вкладок ниже оставлены на английском, как в интерфейсе плагина, чтобы их было проще найти.</p>
 
 </div>
-<section class="pdf-contents"><h2>Содержание</h2><ul><li><a href="#install">1. Установка и открытие</a></li><li><a href="#quickstart">2. Первый экспорт</a></li><li><a href="#preparation">3. Dummy, имена и подготовка</a></li><li><a href="#models">4. Таблица экспортируемых моделей</a></li><li><a href="#tags">5. Теги, цвета и папки проекта</a></li><li><a href="#settings">6. Настройки экспорта</a></li><li><a href="#unity">7. Масштаб и направления Unity</a></li><li><a href="#channels">8. UV-каналы и цвета вершин</a></li><li><a href="#seams">9. Отображение UV-швов</a></li><li><a href="#lod">10. Просмотр LOD и общие слои</a></li><li><a href="#import">11. Пакетный импорт FBX</a></li><li><a href="#updates">12. Обновление и откат</a></li><li><a href="#meshalign">13. Mesh Align: дополнительная сборка</a></li><li><a href="#glb">14. GLB / meshopt: дополнительная сборка</a></li><li><a href="#help">15. Сохранение настроек и частые вопросы</a></li></ul></section><h2 id="install">1. Установка и открытие</h2>
+<section class="pdf-contents"><h2>Содержание</h2><ul><li><a href="#install">1. Установка и открытие</a></li><li><a href="#quickstart">2. Первый экспорт</a></li><li><a href="#preparation">3. Dummy, имена и подготовка</a></li><li><a href="#models">4. Таблица экспортируемых моделей</a></li><li><a href="#tags">5. SubPath, теги имён и папки проекта</a></li><li><a href="#settings">6. Настройки экспорта</a></li><li><a href="#unity">7. Масштаб и направления Unity</a></li><li><a href="#channels">8. UV-каналы и цвета вершин</a></li><li><a href="#seams">9. Отображение UV-швов</a></li><li><a href="#lod">10. Просмотр LOD и общие слои</a></li><li><a href="#import">11. Пакетный импорт FBX</a></li><li><a href="#updates">12. Обновление и откат</a></li><li><a href="#meshalign">13. Mesh Align: дополнительная сборка</a></li><li><a href="#glb">14. GLB / meshopt: дополнительная сборка</a></li><li><a href="#help">15. Сохранение настроек и частые вопросы</a></li></ul></section><h2 id="install">1. Установка и открытие</h2>
 <ol>
-<li>Открой <a href="https://github.com/SashaRX/MaxModelBatch-Releases/releases/tag/v1.3.7">релиз 1.3.7</a>. Выбери архив <strong>для своего года Max</strong>. Для Max 2024: <a href="https://github.com/SashaRX/MaxModelBatch-Releases/releases/download/v1.3.7/MaxModelBatch_v1.3.7_3dsMax2024.zip">скачать стандартную сборку</a>.</li>
+<li>Открой <a href="https://github.com/SashaRX/MaxModelBatch-Releases/releases/tag/v1.3.8">релиз 1.3.8</a>. Выбери архив <strong>для своего года Max</strong>. Для Max 2024: <a href="https://github.com/SashaRX/MaxModelBatch-Releases/releases/download/v1.3.8/MaxModelBatch_v1.3.8_3dsMax2024.zip">скачать стандартную сборку</a>.</li>
 <li>Закрой Max. Распакуй архив в постоянную папку, например <code>C:\Tools\MaxModelBatch\2024</code>. Основной файл - <code>MaxModelBatch.dlu</code>. В исторических релизах до 1.2.0 включительно он назывался <code>TS_UnityExport.dlu</code>.</li>
 <li>В Max открой <strong>Customize → Configure System Paths → 3rd-Party Plug-Ins → Add</strong>. Добавь папку с <code>.dlu</code> и перезапусти Max.</li>
 <li>Открой <strong>Scripting → MAX ModelBatch</strong> на <strong>Max 2022-2024</strong>, либо <strong>MAX ModelBatch → MAX ModelBatch</strong> на <strong>Max 2025-2027</strong>. Резервное меню на старых версиях Max также называется <strong>MAX ModelBatch</strong>. В опубликованной сборке <strong>1.2.0</strong> команда ещё называется <strong>Unity FBX Exporter</strong> и находится в <strong>Scripting</strong> или <strong>Unity Tools</strong>.</li>
 </ol>
-<p>При первом обновлении после переименования репозитория закрой Max и вручную замени установку. Удали <code>TS_UnityExport.dlu</code> из всех папок, которые Max сканирует при поиске плагинов, перед установкой <code>MaxModelBatch.dlu</code>. Для каждого года Max должна остаться одна подходящая копия. Настройки и теги существующих сцен сохраняются.</p>
-<p>На странице <a href="/ru/downloads/#modelbatch">Скачать</a> выбери <strong>Standard</strong>, <strong>Mesh Align</strong>, <strong>GLB</strong> или <strong>Mesh Align + GLB</strong>. Standard содержит FBX, UV, LOD, импорт и теги. Mesh Align экспериментальный. Для GLB нужен соответствующий отдельный Tools ZIP; см. <a href="#glb">настройку GLB</a>. Не смешивай годы Max и варианты плагина/worker. Qt поставляется с Max, дополнительные Qt DLL не нужны. Публичные ZIP скачиваются без аккаунта GitHub.</p>
+<p>При первом обновлении после переименования репозитория закрой Max и вручную замени установку. Удали <code>TS_UnityExport.dlu</code> из всех папок, которые Max сканирует при поиске плагинов, перед установкой <code>MaxModelBatch.dlu</code>. Для каждого года Max должна остаться одна подходящая копия. Настройки и маршруты SubPath существующих сцен сохраняются.</p>
+<p>На странице <a href="/ru/downloads/#modelbatch">Скачать</a> выбери <strong>Standard</strong>, <strong>Mesh Align</strong>, <strong>GLB</strong> или <strong>Mesh Align + GLB</strong>. Standard содержит FBX, UV, LOD, импорт и маршруты SubPath. Mesh Align экспериментальный. Для GLB нужен соответствующий отдельный Tools ZIP; см. <a href="#glb">настройку GLB</a>. Не смешивай годы Max и варианты плагина/worker. Qt поставляется с Max, дополнительные Qt DLL не нужны. Публичные ZIP скачиваются без аккаунта GitHub.</p>
 <p>Панель можно закрепить в удобной области окна Max. На вкладке <strong>Export</strong> папка проекта и <strong>Analyze</strong> находятся сверху, <strong>Export FBX</strong> - снизу. Между ними две страницы: <strong>Models</strong> (создание Dummy, Scene tools и список) и <strong>Export settings</strong> (Geometry / pivots, FBX / Unity и Mesh channels). Нажми заголовок раздела, чтобы свернуть или раскрыть его; это не выключает инструменты внутри. Закреплённая вкладка восстанавливается после перезапуска; явное закрытие панели сохраняется.</p>
 <p><a class="zoom-link" href="/modelbatch/guide/images/models-v1.3.4.png"><img alt="Панель Export с четырьмя страницами и списком моделей" data-asset="guide/images/models-v1.3.4.png" decoding="async" height="978" loading="lazy" src="/modelbatch/guide/images/models-v1.3.4.png" width="654"/></a></p>
 <p><em>Models: создание Dummy, сворачиваемые Scene tools и список экспорта. Analyze заполняет список.</em></p>
 <h2 id="quickstart">2. Первый экспорт</h2>
 <p>Для одного ассета собери визуальные меши и коллизии под одним Dummy. Если такая иерархия уже есть, переходи сразу к Analyze.</p>
-<p>Шаги соответствуют публичным архивам <strong>1.3.7</strong> и обновлённому PDF. Models, Export settings и Viewport показывают текущую компоновку; на остальных снимках могут быть прежние названия.</p>
+<p>Шаги соответствуют публичным архивам <strong>1.3.8</strong> и обновлённому PDF. Models, Export settings и Viewport показывают текущую компоновку; на остальных снимках могут быть прежние названия.</p>
 <ol>
 <li>Выдели меши одной модели в Max. Открой <strong>Export → Models</strong>.</li>
 <li>Введи понятную основу в <strong>Asset name</strong>, например <code>TrashCan</code>. Переключи <strong>At center / At bottom / At LOD0 pivot</strong>, при необходимости включи <strong>Auto LODs</strong> и нажми <strong>Create Dummy</strong> над списком моделей.</li>
-<li>Укажи <strong>Project folder</strong> - общую папку, относительно которой будут рассчитываться пути тегов.</li>
+<li>Укажи <strong>Project folder</strong> - общую папку, относительно которой будут рассчитываться пути маршрутов SubPath.</li>
 <li>Нажми <strong>Analyze</strong>. Если выделены объекты, анализируются их корни Dummy. Если ничего не выделено, плагин ищет Dummy по всей сцене.</li>
-<li>На странице <strong>Models</strong> проверь имена, <strong>Destination</strong> и галочки корней. При необходимости назначь тег в последнем столбце.</li>
+<li>На странице <strong>Models</strong> проверь имена, <strong>Destination</strong> и галочки корней. При необходимости назначь маршрут SubPath в последнем столбце.</li>
 <li>Проверь <strong>Export settings</strong>, включая раздел <strong>Mesh channels</strong>. Нажми <strong>Export FBX</strong>.</li>
 <li>Посмотри результат операции снизу и открой <strong>Details</strong> или <strong>Updates / Log → Log</strong>, если есть ошибки.</li>
 </ol>
-<h3 id="compact-ui">Компактные элементы Dummy в 1.3.7</h3>
+<h3 id="compact-ui">Компактные элементы Dummy в 1.3.8</h3>
 <p><strong>Asset name</strong>, <strong>At center / At bottom / At LOD0 pivot</strong>, <strong>Auto LODs</strong> и <strong>Create Dummy</strong> находятся прямо над списком Models. Инструменты сцены находятся в <strong>Models → Scene tools</strong>. Правила имён, положение геометрии и отмена одним Ctrl+Z сохраняются. В прежних сборках 1.2.1 создание было в <strong>Export → Preparation → Create Dummy from Selection</strong>.</p>
-<p>Каждый отмеченный корень, видимый через текущий фильтр тегов, экспортируется в отдельный файл с именем Dummy: например <code>SM_TrashCan.fbx</code>. В файл входит его иерархия, включая <code>_COL</code>.</p>
+<p>Каждый отмеченный корень, видимый через текущий фильтр маршрутов SubPath, экспортируется в отдельный файл с именем Dummy: например <code>SM_TrashCan.fbx</code>. В файл входит его иерархия, включая <code>_COL</code>.</p>
 <p>Пример структуры одного ассета:</p>
 <pre><code class="language-text">SM_TrashCan                 ← экспортный корень, имя файла
 ├── TrashCan_LOD0            ← самый подробный вариант
@@ -63,7 +63,7 @@ links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(
 <p>LOD не нужно включать для каждой детали составной модели. Используй LOD-ранжирование, когда выбранные объекты или группы представляют альтернативные уровни детализации одного ассета.</p>
 <h2 id="preparation">3. Dummy, имена и подготовка</h2>
 <p><a class="zoom-link" href="/modelbatch/guide/images/preparation.png"><img alt="Создание Dummy и инструменты сцены" data-asset="guide/images/preparation.png" decoding="async" height="671" loading="lazy" src="/modelbatch/guide/images/preparation.png" width="806"/></a></p>
-<p><em>Исторический снимок 1.2.0: создание Dummy было в Preparation. В 1.3.7 оно находится над списком Models; инструменты сцены находятся в Models → Scene tools. Organize export layers работает со всей сценой.</em></p>
+<p><em>Исторический снимок 1.2.0: создание Dummy было в Preparation. В 1.3.8 оно находится над списком Models; инструменты сцены находятся в Models → Scene tools. Organize export layers работает со всей сценой.</em></p>
 <p><strong>At center / At bottom / At LOD0 pivot</strong> задаёт точку корня:</p>
 <div class="table-wrap" tabindex="0"><table>
 <thead>
@@ -126,38 +126,46 @@ links.forEach(link=>link.addEventListener('click',()=>{try{localStorage.setItem(
 <ul>
 <li><strong>Галочка у корня</strong> включает его в экспорт. Она отличается от обычного выделения строки.</li>
 <li>Клик по <strong>Name</strong>, <strong>Status</strong> или <strong>Destination</strong> выделяет соответствующий объект в Max. Dummy выделяется вместе со всеми потомками, даже когда ветка свёрнута. Клик по обычному мешу выбирает сам меш.</li>
-<li><strong>Ctrl/Shift</strong> позволяют выделять несколько строк. Столбец <strong>Tag</strong> открывает выпадающий список назначения тега и не меняет выделение сцены.</li>
+<li><strong>Ctrl/Shift</strong> позволяют выделять несколько строк. Столбец <strong>SubPath</strong> открывает выпадающий список назначения маршрута SubPath и не меняет выделение сцены.</li>
 <li>После <strong>Analyze</strong> ветки свёрнуты. <strong>Развернуть всё / Свернуть всё</strong> переключает все уровни показанных иерархий.</li>
-<li><strong>All / None / Invert</strong> меняют экспортные галочки только у моделей, видимых через фильтр тегов. Скрытые фильтром модели сохраняют свои галочки.</li>
+<li><strong>All / None / Invert</strong> меняют экспортные галочки только у моделей, видимых через фильтр маршрутов SubPath. Скрытые фильтром модели сохраняют свои галочки.</li>
 <li>Потяни границу столбца, чтобы изменить ширину; двойной клик по границе подбирает её по содержимому. Клик по заголовку сортирует строки, повторный клик меняет порядок. Дочерние объекты остаются под своим корнем.</li>
 </ul>
 <p><strong>Split materials</strong> разделяет render-меши с Multi/Sub материалами на меши по материалам. Analyze заранее показывает предполагаемые результаты. Кнопка обрабатывает <strong>все показанные фильтром модели, независимо от экспортных галочек</strong>. Строка предполагаемого результата ещё не является объектом сцены, поэтому до разделения её нельзя выбрать во viewport.</p>
 <p>Analyze заполняет список, но сам по себе не экспортирует и не выполняет Split.</p>
-<h2 id="tags">5. Теги, цвета и папки проекта</h2>
-<p>Тег связывает модель с относительной папкой. У одного Dummy один тег для всей его иерархии.</p>
-<p><a class="zoom-link" href="/modelbatch/guide/images/export-tags.png"><img alt="Список тегов и их относительных папок" data-asset="guide/images/export-tags.png" decoding="async" height="602" loading="lazy" src="/modelbatch/guide/images/export-tags.png" width="1004"/></a></p>
-<p><em>Export Tags: ключ, относительная папка, цвет; снизу добавление, редактирование и удаление.</em></p>
+
+<h2 id="tags">5. SubPath, теги имён и папки проекта</h2>
+<p><strong>SubPath</strong> выбирает папку экспорта Dummy. <strong>Tags</strong> добавляет слова в имена объектов. Оба инструмента находятся на вкладке <strong>SubPath / Tags</strong>, но их назначения независимы.</p>
+<p><a class="zoom-link" href="/modelbatch/guide/images/subpath-tags-preview.png"><img alt="Маршруты SubPath и действия с тегами имён" data-asset="guide/images/subpath-tags-preview.png" decoding="async" height="900" loading="lazy" src="/modelbatch/guide/images/subpath-tags-preview.png" width="654"/></a></p>
+<p><em>SubPath / Tags в предрелизной тестовой сборке для Max 2024: сверху маршруты экспорта, снизу действия с именами. Этот layout сохранён в 1.3.8.</em></p>
+<h3>Выбери маршрут экспорта SubPath</h3>
+<p>Прежний экспортный Tag теперь называется <strong>SubPath</strong>. Сохранённые ключи, папки, цвета и назначения продолжают работать. У одного Dummy один маршрут для всей иерархии.</p>
 <ol>
-<li>Задай общую <strong>Project folder</strong>. Например, <code>D:\Game\Assets</code>.</li>
-<li>Открой <strong>Export Tags → Add tag</strong>. Введи ключ, например <code>props</code>.</li>
-<li>Для <strong>Relative folder</strong> нажми <strong>Browse...</strong> и выбери папку внутри проекта. При корне <code>D:\Game\Assets</code> и папке <code>D:\Game\Assets\Models\Props</code> сохранится <code>Models/Props</code>.</li>
-<li>Выбери цвет и подтверди. Кнопка цвета сразу показывает выбранную подложку.</li>
-<li>На <strong>Export → Models</strong> назначь тег через последний столбец. Для нескольких корней выдели строки и используй правый клик → <strong>Assign export tag to selected roots</strong>.</li>
+<li>Задай общую <strong>Project folder</strong>, например <code>D:\Game\Assets</code>.</li>
+<li>Открой <strong>SubPath / Tags → SubPath → Add subpath</strong>. Введи ключ, например <code>props</code>.</li>
+<li>Для <strong>Relative folder</strong> нажми <strong>Browse...</strong> и выбери папку внутри проекта. При выборе <code>D:\Game\Assets\Models\Props</code> сохранится <code>Models/Props</code>.</li>
+<li>Выбери цвет и подтверди. Назначь маршрут через столбец <strong>SubPath</strong> на <strong>Export → Models</strong>. Для нескольких корней выдели строки и используй правый клик → <strong>Assign export subpath to selected roots</strong>.</li>
 </ol>
-<p>Пример итогового пути:</p>
 <pre><code class="language-text">Project folder     D:\Game\Assets
-Tag                props
+SubPath            props
 Relative folder    Models/Props
 Dummy              SM_TrashCan
 Result             D:\Game\Assets\Models\Props\SM_TrashCan.fbx
 </code></pre>
-<p>Относительный путь можно ввести вручную, даже если папки ещё нет: экспорт создаст её. Папка вне проекта не принимается. <strong>No tag</strong> отправляет FBX непосредственно в Project folder. Если в качестве корня выбран каталог <code>Assets</code>, не добавляй <code>Assets</code> повторно в относительный путь.</p>
-<p><strong>Edit path / color</strong> меняет маршрут и цвет, сохраняя ключ. Цвет используется как подложка имён в списке с контрастным текстом и как цвет Dummy во viewport. Вид выделенного или замороженного объекта может зависеть от правил отображения самого Max.</p>
-<p>Удаление определения тега не стирает назначение у Dummy. Такой тег станет отсутствующим; экспорт нужно разблокировать переназначением или восстановлением определения. Два корня с одинаковым итоговым именем файла в одной папке блокируют пакет до записи.</p>
-<p><a class="zoom-link" href="/modelbatch/guide/images/tag-filter.png"><img alt="Фильтр сразу по нескольким тегам" data-asset="guide/images/tag-filter.png" decoding="async" height="141" loading="lazy" src="/modelbatch/guide/images/tag-filter.png" width="634"/></a></p>
-<p><em>Фильтр: можно отметить несколько тегов и No tag. All models показывает все корни.</em></p>
-<p>Открой <strong>Tag filter</strong>, отметь нужные теги и закрой меню нажатием вне него или <strong>Esc</strong>. Несколько тегов объединяются: показываются модели с любым из выбранных тегов. Если снять абсолютно все пункты, список будет пустым. Выбранные теги фильтра и галочки экспорта сохраняются вместе со сценой после сохранения <code>.max</code>.</p>
-<p>Назначение тега, относительный путь и цвет находятся в User Defined Properties Dummy. Копии сохраняют их; они также записываются в FBX. При импорте <strong>Restore export tags and relative folders from FBX</strong> восстанавливает определения. Конфликтующие маршруты получают отдельные теги. Абсолютный Project folder задаётся для текущего проекта отдельно.</p>
+<p>Экспорт создаёт недостающие относительные папки. Папка вне проекта не принимается. <strong>No subpath</strong> отправляет FBX непосредственно в Project folder. Если корень уже указывает на <code>Assets</code>, не добавляй <code>Assets</code> повторно в относительный путь.</p>
+<p><strong>Edit path / color</strong> меняет маршрут и цвет, сохраняя ключ. Цвет используется как подложка имён в списке и как цвет Dummy во viewport. Удаление определения оставляет его назначения видимыми как отсутствующие: перед экспортом восстанови или переназначь их. Одинаковые итоговые имена файлов блокируют пакет до записи.</p>
+<p>Открой <strong>SubPath filter</strong>, чтобы показать несколько маршрутов вместе, при необходимости включая <strong>No subpath</strong>. <strong>All models</strong> показывает все корни, а снятие всех пунктов даёт пустой список. Сохрани <code>.max</code>, чтобы сохранить фильтр и экспортные галочки.</p>
+<p>User Defined Properties Dummy и экспортируемый FBX содержат маршрут, относительную папку и цвет. Копии сохраняют их. <strong>Restore export subpaths and relative folders from FBX</strong> восстанавливает определения при FBX Import; конфликтующие маршруты получают отдельные ключи. Абсолютную папку принимающего проекта задай отдельно.</p>
+
+<h3 id="name-tags">Добавь пользовательские теги в имена</h3>
+<p>Выдели нужные объекты в Max, введи теги, например <code>Wood, Wet</code> или <code>PM_Concrete</code>, и нажми <strong>Add tags</strong>:</p>
+<pre><code class="language-text">Chair_LOD0       → Chair_Wood_Wet_LOD0
+Chair_COL        → Chair_Wood_Wet_COL
+Chair_LOD2_COL   → Chair_Wood_Wet_LOD2_COL
+</code></pre>
+<p><strong>Remove tags</strong> удаляет введённые управляемые теги, а <strong>Clear tags</strong> очищает все теги, добавленные этим инструментом. Повторное добавление не дублирует тег. Меняются только выделенные узлы: команда не расширяет выделение на дочерние объекты или экспортные корни. Конфликт итоговых имён отменяет весь пакет.</p>
+<p>Тегами можно обозначить тип физического материала или другие правила проекта. Они меняют имена, а не назначенные материалы. Используй латинские буквы, цифры и одиночные подчёркивания. Несколько тегов разделяй запятыми, пробелами или точкой с запятой. <code>COL</code>, <code>LOD</code> и LOD с номером зарезервированы для структурных постфиксов.</p>
+<p>Один <strong>Undo/Redo</strong> восстанавливает имена вместе с метаданными тегов. Сохрани сцену, чтобы оставить их в <code>.max</code>. Очистка сохраняет обычную авторскую часть имени: слова, написанные вручную, не угадываются как управляемые теги. Auto LOD сохраняет теги каждого объекта перед новым постфиксом LOD и исключает их при определении базового имени Dummy.</p>
 <h2 id="settings">6. Настройки экспорта</h2>
 <p><a class="zoom-link" href="/modelbatch/guide/images/settings-v1.3.5.png"><img alt="Настройки геометрии, pivot и FBX" data-asset="guide/images/settings-v1.3.5.png" decoding="async" height="978" loading="lazy" src="/modelbatch/guide/images/settings-v1.3.5.png" width="654"/></a></p>
 <p><em>Export settings: Geometry / pivots слева, FBX / Unity справа, Mesh channels ниже на всю ширину. На узкой панели колонки переходят в столбец; каждый нативный раздел сворачивается независимо.</em></p>
@@ -324,7 +332,7 @@ Result             D:\Game\Assets\Models\Props\SM_TrashCan.fbx
 <p><em>Выбран LOD1; Show objects without LOD names выключен. В HTML можно переключить All, LOD0, LOD1 и LOD2.</em></p>
 <p><strong>Show objects without LOD names</strong> оставляет видимыми объекты без метки LOD. Режим просмотра продолжает работать с закрытой панелью и не снимает существующие Hide-состояния объектов/слоёв. После замены сцены режим возвращается к All LODs. UV-швы учитывают текущий LOD-просмотр.</p>
 <h3>Распределение по слоям</h3>
-<p>В <strong>Export → Models → Scene tools</strong> нажми <strong>Organize export layers</strong>. Кнопка работает <strong>со всей сценой</strong>, независимо от выделения, экспортных галочек и фильтра тегов:</p>
+<p>В <strong>Export → Models → Scene tools</strong> нажми <strong>Organize export layers</strong>. Кнопка работает <strong>со всей сценой</strong>, независимо от выделения, экспортных галочек и фильтра маршрутов SubPath:</p>
 <ul>
 <li>создаёт отсутствующие общие слои <code>LOD0</code>, <code>LOD1</code>, … и <code>COL</code>;</li>
 <li>распределяет объекты по их именам и наследуемым меткам;</li>
@@ -339,16 +347,16 @@ Result             D:\Game\Assets\Models\Props\SM_TrashCan.fbx
 <li>Открой <strong>FBX Import</strong> и выбери <strong>Folder → Browse...</strong>.</li>
 <li>Выдели один или несколько файлов через <strong>Ctrl/Shift</strong>; <strong>Select All</strong> выделяет весь список, <strong>Clear Selection</strong> снимает выделение.</li>
 <li>При необходимости включи <strong>Show FBX options for the first file</strong>. Нативный диалог импорта Max откроется для первого доступного файла, чтобы настроить пакет.</li>
-<li>Оставь <strong>Restore export tags and relative folders from FBX</strong> включённым, если импортируешь модели с тегами этого плагина.</li>
+<li>Оставь <strong>Restore export subpaths and relative folders from FBX</strong> включённым, если импортируешь модели с маршрутами SubPath этого плагина.</li>
 <li>Нажми <strong>Import Selected</strong>. Все файлы добавляются <strong>в текущую сцену</strong>. Результаты видны в Status и отчёте снизу.</li>
 </ol>
 <p><strong>Refresh</strong> перечитывает папку. <strong>Stop after current file</strong> останавливает пакет после завершения текущего файла. Заголовки сортируют таблицу; ширина столбцов настраивается вручную. Импорт использует настройки FBX-импортера Max; отдельные <code>.max</code> для каждого файла не создаются.</p>
 <h2 id="updates">12. Обновление и откат</h2>
 <p>На вкладке <strong>Updates / Log</strong> находятся действия обновления и сворачиваемый <strong>Log</strong> с Copy, Clear и Auto-scroll.</p>
-<p><strong>Публичное обновление вручную:</strong> скачай ZIP 1.3.7 для своего года Max и набора функций на странице <a href="/ru/downloads/#modelbatch">Скачать</a>. Сохрани сцену, закрой Max, замени установленный <code>.dlu</code> и перезапусти Max. Для GLB также установи соответствующий пакет инструментов. Аккаунт GitHub для публичных архивов не нужен.</p>
+<p><strong>Публичное обновление вручную:</strong> скачай ZIP 1.3.8 для своего года Max и набора функций на странице <a href="/ru/downloads/#modelbatch">Скачать</a>. Сохрани сцену, закрой Max, замени установленный <code>.dlu</code> и перезапусти Max. Для GLB также установи соответствующий пакет инструментов. Аккаунт GitHub для публичных архивов не нужен.</p>
 <p><strong>Встроенный автообновитель по-прежнему использует закрытый репозиторий разработки.</strong> Для его действий нужны <code>gh auth login</code> с доступом к репозиторию и папка плагина, доступная для записи. Публикация ZIP не меняет это требование.</p>
 <p><a class="zoom-link" href="/modelbatch/guide/images/updates.png"><img alt="Вкладка обновлений GitHub" data-asset="guide/images/updates.png" decoding="async" height="520" loading="lazy" src="/modelbatch/guide/images/updates.png" width="800"/></a></p>
-<p><em>Исторический снимок Updates из прежней тестовой сборки. В 1.3.7 используются компактные названия ниже; версии и пути на снимке служат примерами.</em></p>
+<p><em>Исторический снимок Updates из прежней тестовой сборки. В 1.3.8 используются компактные названия ниже; версии и пути на снимке служат примерами.</em></p>
 <ol>
 <li>Открой <strong>Updates / Log → Check now</strong>.</li>
 <li>Если доступно обновление, нажми <strong>Install update</strong>. Плагин скачает и проверит пакет для своего года Max и варианта сборки.</li>
@@ -371,9 +379,9 @@ Result             D:\Game\Assets\Models\Props\SM_TrashCan.fbx
 <h2 id="glb">14. GLB / meshopt: дополнительная сборка</h2>
 <p>Вкладка <strong>GLB / meshopt</strong> входит только в сборки <code>_GLB.zip</code> и <code>_MeshAlign_GLB.zip</code>. Стандартная и Mesh Align без GLB сохраняют сценарии FBX.</p>
 <ol>
-<li>На странице <a href="/ru/downloads/#modelbatch">Скачать</a> возьми плагин и соответствующий <code>_GLB_Tools.zip</code> или <code>_MeshAlign_GLB_Tools.zip</code> для <strong>одинаковых версии 1.3.7, года Max и набора функций</strong>.</li>
+<li>На странице <a href="/ru/downloads/#modelbatch">Скачать</a> возьми плагин и соответствующий <code>_GLB_Tools.zip</code> или <code>_MeshAlign_GLB_Tools.zip</code> для <strong>одинаковых версии 1.3.8, года Max и набора функций</strong>.</li>
 <li>Распакуй инструменты в постоянную папку с правом записи. Сохрани манифесты и лицензии. В настройках GLB выбери её <code>gltfpack.exe</code> и <code>MaxModelBatchGlbWorker.exe</code>: worker должен соответствовать сборке плагина. При каждом обновлении GLB-плагина обновляй и инструменты.</li>
-<li>В <strong>Scene export</strong> анализируй корни Dummy, применяй общие теги/фильтр, отмечай модели и экспортируй текущую вычисленную статическую геометрию, включая несохранённые правки. Захват GLB не запускает FBX-подготовку pivot и не схлопывает стек сцены.</li>
+<li>В <strong>Scene export</strong> анализируй корни Dummy, применяй общие маршруты SubPath/фильтр, отмечай модели и экспортируй текущую вычисленную статическую геометрию, включая несохранённые правки. Захват GLB не запускает FBX-подготовку pivot и не схлопывает стек сцены.</li>
 <li><strong>Pack existing GLB</strong> работает с готовыми файлами. Перед использованием оптимизированного результата проверь профиль совместимости и отчёт проверки в целевом приложении.</li>
 </ol>
 <p>GLB использует метры и правую систему Y-up / -Z forward. Неподдерживаемые skin/morph, анимация, материалы и карты дают отчёт. Для meshopt-сжатия нужен совместимый декодер. Дополнительные meshlet-пакеты содержат обычный GLB, отдельный версионированный файл и манифест; им нужна поддержка потребителя, они сами не включают GPU-рендеринг или игровое поведение. Оставляй профиль совместимости по умолчанию, пока поддержка выбранных опций целевым загрузчиком не подтверждена.</p>
@@ -388,11 +396,11 @@ Result             D:\Game\Assets\Models\Props\SM_TrashCan.fbx
 </tr>
 </thead>
 <tbody><tr>
-<td>Project folder, определения тегов, выбранный фильтр, экспортные галочки</td>
+<td>Project folder, определения маршрутов SubPath, выбранный фильтр, экспортные галочки</td>
 <td>В <code>.max</code> после сохранения сцены</td>
 </tr>
 <tr>
-<td>Тег, относительный путь, цвет модели</td>
+<td>Маршрут SubPath, относительный путь, цвет модели</td>
 <td>В User Defined Properties Dummy и в экспортируемом FBX</td>
 </tr>
 <tr>
@@ -400,11 +408,11 @@ Result             D:\Game\Assets\Models\Props\SM_TrashCan.fbx
 <td>В пользовательских настройках плагина</td>
 </tr>
 <tr>
-<td>Определения тегов для новых сцен того же проекта</td>
+<td>Определения маршрутов SubPath для новых сцен того же проекта</td>
 <td>Дополнительно запоминаются для проекта</td>
 </tr>
 </tbody></table></div>
-<h3>Если что-то не работает</h3>
+<p>Панель также запоминает выбранную внутреннюю вкладку. Если необязательной вкладки нет в сборке, открывается Export. Парковка панели и состояния сворачиваемых разделов сохраняются независимо.</p><h3>Если что-то не работает</h3>
 <div class="table-wrap" tabindex="0"><table>
 <thead>
 <tr>
@@ -414,7 +422,7 @@ Result             D:\Game\Assets\Models\Props\SM_TrashCan.fbx
 </thead>
 <tbody><tr>
 <td>Analyze показывает не все модели</td>
-<td>Сними выделение в Max для анализа всей сцены; проверь корни Dummy и Tag filter</td>
+<td>Сними выделение в Max для анализа всей сцены; проверь корни Dummy и SubPath filter</td>
 </tr>
 <tr>
 <td>Export FBX неактивна</td>
@@ -434,15 +442,15 @@ Result             D:\Game\Assets\Models\Props\SM_TrashCan.fbx
 </tr>
 <tr>
 <td>Dummy имеет другой цвет</td>
-<td>Проверь тег/цвет, состояние выделения/заморозки и загруженную сборку; после ручной замены <code>.dlu</code> нужен перезапуск</td>
+<td>Проверь маршрут SubPath/цвет, состояние выделения/заморозки и загруженную сборку; после ручной замены <code>.dlu</code> нужен перезапуск</td>
 </tr>
 <tr>
-<td>Экспорт заблокирован тегом</td>
-<td>Восстанови отсутствующее определение или назначь существующий тег/No tag</td>
+<td>Экспорт заблокирован маршрутом SubPath</td>
+<td>Восстанови отсутствующее определение или назначь существующий маршрут SubPath/No subpath</td>
 </tr>
 <tr>
 <td>Два объекта экспортируются в один путь</td>
-<td>Измени имя корня или папку тега; одинаковые назначения блокируют пакет</td>
+<td>Измени имя корня или папку маршрута SubPath; одинаковые назначения блокируют пакет</td>
 </tr>
 <tr>
 <td>Размер или Front в Unity неверны</td>
@@ -454,8 +462,8 @@ Result             D:\Game\Assets\Models\Props\SM_TrashCan.fbx
 </tr>
 </tbody></table></div>
 <p><strong>Details</strong> показывает полный отчёт текущей операции, а <strong>Log</strong> помогает понять причину ошибки. Некорректные имена файлов, нулевой scale и неподдерживаемые Transform могут блокировать экспорт до исправления сцены.</p>
-<p>Для проверки новой сборки на Max 2024 пройди короткий маршрут: создание Dummy → Analyze → назначение тега → экспорт одного FBX → импорт → Viewport (UV seams / LOD preview). Затем сохрани и открой <code>.max</code>, чтобы проверить сохранение фильтра, галочек и тегов.</p>
-<p>Технические материалы в репозитории плагина, доступные при наличии доступа к нему: <a href="https://github.com/SashaRX/MaxModelBatch/blob/main/docs/UV_SEAMS.md">UV-швы</a>, <a href="https://github.com/SashaRX/MaxModelBatch/blob/main/docs/EXPORT_TAGS.md">теги экспорта</a>, <a href="https://github.com/SashaRX/MaxModelBatch/blob/main/docs/DUMMY_CREATION.md">создание Dummy</a>, <a href="https://github.com/SashaRX/MaxModelBatch/blob/main/docs/UNITY_AXES.md">оси Unity</a>, <a href="https://github.com/SashaRX/MaxModelBatch/blob/main/docs/EXPORT_UNITS.md">единицы измерения</a>, <a href="https://github.com/SashaRX/MaxModelBatch/blob/main/docs/UPDATES.md">обновления</a>, <a href="https://github.com/SashaRX/MaxModelBatch/blob/main/docs/MESHALIGN.md">Mesh Align</a>.</p>
+<p>Для проверки новой сборки на Max 2024 пройди короткий маршрут: создание Dummy → Analyze → назначение маршрута SubPath → экспорт одного FBX → импорт → Viewport (UV seams / LOD preview). Затем сохрани и открой <code>.max</code>, чтобы проверить сохранение фильтра, галочек и маршрутов SubPath.</p>
+<p>Технические материалы в репозитории плагина, доступные при наличии доступа к нему: <a href="https://github.com/SashaRX/MaxModelBatch/blob/main/docs/UV_SEAMS.md">UV-швы</a>, <a href="https://github.com/SashaRX/MaxModelBatch/blob/main/docs/EXPORT_TAGS.md">маршруты SubPath экспорта</a>, <a href="https://github.com/SashaRX/MaxModelBatch/blob/main/docs/DUMMY_CREATION.md">создание Dummy</a>, <a href="https://github.com/SashaRX/MaxModelBatch/blob/main/docs/UNITY_AXES.md">оси Unity</a>, <a href="https://github.com/SashaRX/MaxModelBatch/blob/main/docs/EXPORT_UNITS.md">единицы измерения</a>, <a href="https://github.com/SashaRX/MaxModelBatch/blob/main/docs/UPDATES.md">обновления</a>, <a href="https://github.com/SashaRX/MaxModelBatch/blob/main/docs/MESHALIGN.md">Mesh Align</a>.</p>
 
 <p class="print-note">Интерактивное переключение примеров доступно в HTML-версии руководства. В PDF показаны оба состояния Depth test и два состояния LOD.</p><footer>MAX ModelBatch · Инструкция на русском · Скриншоты тестовых сцен Max 2024 · 16 октября 2026</footer></main>
 <dialog id="zoom" aria-label="Увеличенная иллюстрация"><button id="close-zoom" autofocus>Закрыть</button><img alt="Увеличенная иллюстрация"></dialog>

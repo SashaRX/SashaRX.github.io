@@ -1,10 +1,10 @@
 # MAX ModelBatch: illustrated user guide
 
-**Version 1.3.8 · 3ds Max 2022-2027 · FBX + optional GLB · examples from Max 2024**
+**Version 1.3.9 · 3ds Max 2022-2027 · FBX + optional GLB · examples from Max 2024**
 
 Batch-import, prepare and export models with a dockable Max panel: create export Dummies, write one FBX per asset, import files in batches, compare UV seams, preview LODs and route models into project folders using export subpaths.
 
-Version 1.3.8 separates export SubPath routes from user name Tags and remembers the selected workflow page after restarting Max. Export and viewport settings retain the compact columns from 1.3.5 and stack in narrow docks. Seam counters share a row. Native Max headers and independent rollout state are retained; active viewers stop before host shutdown. Export settings and Viewport captures below are from 1.3.5 in Max 2024; their layout is retained in 1.3.8. The Models capture is from 1.3.4; other workflow captures are from 1.2.0 and may show earlier labels. Dummy placement at the LOD0 pivot, dock restoration, saved options and scene metadata are retained. Names, paths and checked options in screenshots are examples.
+Version 1.3.9 adds quick-pick name tags and a viewport tag menu, material duplicate reports and Merge identical. The Tags page now places Tags above SubPath and scrolls in narrow docks. Existing routes, object-name tags and saved settings remain compatible. Screenshots illustrate earlier Max 2024 builds: Export settings and Viewport are from 1.3.5, Models from 1.3.4, and other workflows may show older labels. The new controls are described below; native runtime of the new tag and material actions has not been validated. Names, paths and checked options in screenshots are examples.
 
 ## Contents
 
@@ -27,7 +27,7 @@ Version 1.3.8 separates export SubPath routes from user name Tags and remembers 
 <a id="install"></a>
 ## 1. Install and open
 
-1. Open the [1.3.8 release](https://github.com/SashaRX/MaxModelBatch-Releases/releases/tag/v1.3.8). Download the archive **for your exact Max year**. For Max 2024, [download the standard build](https://github.com/SashaRX/MaxModelBatch-Releases/releases/download/v1.3.8/MaxModelBatch_v1.3.8_3dsMax2024.zip).
+1. Open the [1.3.9 release](https://github.com/SashaRX/MaxModelBatch-Releases/releases/tag/v1.3.9). Download the archive **for your exact Max year**. For Max 2024, [download the standard build](https://github.com/SashaRX/MaxModelBatch-Releases/releases/download/v1.3.9/MaxModelBatch_v1.3.9_3dsMax2024.zip).
 2. Close Max. Extract the archive into a permanent folder such as `C:\Tools\MaxModelBatch\2024`. The plugin file is `MaxModelBatch.dlu`. Historical releases through 1.2.0 use `TS_UnityExport.dlu`.
 3. In Max, open **Customize → Configure System Paths → 3rd-Party Plug-Ins → Add**. Add the folder containing the `.dlu`, then restart Max.
 4. Open **Scripting → MAX ModelBatch** on **Max 2022-2024**, or **MAX ModelBatch → MAX ModelBatch** on **Max 2025-2027**. The legacy menu fallback on older hosts is also **MAX ModelBatch**. In the published **1.2.0** build, the command is still **Unity FBX Exporter**, under **Scripting** or **Unity Tools**.
@@ -47,7 +47,7 @@ Dock the panel wherever it suits your workspace. The **Export** tab keeps **Proj
 
 Place one asset's render meshes and collision meshes under one Dummy. If you already have that hierarchy, start with Analyze.
 
-These steps match the public **1.3.8** downloads and the updated PDF. Models, Export settings and Viewport show the current layout; other workflow captures may have earlier labels.
+These steps match the public **1.3.9** downloads and the updated PDF. Screenshots show earlier builds and may omit the new tag and material controls; follow the current button names below.
 
 1. Select the meshes of one asset in Max. Open **Export → Models**.
 2. Enter an informative **Asset name**, such as `TrashCan`. Toggle **At center / At bottom / At LOD0 pivot**, optionally enable **Auto LODs**, and click **Create Dummy** above the model list.
@@ -58,7 +58,7 @@ These steps match the public **1.3.8** downloads and the updated PDF. Models, Ex
 7. Read the operation status at the bottom. Open **Details** or **Updates / Log → Log** for errors.
 
 <a id="compact-ui"></a>
-### Compact Dummy controls in 1.3.8
+### Compact Dummy controls in 1.3.9
 
 **Asset name**, **At center / At bottom / At LOD0 pivot**, **Auto LODs** and **Create Dummy** are directly above the Models list. Scene utilities are under **Models → Scene tools**. Naming, geometry placement and single-Undo behavior are retained. In older 1.2.1 builds, creation was under **Export → Preparation → Create Dummy from Selection**.
 
@@ -81,7 +81,7 @@ Do not assign a different LOD number to every part of a multipart model. Use pol
 
 ![Dummy creation controls and scene tools](guide/images/preparation.png)
 
-*Historical 1.2.0 capture: Dummy creation was in Preparation. In 1.3.8 it is above the Models list; scene utilities are in Models → Scene tools. Organize export layers works on the whole scene.*
+*Historical 1.2.0 capture: Dummy creation was in Preparation. In 1.3.9 it is above the Models list; scene utilities are in Models → Scene tools. Organize export layers works on the whole scene.*
 
 **At center / At bottom / At LOD0 pivot** determines the root's location:
 
@@ -127,16 +127,55 @@ For **Rebuild SG from UV**, UV data must be in the base object. If it exists onl
 
 **Split materials** splits render meshes with Multi/Sub materials into meshes per material. Analyze previews the expected outputs. The button processes **all models shown by the filter, regardless of root checkboxes**. An output preview is not yet a scene object, so it cannot be selected in the viewport before the split.
 
-Analyze populates the table; it does not export or run Split. Historical screenshots can show longer or Russian labels; 1.3.8 uses **All / None / Invert** for export checkboxes.
+Analyze populates the table; it does not export or run Split. Historical screenshots can show longer or Russian labels; 1.3.9 uses **All / None / Invert** for export checkboxes.
+
+<a id="material-check"></a>
+### Check and merge duplicate materials
+
+In **Export → Models**, **Check materials** reads the checked models currently shown by the SubPath filter. It reports candidates without changing the scene. **Details** lists identical materials, materials sharing a diffuse bitmap but differing in other values, and same-named bitmaps in different folders.
+
+**Merge identical** reads the scope again, then asks for confirmation. It replaces duplicate assignments in the checked models and their Multi/Sub slots with one kept material. A Multi/Sub container also used outside those models is skipped and reported. One Undo restores the assignments. Tags in object names do not assign materials.
+
+Save a copy of the scene and review the report before merging. Comparison reads supported values at the current frame; bitmap Output controls and 3D procedural coordinates are not compared, and animated or renderer-specific equivalence is not established. Native Max validation of the new merge and its Undo/Redo remains pending.
 
 <a id="tags"></a>
 ## 5. SubPath, name tags and project folders
 
-**SubPath** controls where a Dummy is exported. **Tags** are words in object names. Both tools share the **SubPath / Tags** page, but have independent assignments.
+**Tags** adds words to object names; **SubPath** chooses the export folder for a Dummy. Tags is above SubPath on the shared page. Sections wrap and scroll in a narrow dock.
 
-![SubPath routes and user name tag controls](guide/images/subpath-tags-preview.png)
+### Quick-pick tag types
 
-*SubPath / Tags in a pre-release Max 2024 validation build: project routes above, name-tag actions below. The layout is retained in 1.3.8.*
+Set an existing **Project folder**, then open **SubPath / Tags → Tags**. Click the trailing **+** chip, enter types such as `Wood, Metal`, and press Enter. Escape cancels the field. Right-click a chip to **Rename...**, **Remove**, **Move left** or **Move right**. These edits change the project vocabulary; existing object names keep their tags.
+
+Select objects in Max and click a chip:
+
+- Solid fill: all selected objects carry the tag; click to remove it from all.
+- Translucent fill and a partial-circle marker: some carry it; click to add it to the rest.
+- Outline: none carry it; click to add it to all.
+- Dimmed: select objects first. Right-click still edits the type.
+
+One Undo restores a tag change. Chips follow selection, rename, Undo/Redo and scene changes. Use **Other tags** for free-text tags; the field completes the word from the saved types.
+
+For viewport access, bind **Name tag menu** in the **MAX ModelBatch** category to a hotkey or quad menu through Customize UI. The popup uses the same selection rules; **Edit tag types...** opens the panel and the add field.
+
+Types are saved with SubPath definitions in the scene and remembered for the project folder. Versions 1.3.8 and earlier can read the SubPaths but discard this type list when saving definitions.
+
+<a id="name-tags"></a>
+### Add user tags to object names
+
+Select the exact objects in Max, enter tags in **Other tags** such as `Wood, Wet` or `PM_Concrete`, then choose **Add tags**. For example:
+
+```text
+Chair_LOD0       → Chair_Wood_Wet_LOD0
+Chair_COL        → Chair_Wood_Wet_COL
+Chair_LOD2_COL   → Chair_Wood_Wet_LOD2_COL
+```
+
+**Remove tags** removes the entered managed tags; **Clear tags** removes all tags added by this tool. Repeating Add keeps a tag only once. The command edits only the selected nodes, without expanding selection to their children or export roots. A conflicting target name rejects the whole batch.
+
+Tags can mark physical-material types or other project conventions. They change names, not assigned materials. Use Latin letters, digits and single underscores; separate multiple tags with commas, spaces or semicolons. `COL`, `LOD` and numbered LOD tokens are reserved structural suffixes.
+
+One **Undo/Redo** restores the names and tag metadata together. Save the scene to retain them. Clear preserves ordinary authored name text; manually written words are not guessed to be managed tags. Auto LOD keeps each object's managed tags before its new LOD suffix and excludes them when inferring the Dummy's base name.
 
 ### Choose an export SubPath
 
@@ -162,23 +201,6 @@ Export creates missing relative folders. Folders outside the project are rejecte
 Open **SubPath filter** to show several routes together, optionally including **No subpath**. **All models** shows every analyzed root; clearing every choice shows none. Save the `.max` scene to retain the filter and export checkboxes.
 
 Dummy User Defined Properties and exported FBX carry the route, relative folder and color. Clones retain them. **Restore export subpaths and relative folders from FBX** rebuilds missing definitions during FBX Import; conflicting routes get separate keys. Set the receiving project's absolute folder separately.
-
-<a id="name-tags"></a>
-### Add user tags to object names
-
-Select the exact objects in Max, enter tags such as `Wood, Wet` or `PM_Concrete`, then choose **Add tags**. For example:
-
-```text
-Chair_LOD0       → Chair_Wood_Wet_LOD0
-Chair_COL        → Chair_Wood_Wet_COL
-Chair_LOD2_COL   → Chair_Wood_Wet_LOD2_COL
-```
-
-**Remove tags** removes the entered managed tags; **Clear tags** removes all tags added by this tool. Repeating Add keeps a tag only once. The command edits only the selected nodes, without expanding selection to their children or export roots. A conflicting target name rejects the whole batch.
-
-Tags can mark physical-material types or other project conventions. They change names, not assigned materials. Use Latin letters, digits and single underscores; separate multiple tags with commas, spaces or semicolons. `COL`, `LOD` and numbered LOD tokens are reserved structural suffixes.
-
-One **Undo/Redo** restores the names and tag metadata together. Save the scene to retain them. Clear preserves ordinary authored name text; manually written words are not guessed to be managed tags. Auto LOD keeps each object's managed tags before its new LOD suffix and excludes them when inferring the Dummy's base name.
 
 <a id="settings"></a>
 ## 6. Export settings
@@ -336,13 +358,13 @@ LOD preview temporarily filters the viewport. Layer organization changes scene-l
 
 The **Updates / Log** page contains update actions and a collapsible **Log** section with Copy, Clear and Auto-scroll.
 
-**Public manual update:** download the 1.3.8 ZIP for your exact Max year and feature variant from [Downloads](/downloads/#modelbatch). Save your scene, close Max, replace the installed `.dlu` and restart. For GLB builds, also install the matching tools package. No GitHub account is needed for these public downloads.
+**Public manual update:** download the 1.3.9 ZIP for your exact Max year and feature variant from [Downloads](/downloads/#modelbatch). Save your scene, close Max, replace the installed `.dlu` and restart. For GLB builds, also install the matching tools package. No GitHub account is needed for these public downloads.
 
 The **in-plugin updater still uses the private development repository**. Its actions require `gh auth login` with repository access and a writable plugin folder. Publishing public ZIPs does not change that requirement.
 
 ![GitHub update controls](guide/images/updates.png)
 
-*Historical Updates capture from an earlier test build. 1.3.8 uses the compact labels below; versions and paths in this image are examples.*
+*Historical Updates capture from an earlier test build. 1.3.9 uses the compact labels below; versions and paths in this image are examples.*
 
 1. Open **Updates / Log → Check now**.
 2. If an update is available, click **Install update**. The package is downloaded and checked against the exact Max year and build variant.
@@ -374,7 +396,7 @@ Analyze and highlighting are read-only. Project/Weld move existing vertices with
 
 The **GLB / meshopt** tab is included only in `_GLB.zip` and `_MeshAlign_GLB.zip` plugin builds. Standard and Mesh Align builds without GLB keep the FBX workflows.
 
-1. Download the plugin and its matching `_GLB_Tools.zip` or `_MeshAlign_GLB_Tools.zip` for the **same 1.3.8 version, Max year and feature variant** from [Downloads](/downloads/#modelbatch).
+1. Download the plugin and its matching `_GLB_Tools.zip` or `_MeshAlign_GLB_Tools.zip` for the **same 1.3.9 version, Max year and feature variant** from [Downloads](/downloads/#modelbatch).
 2. Extract the tools into a permanent writable folder. Keep the manifests and licenses. In GLB settings select its `gltfpack.exe` and `MaxModelBatchGlbWorker.exe`; the worker must match the plugin build. Replace the tools together with every GLB plugin update.
 3. Use **Scene export** to analyze Dummy roots, apply the shared subpaths/filter, check models and export current evaluated static geometry, including unsaved edits. GLB capture does not run FBX pivot preparation or collapse the scene stack.
 4. Use **Pack existing GLB** for existing files. Check the selected compatibility profile and validation report before using optimized output in your target application.

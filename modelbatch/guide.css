@@ -112,3 +112,9 @@ footer { margin-top: 36px; color: var(--muted); font-size: 12px; border-top: 1px
   .capture-note > summary { display: none; }
   .capture-note > p { display: block; margin: 8pt 0; font-size: 8pt; }
 }
+
+/* 1.3.10 print pagination */
+@media print {
+  #tags { break-before: page; }
+  main p { orphans: 3; widows: 3; }
+}

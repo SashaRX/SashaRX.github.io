@@ -5,6 +5,11 @@ export const optionGroups = [
     "ru": "Запуск и вывод"
   },
   {
+    "id": "strict",
+    "en": "Strict channel modes",
+    "ru": "Строгие режимы каналов"
+  },
+  {
     "id": "materials",
     "en": "Materials",
     "ru": "Материалы"
@@ -176,8 +181,8 @@ export const options = [
     "flag": "--apply-materials-patch",
     "group": "materials",
     "kind": "repair",
-    "en": "Enable render-mesh texture shading, fill empty relative paths and bind diffuse textures to UV0. Shared UVSet conflicts are reported and preserved; repairs are off by default.",
-    "ru": "Включить шейдинг render-мешей, заполнить пустые относительные пути и привязать diffuse к UV0. Конфликтующие общие привязки отмечаются и сохраняются; исправления по умолчанию выключены.",
+    "en": "Enable render-mesh texture shading, fill empty relative texture paths and bind diffuse textures to UV0. Conflicting shared UV bindings are reported and preserved. These repairs are off by default.",
+    "ru": "Включить шейдинг render-мешей, заполнить пустые относительные пути текстур и привязать diffuse к UV0. Конфликтующие общие привязки отмечаются и сохраняются. По умолчанию исправления выключены.",
     "aliases": [],
     "requires": [],
     "argument": ""
@@ -707,5 +712,35 @@ export const options = [
     "aliases": [],
     "requires": [],
     "argument": ""
+  },
+  {
+    "flag": "--normalize-render-channels",
+    "group": "strict",
+    "kind": "repair",
+    "aliases": [],
+    "requires": [],
+    "argument": "",
+    "en": "On render meshes (not _COL, not shared with a _COL node) add each missing UV0/UV1/UV2 on its own layer, filled with (0, 0), (0, 0) and (1, 0); a missing UV1 next to an authored UV0 is an exact copy of UV0 instead, because Unity lightmaps a mesh without TexCoord1 through TexCoord0. Add opaque white colour on layer 0 when no layer has one. Remove UVs on layers ≥ 3, and extra colours when layer 0 holds a valid one. A damaged UV0–UV2 or layer-0 colour is an error: the whole file is left untouched and the run exits 2. Ambiguous layouts are reported and the mesh is skipped. Existing valid channels are never rewritten.",
+    "ru": "Для render-мешей (не _COL и без общей геометрии с _COL) добавить каждый отсутствующий UV0/UV1/UV2 в собственный слой со значениями (0, 0), (0, 0) и (1, 0). Отсутствующий UV1 при авторском UV0 — точная копия UV0: Unity использует TexCoord0 для лайтмапы меша без TexCoord1, и копия сохраняет это поведение. Если цвета нет ни в одном слое, добавить в слой 0 белый непрозрачный цвет. Удалить UV в слоях от 3 и выше, а лишние цвета — если в слое 0 есть корректный. Повреждённый UV0–UV2 или цвет слоя 0 считается ошибкой: весь файл остаётся нетронутым, код выхода 2. Неоднозначные каналы попадают в отчёт, меш пропускается. Существующие корректные каналы не переписываются."
+  },
+  {
+    "flag": "--restore-missing-smoothing",
+    "group": "strict",
+    "kind": "repair",
+    "aliases": [],
+    "requires": [],
+    "argument": "",
+    "en": "On render meshes with no smoothing element, derive 3ds Max smoothing groups that reproduce the authored normals exactly (1e-5 equality, not an angle) and write them on layer 0. Faceted faces get distinct non-zero groups; only when more than 32 bits would be needed do isolated faceted faces fall back to group 0. A split that groups cannot express, or a mesh with damaged UV0–UV2/colour, is reported and skipped. Normals and tangents are never changed.",
+    "ru": "Для render-мешей без элемента сглаживания вычислить группы сглаживания 3ds Max, которые в точности воспроизводят записанные нормали (равенство с допуском 1e-5, а не угол), и записать их в слой 0. Гранёные грани получают разные ненулевые группы; только если нужно больше 32 бит, изолированные гранёные грани получают группу 0. Если разбиение группами не выражается или у меша повреждены UV0–UV2 или цвет, меш попадает в отчёт и пропускается. Нормали и тангенты не меняются."
+  },
+  {
+    "flag": "--clean-col-geometry",
+    "group": "strict",
+    "kind": "repair",
+    "aliases": [],
+    "requires": [],
+    "argument": "",
+    "en": "On _COL meshes remove UVs, vertex colours, normals, tangents, binormals, smoothing and material elements, and disconnect the node's materials without destroying them. Geometry, names and transforms are kept. Shared or deformed _COL meshes are reported and skipped.",
+    "ru": "У _COL-мешей удалить UV, вершинные цвета, нормали, тангенты, бинормали, сглаживание и элементы материалов, а материалы узла отсоединить, не удаляя их. Геометрия, имена и трансформации сохраняются. Общие с render-узлом и деформируемые _COL-меши попадают в отчёт и пропускаются."
   }
 ];

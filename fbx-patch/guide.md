@@ -1,10 +1,10 @@
-# FBX Patch Tool 1.0.1
+# FBX Patch Tool 1.1.1
 
 Complete Windows x64 command reference. No Max, Unity or Qt installation is needed.
 
 Audit and repair existing FBX libraries: materials, textures, UVs, vertex colors, collisions, normals, smoothing, units, axes, geometry and metadata. Process multiple files and folders in one run.
 
-Download: https://github.com/SashaRX/MaxModelBatch-Releases/releases/tag/patch-fbx-v1.0.1
+Download: https://github.com/SashaRX/MaxModelBatch-Releases/releases/tag/patch-fbx-v1.1.1
 
 ## Quick start
 
@@ -23,7 +23,7 @@ Without repair flags the tool only audits. -n previews repairs without FBX/backu
 
 Shared diffuse textures used by meshes with different UV0 names are reported as UVSET-CONFLICT. Their UVSet is preserved; rename the source UV0 channels consistently or use separate texture/material bindings before retrying that repair.
 
-## All 62 user-facing options
+## All 65 user-facing options
 
 ### Run and output
 
@@ -147,6 +147,95 @@ Shared diffuse textures used by meshes with different UV0 names are reported as 
 | `--detect-unity-modified` | Report Unity in the original or last-saving application/vendor metadata. |
 | `--classify-source` | Group files by source metadata: empty, Blender, stock Max/Maya, Unity FBX, custom Max SDK or other named source. Adds SOURCE-* report categories. |
 
+### Strict modes
+
+Opt-in and independent; any combination of the three is allowed. They cannot be combined with legacy repair flags (exit code 1). See "Strict modes in detail" below.
+
+| Option | Behavior |
+|---|---|
+| `--normalize-render-channels` | On render meshes (not _COL, not shared with a _COL node) add each missing UV0/UV1/UV2 on its own layer, filled with (0, 0), (0, 0) and (1, 0); a missing UV1 next to an authored UV0 is an exact copy of UV0 instead, because Unity lightmaps a mesh without TexCoord1 through TexCoord0. Add opaque white colour on layer 0 when no layer has one. Remove UVs on layers ≥ 3, and extra colours when layer 0 holds a valid one. A damaged UV0–UV2 or layer-0 colour is an error: the whole file is left untouched and the run exits 2. Ambiguous layouts are reported and the mesh is skipped. Existing valid channels are never rewritten. |
+| `--restore-missing-smoothing` | On render meshes with no smoothing element, derive 3ds Max smoothing groups that reproduce the authored normals exactly (1e-5 equality, not an angle) and write them on layer 0. Faceted faces get distinct non-zero groups; only when more than 32 bits would be needed do isolated faceted faces fall back to group 0. A split that groups cannot express, or a mesh with damaged UV0–UV2/colour, is reported and skipped. Normals and tangents are never changed. |
+| `--clean-col-geometry` | On _COL meshes remove UVs, vertex colours, normals, tangents, binormals, smoothing and material elements, and disconnect the node's materials without destroying them. Geometry, names and transforms are kept. Shared or deformed _COL meshes are reported and skipped. |
+
+## Strict modes in detail
+
+**Channel names.** UV0/UV1/UV2 are FBX layers 0/1/2, which Unity imports as TexCoord0/1/2 (`Mesh.uv`, `Mesh.uv2`, `Mesh.uv3`). The tool's UV2 is not Unity's `Mesh.uv2`, which is TexCoord1, the tool's UV1.
+
+**--normalize-render-channels.**
+- Missing UV0 is added as (0, 0); missing UV2 as (1, 0), by-polygon-vertex / index-to-direct. Missing UV1 copies authored UV0 exactly, including mapping, reference mode, values and indices. If UV0 is also missing, the new UV1 uses (0, 0).
+- The added UV is named `UVChannel_{k+1}` unless the mesh already has a UV set with that name. 3ds Max exports map channels 1 and 3 as `UVChannel_1` and `UVChannel_3`, so an added UV2 then becomes `UVChannel_4` (one past the highest existing `UVChannel_<n>`). Duplicate names would make Max overwrite one channel on re-import. The report's `uvnames=` shows the names used.
+- A mesh with no colour gets white (1, 1, 1, 1) on layer 0.
+- The main colour is a valid layer-0 colour; colours on other layers are then removed. Colour only on higher layers is ambiguous: the mesh is skipped (CHANNEL-AMBIGUOUS).
+- Diffuse UVs on layers 3 and up are removed.
+- Damaged is not missing, and it is an error. A UV0–UV2 or layer-0 colour element with an unsupported mapping or reference (including legacy eIndex), an empty or short value array, a wrong index count, an out-of-range index or NaN/Inf values is never replaced. It is reported (CHANNEL-DAMAGED) and the whole file is left untouched: no mesh in it is rewritten, no backup is made, an ERROR row is written and the run exits 2. A dry run reports the same error. Values outside [0, 1] are not damage; damage on UV3+ or on a colour that would be removed does not block.
+- A UV gap (e.g. UV0 + UV2 only), a UV in a non-diffuse slot, or UV0–UV2 element order differing from layer order skips the mesh (CHANNEL-AMBIGUOUS, not an error). Only layers 0–2 are compared for element order, since higher UVs are removed.
+
+**--restore-missing-smoothing.**
+- Runs only when the mesh has no smoothing element and exactly one valid normal element mapped by polygon-vertex or by control point. By control point means all manifold edges are soft.
+- An edge is soft only when both faces carry equal normals at both ends. Equal means 1e-5 per component after normalisation: a float round-trip tolerance, not an angle threshold.
+- The groups are verified against a simulation of Max's smoothing rule. A seam, a hard edge ending inside a smooth region, a non-manifold or inconsistently wound edge, or more than 32 groups gives SMOOTHING-UNREPRESENTABLE and no change. It never falls back to smooth-all or an angle threshold.
+- Regions are greedy-coloured, faceted faces included, so a hard-edged cube gets non-zero groups and is not later detected as missing smoothing. Only if that needs more than 32 bits, isolated faceted faces (a single face whose corner normals no other face shares) get group 0 and use no bit, so a faceted fan or cone with 33+ faces at one apex still succeeds. If every face ends up at 0 the SMOOTHING-RESTORED row carries allzero=1.
+- A mesh with a damaged UV0–UV2 or layer-0 colour is skipped (reason damaged-channels), even without --normalize-render-channels.
+- Contrast with --rebuild-shading:
+  - It destroys all normal elements and rebuilds them from smoothing.
+  - Or, when there is no smoothing, it derives smoothing by connectivity (dot ≥ 0.9999). That can merge hard edges such as a cylinder seam, and more than 32 islands wrap.
+  - Tangents are left stale.
+  - Every run rewrites the file.
+  - The strict modes therefore never enable it.
+
+**--clean-col-geometry.**
+- Kept: control points, polygons and their order, edges, hole/visibility elements, user data, names, hierarchy and transforms.
+- Materials are disconnected, never destroyed. A material still used by a render node stays connected there. One left with no user is reported (COL-MATERIALS-ORPHANED).
+- A _COL mesh shared with a render node (COL-SHARED-SKIPPED), with any deformer such as a skin (COL-DEFORMED-SKIPPED), or whose geometry is not a mesh (COL-NOT-MESH-SKIPPED) is skipped.
+- Unity Physics Materials, BallisticMaterial and collider components are out of scope.
+
+**Safety.**
+- Classification uses the scene as imported. A mesh used by both a render and a _COL node is skipped by every mode (SHARED-MESH-SKIPPED).
+- Render meshes with blend shapes or vertex caches are skipped (RENDER-DEFORMED-SKIPPED); skin-only meshes are processed.
+- Backups:
+  - The backup is mandatory, flushed to disk and verified byte for byte before staging.
+  - A failed backup leaves the file untouched and exits 2.
+  - --no-backup together with a strict flag is rejected (exit 1); legacy runs still accept it.
+- Only FBX 7.1–7.5 and 7.7 are accepted, written back at the same version and encoding. Anything else gives UNSUPPORTED-FBX-VERSION and is skipped.
+- A second run plans nothing and writes nothing, so the .bak is kept.
+- -n previews without writing an FBX, backup or staging file.
+- --inspect stays read-only. Only with a strict flag does it add each mesh's kind and layer slots; plain --inspect output is unchanged.
+- .meta files are never touched.
+- Any mesh error (STRICT-MESH-ERROR) or damaged channel (CHANNEL-DAMAGED) discards the scene before writing.
+- In strict runs neither the per-file lines nor the summary suggest legacy flags.
+
+**Rejected combinations.** Any strict flag plus any legacy repair flag exits 1 before any file is opened. Examples are --fill-missing-uv1, --strip-col-data, --rebuild-shading, --strip-tbn, --apply-materials-patch, --guess-textures and --convert-to-meters. --no-backup is rejected too. Allowed alongside: --detect-*, --classify-source, --debug-textures, --inspect, -n, -v, -r, -j, --report-file and --short-paths.
+
+**Report rows.** Every row carries node='…' mesh='…' kind=render|col|shared.
+
+| Row | Meaning |
+|---|---|
+| RENDER-CHANNELS-NORMALIZED | before/after inventories, the added and removed labels, and `uvnames` of added UVs |
+| CHANNEL-DAMAGED | reason; an error, the file is not written |
+| CHANNEL-AMBIGUOUS | reason; the mesh is untouched |
+| SMOOTHING-RESTORED | groups (bits used, 0 when every face is faceted) and polygon count |
+| SMOOTHING-UNREPRESENTABLE | reason and detail |
+| COL-GEOMETRY-CLEANED | what was removed and how many materials were disconnected |
+| COL-SHARED-SKIPPED, COL-DEFORMED-SKIPPED, COL-NOT-MESH-SKIPPED, SHARED-MESH-SKIPPED, RENDER-DEFORMED-SKIPPED | the mesh was skipped |
+| MESH-ANOMALY | structural problems, reported only |
+| STRICT-MESH-ERROR | an error; the file is not written |
+| COL-MATERIALS-ORPHANED, UNSUPPORTED-FBX-VERSION | file-level rows |
+| ERROR | file level: channel damaged or backup failed, file untouched |
+| PATCHED | backup='…' |
+
+An inventory such as `uv,col|uv|uv` lists layers in order. `!` marks damage, `*` a UV in another slot and `~order` an order mismatch.
+
+```powershell
+.\patch_fbx.exe -n -r -v --report-file strict.txt --normalize-render-channels --restore-missing-smoothing --clean-col-geometry "D:\Models"
+.\patch_fbx.exe -r --normalize-render-channels "D:\Models"
+.\patch_fbx.exe -r --restore-missing-smoothing "D:\Models"
+.\patch_fbx.exe -r --clean-col-geometry --report-file col.md "D:\Models"
+```
+
+**Windows release verification:** MSVC 19.44 / FBX SDK 2020.3.9: all 3 CTest suites pass; the extracted ZIP passes 262 CLI integration checks on generated fixtures. The strict round trip changes FBX object UniqueIDs (34 of 34 in the fixture); ID stability is not guaranteed. The long-path case passes; the FBX 6.x rejection fixture is handwritten.
+
+**Not verified:** Unity import/TexCoord mapping and sub-asset fileID stability, native 3ds Max smoothing, and every supported FBX version. The generated-fixture results do not establish production-asset compatibility. Unity mesh compression may requantize UVs after adding a channel; smoothing affects Normals=Calculate, not imported authored normals.
+
 ## Internal arguments
 
 The dispatcher also accepts three internal worker arguments: --child-mode STATS_PATH (one-file patch worker), --survey-mode STATS_PATH (read-only pool survey worker), and --load-material-pool PATH (load the dispatcher-generated pool). They are implementation protocols, not normal library-processing commands, and are not included in the builder.
@@ -157,7 +246,7 @@ UV0/UV1/UV2 are FBX indices 0/1/2, corresponding to Max map channels 1/2/3. Cons
 
 Flag order does not control repair order. The tool orders its own passes: axes before units and mesh patches; TBN stripping before baking; UV-based shading before the general rebuild. Use UV-based shading only when chart seams match intended hard edges.
 
-A successful rewrite creates .fbx.bak; a later rewrite refreshes it. Audits, -n and no-op repairs leave it unchanged. --no-backup disables it. An FBX SDK re-save is not byte-identical to the input.
+A successful rewrite creates .fbx.bak; a later rewrite refreshes it. Audits, -n and no-op repairs leave it unchanged. --no-backup disables it for legacy repairs and is rejected with strict modes. An FBX SDK re-save is not byte-identical to the input.
 
 Exit codes: 0 completed (findings alone are not failure), 1 invalid CLI/no eligible inputs, 2 at least one file failed.
 

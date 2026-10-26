@@ -1,7 +1,8 @@
-import { options } from './options-catalog.js?v=20261014-fbx101';
+import { options } from './options-catalog.js?v=20261026-fbx111';
 
 const selectable = new Map(options.filter(option => ['repair', 'diagnostic', 'modifier'].includes(option.kind)).map(option => [option.flag, option]));
 const aliases = new Map(options.flatMap(option => option.aliases.map(alias => [alias, option.flag])));
+const strictFlags = new Set(['--normalize-render-channels', '--restore-missing-smoothing', '--clean-col-geometry']);
 function pathValue(value) {
   const trimmed = value.trim();
   if (trimmed.startsWith('"') && trimmed.endsWith('"')) return trimmed.slice(1, -1);
@@ -14,7 +15,12 @@ function quote(value) {
 }
 function expandFlags(selected) {
   const expanded = new Set(selected);
-  for (const flag of expanded) for (const required of selectable.get(flag).requires) expanded.add(required);
+  const strict = selected.some(flag => strictFlags.has(flag));
+  for (const flag of expanded) {
+    // The CLI allows this diagnostic without texture repair during strict runs.
+    if (strict && flag === '--debug-textures') continue;
+    for (const required of selectable.get(flag).requires) expanded.add(required);
+  }
   return expanded;
 }
 export function buildCommand(config) {
@@ -27,11 +33,15 @@ export function buildCommand(config) {
   const textureRoot = pathValue(config.textureRoot || '');
   const inspect = config.mode === 'inspect';
   const repair = config.mode === 'preview' || config.mode === 'apply';
-  const selected = inspect ? [] : [...new Set((config.flags || []).map(flag => aliases.get(flag) || flag))];
+  const requested = [...new Set((config.flags || []).map(flag => aliases.get(flag) || flag))];
+  const selected = inspect ? requested.filter(flag => strictFlags.has(flag)) : requested;
   if (selected.some(flag => !selectable.has(flag))) return { error: 'flags' };
   const expanded = expandFlags(selected);
+  const strict = [...expanded].some(flag => strictFlags.has(flag));
+  if (strict && [...expanded].some(flag => !strictFlags.has(flag) && ['repair', 'modifier'].includes(selectable.get(flag).kind))) return { error: 'strictConflict' };
+  if (strict && config.mode === 'apply' && config.noBackup) return { error: 'strictBackup' };
   const repairs = [...expanded].filter(flag => selectable.get(flag).kind === 'repair');
-  if (!repair && repairs.length) return { error: 'auditRepairs' };
+  if (!repair && !inspect && repairs.length) return { error: 'auditRepairs' };
   if (repair && !repairs.length) return { error: 'patches' };
   const jobs = Number(config.jobs);
   if (!inspect && (!Number.isInteger(jobs) || jobs < 1 || jobs > 64)) return { error: 'jobs' };
@@ -40,6 +50,7 @@ export function buildCommand(config) {
   if (usesTextures && textureRoot && !validPath(textureRoot)) return { error: 'textureRoot' };
   const flags = [];
   if (inspect) flags.push('--inspect');
+  if (inspect) flags.push(...selected);
   if (config.mode === 'preview') flags.push('-n');
   if (config.recursive) flags.push('-r');
   if (!inspect) {
@@ -67,6 +78,8 @@ function initBuilder() {
     invalidPaths: 'Проверь пути: без управляющих символов и кавычек внутри. Для имени, начинающегося с «-», добавь .\\ или полный путь.',
     mode: 'Выбери режим обработки.', patches: 'Выбери хотя бы одно исправление или готовый набор.',
     flags: 'Неизвестный параметр. Выбери его из справочника.', auditRepairs: 'Для исправлений выбери «Предпросмотр» или «Применить».',
+    strictConflict: 'Строгие режимы несовместимы с прежними исправлениями. Запускай их отдельными проходами.',
+    strictBackup: 'Строгим режимам нужна проверенная резервная копия. Выключи «Без резервной копии».',
     jobs: 'Число процессов должно быть целым: от 1 до 64.', report: 'Проверь путь к отчёту.', textureRoot: 'Проверь путь к папке текстур.',
     copied: 'Команда скопирована.', manual: 'Команда выделена — нажми Ctrl+C для копирования.',
     audit: 'Только проверка и отчёт. Исходные FBX не меняются; можно выбрать отдельные диагностики.',
@@ -81,6 +94,8 @@ function initBuilder() {
     invalidPaths: 'Check paths: no control characters or quotes inside. Prefix names starting with “-” with .\\ or use a full path.',
     mode: 'Choose an operation.', patches: 'Select at least one repair or choose a preset.',
     flags: 'Unknown option. Choose it from the reference.', auditRepairs: 'Choose Preview or Apply to use repairs.',
+    strictConflict: 'Strict modes cannot be mixed with legacy repairs. Run them in separate passes.',
+    strictBackup: 'Strict modes require a verified backup. Turn off the no-backup option.',
     jobs: 'Worker count must be a whole number from 1 to 64.', report: 'Check the report path.', textureRoot: 'Check the texture folder path.',
     copied: 'Command copied.', manual: 'Command selected — press Ctrl+C to copy.',
     audit: 'Scan and report only. Original FBX files stay unchanged; select individual diagnostics as needed.',
@@ -107,7 +122,7 @@ function initBuilder() {
     fields.noBackup.disabled = mode !== 'apply';
     checkboxes.forEach(box => {
       const option = selectable.get(box.value);
-      box.disabled = info || inspect || (!repair && (option.kind !== 'diagnostic' || option.requires.length > 0));
+      box.disabled = info || (inspect ? !strictFlags.has(box.value) : (!repair && (option.kind !== 'diagnostic' || option.requires.length > 0)));
     });
     const selected = checkboxes.filter(box => box.checked && !box.disabled).map(box => box.value);
     const usesTextures = repair && expandFlags(selected).has('--guess-textures');

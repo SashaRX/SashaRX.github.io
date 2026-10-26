@@ -1,4 +1,15 @@
-# FBX Patch Tool 1.0.1 validation
+# FBX Patch Tool validation
+
+## 1.1.1 release scope
+
+The 1.1.1 release gates use only generated SDK fixtures: helper checks, SDK/CLI
+regressions, staged-file I/O tests and an extracted-package CLI smoke test.
+They cover strict channel modes and copying authored UV0 into missing UV1.
+No production FBX, Unity project or Max scene is processed for this release.
+The historical corpus results below apply to 1.0.1 only; they are not evidence
+of production validation for the new strict modes.
+
+## Historical 1.0.1 validation
 
 Validated on Windows x64 with FBX SDK 2020.3.9 and the static MSVC runtime.
 The old published 1.0.0 EXE fails with the staged-export identity error on
